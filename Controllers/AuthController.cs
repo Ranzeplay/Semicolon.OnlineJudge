@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models;
 using Semicolon.OnlineJudge.Models.Auth;
 
@@ -16,9 +17,12 @@ namespace Semicolon.OnlineJudge.Controllers
     {
         private readonly AuthProps _authProps;
 
-        public AuthController(IOptions<AuthProps> options)
+        private readonly ApplicationDbContext _context;
+
+        public AuthController(IOptions<AuthProps> options, ApplicationDbContext context)
         {
             _authProps = options.Value;
+            _context = context;
         }
 
         [Route("/Auth")]
@@ -91,6 +95,19 @@ namespace Semicolon.OnlineJudge.Controllers
             };
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, claimsPricipal, props);
+
+            var user = _context.OJUsers.FirstOrDefault(u => u.Id == model.Id);
+            if(user == null)
+            {
+                _context.OJUsers.Add(new Models.User.OJUser
+                {
+                    Id = model.Id,
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    NickName = model.UserName,
+                    ProblemsPassedId = ""
+                });
+            }
 
             return RedirectToAction("Index", "Home");
         }
