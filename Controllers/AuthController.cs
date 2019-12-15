@@ -107,8 +107,16 @@ namespace Semicolon.OnlineJudge.Controllers
                     NickName = model.UserName,
                     ProblemsPassedId = ""
                 });
+
+                await _context.SaveChangesAsync();
             }
 
+            return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
 
