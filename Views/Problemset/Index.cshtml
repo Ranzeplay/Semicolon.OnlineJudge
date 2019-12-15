@@ -7,13 +7,13 @@
     <div class="col-md-9">
         <div class="card">
             <div class="card-body">
-                <table class="table table-condensed table-head-fixed">
+                <table class="table table-condensed table-head-fixed table-hover">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Title</th>
-                            <th>Pass rate</th>
-                            <th>History</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Pass rate</th>
+                            <th scope="col">History</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -21,7 +21,7 @@
                         {
                             <tr>
                                 <td>@problem.Id</td>
-                                <td><a class="link-hover-blue">@problem.Title</a></td>
+                                <td><a asp-action="Details" asp-route-id="@problem.Id">@problem.Title</a></td>
                                 <td>@problem.GetPassRate().ToString()</td>
                                 <td>None</td>
                             </tr>

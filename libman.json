@@ -10,6 +10,16 @@
       "provider": "cdnjs",
       "library": "font-awesome@5.11.2",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "clipboard.js@2.0.4",
+      "destination": "wwwroot/lib/clipboard.js/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/"
     }
   ]
 }

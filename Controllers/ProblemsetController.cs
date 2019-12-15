@@ -24,8 +24,10 @@ namespace Semicolon.OnlineJudge.Controllers
 
         public IActionResult Index()
         {
-            var model = new IndexModel();
-            model.ProblemModels = new List<ProblemModel>();
+            var model = new IndexModel
+            {
+                ProblemModels = new List<ProblemModel>()
+            };
             foreach (var p in _context.Problems.ToList())
             {
                 var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
@@ -125,6 +127,37 @@ namespace Semicolon.OnlineJudge.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Details(long? id)
+        {
+            var problem = _context.Problems.FirstOrDefault(p => p.Id == id);
+
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
+
+            var html = Markdown.ToHtml(problem.Description, pipeline);
+            var raw = Markdown.ToPlainText(problem.Description);
+
+            var author = _context.OJUsers.FirstOrDefault(x => x.Id == problem.AuthorId);
+
+            var model = new ProblemModel
+            {
+                Id = problem.Id,
+                Title = problem.Title,
+                Description = problem.Description,
+                ContentRaw = raw,
+                ContentHtml = html,
+                AuthorId = problem.AuthorId,
+                Author = author.UserName,
+                ExampleData = problem.ExampleData,
+                JudgeProfile = problem.JudgeProfile,
+                PassRate = problem.PassRate,
+                PublishTime = problem.PublishTime
+            };
+
+            return View(model);
         }
 
         private OJUser GetUserProfile()
