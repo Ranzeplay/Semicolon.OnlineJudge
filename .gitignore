@@ -338,3 +338,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/wwwroot/lib/admin-lte
+/wwwroot/lib/font-awesome
+/Semicolon.OnlineJudge.db
+/wwwroot/lib/clipboard.js
+/wwwroot/lib/jquery

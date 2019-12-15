@@ -1,0 +1,86 @@
+﻿@model Semicolon.OnlineJudge.Models.ViewModels.Problemset.ProblemModel
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="invoice p-3 mb-3">
+            <h4>Description</h4>
+            <div class="row" style="margin-top: 5px">
+                <div class="col-md-1"></div>
+                <div class="col-md-11">
+                    @Model.ContentRaw
+                </div>
+            </div>
+            <br />
+            <h4>Example data</h4>
+            <div class="row" style="margin-top: 5px">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Input</label>
+                        <textarea id="input" class="form-control" rows="3" readonly>@Model.GetExampleData().Input</textarea>
+                        <button class="btn btn-info btn-sm" data-clipboard-target="#input" style="margin-top: 4px">Copy</button>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>Output</label>
+                        <textarea id="output" class="form-control" rows="3" readonly>@Model.GetExampleData().Output</textarea>
+                        <button class="btn btn-info btn-sm" data-clipboard-target="#output" style="margin-top: 4px">Copy</button>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-chart-pie"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Pass rate</span>
+                <span class="info-box-number">@Model.GetPassRate().ToString()</span>
+            </div>
+        </div>
+        <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Author</span>
+                <span class="info-box-number">@Model.Author</span>
+            </div>
+        </div>
+        <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-calendar-plus"></i></span>
+
+            <div class="info-box-content">
+                <span class="info-box-text">Published at</span>
+                <span class="info-box-number">@Model.PublishTime</span>
+            </div>
+        </div>
+        <div class="info-box">
+            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-code"></i></span>
+
+            <div class="info-box-content">
+                <a class="btn btn-primary btn-block" asp-controller="Judge" asp-action="Submit" asp-route-id="@Model.Id">Submit my code</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Head {
+    <environment include="Development">
+        <script src="~/lib/clipboard.js/clipboard.js"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/clipboard.js/clipboard.min.js"></script>
+    </environment>
+}
+
+@section Scripts {
+    <script>
+        new ClipboardJS('.btn');
+    </script>
+}
