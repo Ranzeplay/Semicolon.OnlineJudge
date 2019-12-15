@@ -129,6 +129,45 @@ namespace Semicolon.OnlineJudge.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Search(string content)
+        {
+            if(content == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var model = new IndexModel
+            {
+                ProblemModels = new List<ProblemModel>()
+            };
+            foreach (var p in _context.Problems.Where(x => x.Title.Contains(content)).ToList())
+            {
+                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
+
+                var html = Markdown.ToHtml(p.Description, pipeline);
+                var raw = Markdown.ToPlainText(p.Description);
+
+                var author = _context.OJUsers.FirstOrDefault(x => x.Id == p.AuthorId);
+
+                model.ProblemModels.Add(new ProblemModel
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    ContentRaw = raw,
+                    ContentHtml = html,
+                    AuthorId = p.AuthorId,
+                    Author = author.UserName,
+                    ExampleData = p.ExampleData,
+                    JudgeProfile = p.JudgeProfile,
+                    PassRate = p.PassRate,
+                    PublishTime = p.PublishTime
+                });
+            }
+
+            return View(model);
+        }
+
         [HttpGet]
         [Route("{id}")]
         public IActionResult Details(long? id)

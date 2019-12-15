@@ -1,0 +1,66 @@
+﻿@model Semicolon.OnlineJudge.Models.ViewModels.Problemset.IndexModel
+@{
+    ViewData["Title"] = "Problemset";
+}
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-condensed table-head-fixed table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Pass rate</th>
+                            <th scope="col">History</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var problem in Model.ProblemModels)
+                        {
+                            <tr>
+                                <td>@problem.Id</td>
+                                <td><a asp-action="Details" asp-route-id="@problem.Id">@problem.Title</a></td>
+                                <td>@problem.GetPassRate().ToString()</td>
+                                <td>None</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="row">
+            <form method="get" asp-action="Search">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input name="content" type="text" class="form-control" placeholder="Content" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-search"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px">Go</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="card" style="width: 100%">
+                <div class="card-header">
+                    <h3 class="card-title">Can't find what you want?</h3>
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-primary btn-block" asp-action="New">Submit a new problem</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
