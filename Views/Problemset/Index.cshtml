@@ -5,46 +5,62 @@
 
 <div class="row">
     <div class="col-md-9">
-        <table class="table table-condensed table-head-fixed">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Pass rate</th>
-                    <th>History</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(var problem in Model.ProblemModels)
-                {
-                    <tr>
-                        <td>@problem.Id</td>
-                        <td>@problem.Title</td>
-                        <td>@problem.PassRate.ToString()</td>
-                        <td>None</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-condensed table-head-fixed">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>Pass rate</th>
+                            <th>History</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var problem in Model.ProblemModels)
+                        {
+                            <tr>
+                                <td>@problem.Id</td>
+                                <td><a class="link-hover-blue">@problem.Title</a></td>
+                                <td>@problem.GetPassRate().ToString()</td>
+                                <td>None</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     <div class="col-md-3">
-        <form method="get" asp-action="Search">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Search</h3>
-                </div>
-                <div class="card-body">
-                    <div class="input-group">
-                        <input name="content" type="text" class="form-control" placeholder="Content" />
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-search"></span>
+        <div class="row">
+            <form method="get" asp-action="Search">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Search</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input name="content" type="text" class="form-control" placeholder="Content" />
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-search"></span>
+                                </div>
                             </div>
                         </div>
+                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px">Go</button>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px">Go</button>
+                </div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="card" style="width: 100%">
+                <div class="card-header">
+                    <h3 class="card-title">Can't find what you want?</h3>
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-primary btn-block" asp-action="New">Submit a new problem</a>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>

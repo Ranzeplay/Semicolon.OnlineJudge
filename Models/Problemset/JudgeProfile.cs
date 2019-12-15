@@ -7,8 +7,6 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 {
     public class JudgeProfile
     {
-        public long Id { get; set; }
-
         public string TestDatas { get; set; }
 
         public double MemoryLimit { get; set; }

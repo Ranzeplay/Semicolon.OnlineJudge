@@ -7,8 +7,6 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 {
     public class TestData
     {
-        public long Id { get; set; }
-
         public string Input { get; set; }
 
         public string Output { get; set; }

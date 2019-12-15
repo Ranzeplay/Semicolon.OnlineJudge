@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
+
+    @RenderSection("Head", required: false)
 </head>
 <body class="sidebar-mini layout-footer-fixed sidebar-collapse">
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -41,7 +43,7 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" data-slide="true" data-auto-collapse-size="768">
+                <a class="nav-link" data-toggle="dropdown" aria-expanded="false">
                     <i class="fas fa-th-large"></i>
                 </a>
             </li>
@@ -60,7 +62,7 @@
                 <div class="info">
                     @if (User.Identity.IsAuthenticated)
                     {
-                    <a asp-controller="Account" asp-action="Me" class="d-block">Hello, @User.FindFirst("UserName").Value</a>
+                        <a asp-controller="Account" asp-action="Me" class="d-block">Hello, @User.FindFirst("UserName").Value</a>
                     }
                     else
                     {

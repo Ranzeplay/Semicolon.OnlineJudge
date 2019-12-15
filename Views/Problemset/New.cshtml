@@ -1,0 +1,65 @@
+﻿@model Semicolon.OnlineJudge.Models.ViewModels.Problemset.NewModel
+@{
+    ViewData["Title"] = "New";
+}
+
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+        <div class="row">
+            <form method="post" asp-action="New" style="width: 100%">
+                <h4>New problem (Basic Infomation)</h4>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input class="form-control" id="title" asp-for="Title" />
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" id="description" asp-for="Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="mem">Memory Limit (MB)</label>
+                    <input type="number" class="form-control" id="mem" asp-for="MemoryLimit" />
+                </div>
+                <div class="form-group">
+                    <label for="time">Time Limit (Seconds)</label>
+                    <input type="number" class="form-control" id="time" asp-for="TimeLimit" />
+                </div>
+
+                <div class="form-group">
+                    <label for="count">How many test data do you have?</label>
+                    <input type="number" class="form-control" id="count" asp-for="TestDataNumber" />
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Example data input</label>
+                            <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Input"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Example data output</label>
+                            <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Output"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Continue</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-1"></div>
+</div>
+
+@section Head {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+}
+
+@section Scripts {
+    <script>
+        var simplemde = new SimpleMDE({ element: document.getElementById("description"), spellChecker: false });
+    </script>
+}

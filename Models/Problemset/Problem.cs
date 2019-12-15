@@ -18,10 +18,55 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public DateTime PublishTime { get; set; }
 
-        public TestData ExampleData { get; set; }
+        public string ExampleData { get; set; }
 
-        public JudgeProfile JudgeProfile { get; set; }
+        public string JudgeProfile { get; set; }
 
-        public PassRate PassRate { get; set; }
+        public string PassRate { get; set; }
+
+        public TestData GetExampleData()
+        {
+            if (!string.IsNullOrWhiteSpace(ExampleData))
+            {
+                return System.Text.Json.JsonSerializer.Deserialize<TestData>(ExampleData);
+            }
+
+            return new TestData();
+        }
+
+        public void SetTestData(TestData testData)
+        {
+            System.Text.Json.JsonSerializer.Serialize(testData);
+        }
+
+        public JudgeProfile GetJudgeProfile()
+        {
+            if (!string.IsNullOrWhiteSpace(JudgeProfile))
+            {
+                return System.Text.Json.JsonSerializer.Deserialize<JudgeProfile>(JudgeProfile);
+            }
+
+            return new JudgeProfile();
+        }
+
+        public void SetJudgeProfile(JudgeProfile judgeProfile)
+        {
+            System.Text.Json.JsonSerializer.Serialize(judgeProfile);
+        }
+
+        public PassRate GetPassRate()
+        {
+            if (!string.IsNullOrWhiteSpace(PassRate))
+            {
+                return System.Text.Json.JsonSerializer.Deserialize<PassRate>(PassRate);
+            }
+
+            return new PassRate();
+        }
+
+        public void SetPassRate(PassRate passRate)
+        {
+            System.Text.Json.JsonSerializer.Serialize(passRate);
+        }
     }
 }

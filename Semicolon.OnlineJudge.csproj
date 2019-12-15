@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20191214141138_InitProblemsDb.cs" />
+    <Compile Remove="Migrations\20191214141138_InitProblemsDb.Designer.cs" />
+    <Compile Remove="Migrations\20191214142040_InitUserDb.cs" />
+    <Compile Remove="Migrations\20191214142040_InitUserDb.Designer.cs" />
+    <Compile Remove="Migrations\20191214152122_AddEmailToUserDb.cs" />
+    <Compile Remove="Migrations\20191214152122_AddEmailToUserDb.Designer.cs" />
+    <Compile Remove="Migrations\20191215061033_UpdateProblemstDb.cs" />
+    <Compile Remove="Migrations\20191215061033_UpdateProblemstDb.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Markdig" Version="0.18.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
