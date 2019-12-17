@@ -169,7 +169,7 @@ namespace Semicolon.OnlineJudge.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        // [Route("{id}")]
         public IActionResult Details(long? id)
         {
             var problem = _context.Problems.FirstOrDefault(p => p.Id == id);

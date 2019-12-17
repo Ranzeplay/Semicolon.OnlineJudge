@@ -343,3 +343,4 @@ healthchecksdb
 /Semicolon.OnlineJudge.db
 /wwwroot/lib/clipboard.js
 /wwwroot/lib/jquery
+/wwwroot/lib/monaco-editor
