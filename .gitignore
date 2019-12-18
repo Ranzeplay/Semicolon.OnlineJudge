@@ -344,3 +344,5 @@ healthchecksdb
 /wwwroot/lib/clipboard.js
 /wwwroot/lib/jquery
 /wwwroot/lib/monaco-editor
+/wwwroot/lib/simplemde
+/wwwroot/lib/signalr

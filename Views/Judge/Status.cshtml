@@ -1,0 +1,60 @@
+﻿@model Semicolon.OnlineJudge.Models.Judge.Track
+@{
+    ViewData["Title"] = "Status";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        @for (int i = 0; i < Model.GetPointStatus().Count; i++)
+        {
+            <div class="info-box">
+                <span class="info-box-icon bg-info" id="show-@i"><i class="fas fa-code" id="icon-@i"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">undifined</span>
+                    <span class="info-box-number" id="status-@i">undifined</span>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Code</h3>
+            </div>
+            <div class="card-body">
+                <div id="code" style="min-height: 400px"></div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Compiler Output</h3>
+            </div>
+            <div class="card-body">
+                @Html.DisplayFor(x => x.CompilerOutput)
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Head {
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="~/lib/monaco-editor/min/vs/editor/editor.main.css" />
+}
+
+@section Scripts {
+    <script>var require = { paths: { 'vs': '~/lib/monaco-editor/min/vs' } };</script>
+    <script src="~/lib/monaco-editor/min/vs/loader.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/base/worker/workerMain.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/basic-languages/cpp/cpp.js"></script>
+
+    <script>
+        var code = atob('@Model.CodeEncoded');
+        var editor = monaco.editor.create(document.getElementById('code'), {
+            language: 'cpp',
+            readOnly: true,
+            value: code
+        });
+    </script>
+}

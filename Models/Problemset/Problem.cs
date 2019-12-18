@@ -51,7 +51,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public void SetJudgeProfile(JudgeProfile judgeProfile)
         {
-            System.Text.Json.JsonSerializer.Serialize(judgeProfile);
+            JudgeProfile = System.Text.Json.JsonSerializer.Serialize(judgeProfile);
         }
 
         public PassRate GetPassRate()

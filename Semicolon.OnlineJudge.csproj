@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20191214152122_AddEmailToUserDb.Designer.cs" />
     <Compile Remove="Migrations\20191215061033_UpdateProblemstDb.cs" />
     <Compile Remove="Migrations\20191215061033_UpdateProblemstDb.Designer.cs" />
+    <Compile Remove="Migrations\20191218144817_InitTrackDb.cs" />
+    <Compile Remove="Migrations\20191218144817_InitTrackDb.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
