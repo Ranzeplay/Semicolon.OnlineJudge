@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Hubs;
 using Semicolon.OnlineJudge.Models;
+using Semicolon.OnlineJudge.Services;
 
 namespace Semicolon.OnlineJudge
 {
@@ -51,7 +52,13 @@ namespace Semicolon.OnlineJudge
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
             });
 
-            services.AddSignalR();
+            services.AddRazorPages();
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
+
+            services.AddTransient<IEvaluationMachine, EvaluationMachine>();
 
             services.AddControllersWithViews();
         }

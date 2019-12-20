@@ -5,6 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EvaluationMachine\**" />
+    <Content Remove="EvaluationMachine\**" />
+    <EmbeddedResource Remove="EvaluationMachine\**" />
+    <None Remove="EvaluationMachine\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20191214141138_InitProblemsDb.cs" />
     <Compile Remove="Migrations\20191214141138_InitProblemsDb.Designer.cs" />
     <Compile Remove="Migrations\20191214142040_InitUserDb.cs" />

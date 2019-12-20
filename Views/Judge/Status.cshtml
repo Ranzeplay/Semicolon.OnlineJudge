@@ -8,10 +8,12 @@
         @for (int i = 0; i < Model.GetPointStatus().Count; i++)
         {
             <div class="info-box">
-                <span class="info-box-icon bg-info" id="show-@i"><i class="fas fa-code" id="icon-@i"></i></span>
+                <span class="info-box-icon bg-secondary" id="show-@i">
+                    <i class="fas fa-code" id="icon-@i"></i>
+                </span>
                 <div class="info-box-content">
-                    <span class="info-box-text">undifined</span>
-                    <span class="info-box-number" id="status-@i">undifined</span>
+                    <span class="info-box-text" id="text-@i">WFSR</span>
+                    <span class="info-box-number" id="status-@i">Waiting for server response</span>
                 </div>
             </div>
         }
@@ -19,10 +21,13 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Code</h3>
+                <h3 class="card-title">Judge status</h3>
+                <div class="card-tools">
+                    <span class="badge badge-light" id="server-status">WFSR</span>
+                </div>
             </div>
             <div class="card-body">
-                <div id="code" style="min-height: 400px"></div>
+                <h3 id="status">@Model.Status</h3>
             </div>
         </div>
         <div class="card">
@@ -33,16 +38,27 @@
                 @Html.DisplayFor(x => x.CompilerOutput)
             </div>
         </div>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Code</h3>
+            </div>
+            <div class="card-body">
+                <input style="display: none" value="@Model.CodeEncoded" id="code-encoded" />
+                <div id="code" style="min-height: 400px; width: 100%"></div>
+            </div>
+        </div>
     </div>
 </div>
 
 @section Head {
-    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <link rel="stylesheet" data-name="vs/editor/editor.main" href="~/lib/monaco-editor/min/vs/editor/editor.main.css" />
 }
 
 @section Scripts {
-    <script>var require = { paths: { 'vs': '~/lib/monaco-editor/min/vs' } };</script>
+    <script>
+        let require = { paths: { 'vs': '~/lib/monaco-editor/min/vs' } };
+        let trackId = '@Model.Id';
+    </script>
     <script src="~/lib/monaco-editor/min/vs/loader.js"></script>
     <script src="~/lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
     <script src="~/lib/monaco-editor/min/vs/editor/editor.main.js"></script>
@@ -50,11 +66,13 @@
     <script src="~/lib/monaco-editor/min/vs/basic-languages/cpp/cpp.js"></script>
 
     <script>
-        var code = atob('@Model.CodeEncoded');
+        var code = atob(document.getElementById('code-encoded').value)
         var editor = monaco.editor.create(document.getElementById('code'), {
             language: 'cpp',
             readOnly: true,
             value: code
         });
     </script>
+
+    <script src="~/js/judge/status.js"></script>
 }

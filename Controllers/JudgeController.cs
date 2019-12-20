@@ -70,7 +70,11 @@ namespace Semicolon.OnlineJudge.Controllers
                         });
                     }
 
+                    var passRate = problem.GetPassRate();
+                    passRate.Submit += 1;
+                    problem.SetPassRate(passRate);
                     track.SetPointStatus(points);
+                    _context.Problems.Update(problem);
 
                     _context.Tracks.Add(track);
                     await _context.SaveChangesAsync();

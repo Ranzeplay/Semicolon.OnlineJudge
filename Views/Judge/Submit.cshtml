@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-9">
             <div class="invoice p-3 mb-3">
-                <div id="code" style="width: 100%; min-height: 500px"></div>
+                <div id="code" style="width: 100%; min-height: 648px"></div>
                 <textarea asp-for="Code" id="code-saver" hidden></textarea>
             </div>
         </div>
@@ -59,7 +59,8 @@
 
     <script>
         var editor = monaco.editor.create(document.getElementById('code'), {
-            language: 'cpp'
+            language: 'cpp',
+            fontSize: "18px"
         });
     </script>
 }
