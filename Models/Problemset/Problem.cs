@@ -66,7 +66,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public void SetPassRate(PassRate passRate)
         {
-            System.Text.Json.JsonSerializer.Serialize(passRate);
+            PassRate = System.Text.Json.JsonSerializer.Serialize(passRate);
         }
     }
 }
