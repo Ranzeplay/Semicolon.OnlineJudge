@@ -60,7 +60,7 @@ namespace Semicolon.OnlineJudge.Services
                 _context.Tracks.Update(track);
                 await _context.SaveChangesAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
@@ -104,6 +104,7 @@ namespace Semicolon.OnlineJudge.Services
         public PointStatus RunTest(string input, string expectedOutput, string compiledProgramPath, long trackId)
         {
             var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
+            var problem = _context.Problems.FirstOrDefault(p => p.Id == track.ProblemId);
 
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
@@ -129,6 +130,12 @@ namespace Semicolon.OnlineJudge.Services
                 programProcess.StandardInput.WriteLine(input);
                 programOutput = programProcess.StandardOutput.ReadToEnd();
                 programProcess.WaitForExit();
+
+                var runningTime = (DateTime.Now - programProcess.StartTime).Seconds;
+                if(runningTime > problem.GetJudgeProfile().TimeLimit)
+                {
+                    return PointStatus.TimeLimitExceeded;
+                }
 
                 if (expectedOutput == programOutput)
                 {
