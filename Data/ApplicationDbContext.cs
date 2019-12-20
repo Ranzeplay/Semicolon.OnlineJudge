@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Semicolon.OnlineJudge.Models.Judge;
 using Semicolon.OnlineJudge.Models.Problemset;
 using Semicolon.OnlineJudge.Models.User;
 using System;
@@ -17,5 +18,7 @@ namespace Semicolon.OnlineJudge.Data
         public DbSet<OJUser> OJUsers { get; set; }
 
         public DbSet<Problem> Problems { get; set; }
+
+        public DbSet<Track> Tracks { get; set; }
     }
 }

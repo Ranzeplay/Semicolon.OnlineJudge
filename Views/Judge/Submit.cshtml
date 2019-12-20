@@ -1,0 +1,66 @@
+﻿@model Semicolon.OnlineJudge.Models.ViewModels.Judge.SubmitModel
+@{
+    ViewData["Title"] = "Submit";
+}
+
+<form method="post" asp-action="Submit" id="form">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="invoice p-3 mb-3">
+                <div id="code" style="width: 100%; min-height: 648px"></div>
+                <textarea asp-for="Code" id="code-saver" hidden></textarea>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-info"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Problem Id</span>
+                    <span class="info-box-number">@Model.Id</span>
+                </div>
+            </div>
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">Language</span>
+                    <select class="form-control" asp-for="Language">
+                        @foreach (var lang in Enum.GetNames(typeof(Semicolon.OnlineJudge.Models.ProgrammingLanguage)).ToList())
+                        {
+                            <option value="@lang">@lang</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="info-box">
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-upload"></i></span>
+
+                <div class="info-box-content">
+                    <button type="submit" class="btn btn-primary btn-block" onclick="document.getElementById('code-saver').value = btoa(editor.getValue())">Submit my code</button>
+                    <input asp-for="Id" style="display: none" hidden readonly />
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Head {
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="~/lib/monaco-editor/min/vs/editor/editor.main.css" />
+}
+
+@section Scripts {
+    <script>var require = { paths: { 'vs': '~/lib/monaco-editor/min/vs' } };</script>
+    <script src="~/lib/monaco-editor/min/vs/loader.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/editor/editor.main.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/base/worker/workerMain.js"></script>
+    <script src="~/lib/monaco-editor/min/vs/basic-languages/cpp/cpp.js"></script>
+
+    <script>
+        var editor = monaco.editor.create(document.getElementById('code'), {
+            language: 'cpp',
+            fontSize: "18px"
+        });
+    </script>
+}

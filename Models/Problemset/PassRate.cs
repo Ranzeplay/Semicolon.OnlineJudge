@@ -18,7 +18,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public override string ToString()
         {
-            if (Submit == 0 || Pass == 0)
+            if (Submit == 0)
             {
                 return "0/0 - 0%";
             }

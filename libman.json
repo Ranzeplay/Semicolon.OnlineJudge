@@ -20,6 +20,20 @@
       "provider": "cdnjs",
       "library": "jquery@3.4.1",
       "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "monaco-editor@0.18.1",
+      "destination": "wwwroot/lib/monaco-editor/"
+    },
+    {
+      "library": "simplemde@1.11.2",
+      "destination": "wwwroot/lib/simplemde/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/lib/signalr/"
     }
   ]
 }

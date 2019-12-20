@@ -12,7 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Semicolon.OnlineJudge.Data;
+using Semicolon.OnlineJudge.Hubs;
 using Semicolon.OnlineJudge.Models;
+using Semicolon.OnlineJudge.Services;
 
 namespace Semicolon.OnlineJudge
 {
@@ -50,6 +52,13 @@ namespace Semicolon.OnlineJudge
                 options.ExpireTimeSpan = TimeSpan.FromDays(1);
             });
 
+            services.AddRazorPages();
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
+
+            services.AddTransient<IEvaluationMachine, EvaluationMachine>();
 
             services.AddControllersWithViews();
         }
@@ -81,6 +90,8 @@ namespace Semicolon.OnlineJudge
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapHub<TrackHub>("/Track");
             });
         }
     }

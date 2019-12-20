@@ -21,7 +21,7 @@
                         {
                             <tr>
                                 <td>@problem.Id</td>
-                                <td><a asp-action="Details" asp-route-id="@problem.Id">@problem.Title</a></td>
+                                <td><a asp-controller="Problemset" asp-action="Details" asp-route-id="@problem.Id">@problem.Title</a></td>
                                 <td>@problem.GetPassRate().ToString()</td>
                                 <td>None</td>
                             </tr>
