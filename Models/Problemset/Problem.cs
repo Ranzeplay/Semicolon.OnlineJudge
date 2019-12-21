@@ -34,10 +34,11 @@ namespace Semicolon.OnlineJudge.Models.Problemset
             return new TestData();
         }
 
-        public void SetTestData(TestData testData)
+        public void SetExampleData(TestData exampleData)
         {
-            System.Text.Json.JsonSerializer.Serialize(testData);
+            ExampleData = System.Text.Json.JsonSerializer.Serialize(exampleData);
         }
+
 
         public JudgeProfile GetJudgeProfile()
         {

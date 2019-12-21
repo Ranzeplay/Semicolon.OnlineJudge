@@ -15,7 +15,7 @@ namespace Semicolon.OnlineJudge.Models.ViewModels.Problemset
         [Required]
         public string Description { get; set; }
 
-        [Required]
+        // [Required]
         public TestData ExampleData { get; set; }
 
         // [Required]

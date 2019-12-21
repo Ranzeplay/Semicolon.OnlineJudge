@@ -9,18 +9,32 @@
         <div class="row">
             <form method="post" asp-action="NewTestData" style="width: 100%">
                 <h4>One last step (Test data)</h4>
+                <div class="row" style="margin-top: 7px; margin-bottom: 15px">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Example data input</label>
+                            <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Input"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Example data output</label>
+                            <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Output"></textarea>
+                        </div>
+                    </div>
+                </div>
                 @for (int i = 0; i < Model.TestDatas.Count; i++)
                 {
                     <div class="row" style="margin-top: 7px; margin-bottom: 7px">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Inputs for Test data @(i+1)</label>
+                                <label>Inputs for test data #@(i + 1)</label>
                                 <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="TestDatas[i].Input"></textarea>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Outputs for Test data @(i+1)</label>
+                                <label>Outputs for test data #@(i + 1)</label>
                                 <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="TestDatas[i].Output"></textarea>
                             </div>
                         </div>
@@ -28,11 +42,13 @@
                 }
 
                 <div style="display: none">
-                    <input class="form-control" id="title" asp-for="Title" />
-                    <textarea class="form-control" id="description" asp-for="Description"></textarea>
-                    <input type="number" class="form-control" id="mem" asp-for="MemoryLimit" />
-                    <input type="number" class="form-control" id="time" asp-for="TimeLimit" />
-                    <input type="number" class="form-control" id="count" asp-for="TestDataNumber" />
+                    <input class="form-control" asp-for="Title" />
+                    <textarea class="form-control" asp-for="Description"></textarea>
+                    <input type="number" class="form-control" asp-for="MemoryLimit" />
+                    <input type="number" class="form-control" asp-for="TimeLimit" />
+                    <input type="number" class="form-control" asp-for="TestDataNumber" />
+                    <input class="form-control" asp-for="ExampleData.Input" />
+                    <input class="form-control" asp-for="ExampleData.Output" />
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Complete</button>
             </form>
