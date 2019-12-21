@@ -22,6 +22,8 @@ namespace Semicolon.OnlineJudge.Services
 
         public async Task<string> CompileProgramAsync(string sourceFilePath, long trackId)
         {
+            var osVersion = Environment.OSVersion.Platform;
+
             var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
 
             var path = Directory.GetCurrentDirectory();
@@ -43,7 +45,20 @@ namespace Semicolon.OnlineJudge.Services
                 compilerProcess.StartInfo.RedirectStandardInput = true;
                 compilerProcess.StartInfo.RedirectStandardOutput = true;
                 compilerProcess.StartInfo.WorkingDirectory = path;
-                compilerProcess.StartInfo.FileName = "cmd.exe";
+
+                if (osVersion == PlatformID.Win32NT)
+                {
+                    compilerProcess.StartInfo.FileName = "cmd.exe";
+                }
+                else if(osVersion == PlatformID.Unix)
+                {
+                    compilerProcess.StartInfo.FileName = "sh";
+                }
+                else
+                {
+                    return null;
+                }
+
                 compilerProcess.Start();
                 compilerProcess.StandardInput.WriteLine("gcc source.c");
                 compilerProcess.StandardInput.WriteLine("exit");
@@ -67,7 +82,15 @@ namespace Semicolon.OnlineJudge.Services
                 throw ex;
             }
 
-            return Path.Combine(path, "a.exe");
+            if (osVersion == PlatformID.Win32NT)
+            {
+                return Path.Combine(path, "a.exe");
+            }
+            else
+            {
+                return Path.Combine(path, "a.out");
+            }
+            
         }
 
         public string CreateSourceFile(string code, long trackId)
@@ -116,8 +139,6 @@ namespace Semicolon.OnlineJudge.Services
                 Directory.CreateDirectory(path);
             }
 
-            var programSourceFilePath = Path.Combine(path, "a.exe");
-
             string programOutput = string.Empty;
             try
             {
@@ -127,14 +148,14 @@ namespace Semicolon.OnlineJudge.Services
                 programProcess.StartInfo.RedirectStandardInput = true;
                 programProcess.StartInfo.RedirectStandardOutput = true;
                 programProcess.StartInfo.WorkingDirectory = path;
-                programProcess.StartInfo.FileName = programSourceFilePath;
+                programProcess.StartInfo.FileName = compiledProgramPath;
                 programProcess.Start();
                 programProcess.StandardInput.WriteLine(data.Input);
                 programOutput = programProcess.StandardOutput.ReadToEnd();
                 programProcess.WaitForExit();
 
                 var runningTime = (DateTime.Now - programProcess.StartTime).Seconds;
-                if(runningTime > problem.GetJudgeProfile().TimeLimit)
+                if (runningTime > problem.GetJudgeProfile().TimeLimit)
                 {
                     return PointStatus.TimeLimitExceeded;
                 }
