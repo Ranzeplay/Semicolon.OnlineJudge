@@ -12,9 +12,7 @@ connection.start().then(function () {
 
 connection.on('updateStatus', function (data) {
     var originalData = JSON.parse(atob(data));
-    console.log(originalData);
     var pointStatus = JSON.parse(originalData.PointStatus);
-    console.log(pointStatus);
 
     switch (originalData.Status) {
         case 0:
@@ -35,7 +33,6 @@ connection.on('updateStatus', function (data) {
     }
 
     pointStatus.forEach(item => {
-        console.log(item);
         switch (item.Status) {
             case 0:
                 document.getElementById('status-' + item.Id).innerText = 'Accepted';
@@ -95,7 +92,7 @@ connection.on('updateStatus', function (data) {
     });
 
     document.getElementById('code-text') = orginalData.code;
-    document.getElementById('compiler-output-text') = originalData.compilerOutput;
+    document.getElementById('compiler-output-text').innerText = originalData.CompilerOutput;
 });
 
 connection.onclose(function () {
