@@ -36,14 +36,14 @@ namespace Semicolon.OnlineJudge.Hubs
             var problem = await _context.Problems.FirstOrDefaultAsync(q => q.Id == track.ProblemId);
             if (problem != null)
             {
-                var testdata = problem.GetJudgeProfile().GetJudgeDatas();
+                var testdata = problem.GetJudgeProfile().GetTestDatas();
 
                 string sourceFilePath = _evaluationMachine.CreateSourceFile(track.CodeEncoded, track.Id);
                 string programPath = await _evaluationMachine.CompileProgramAsync(sourceFilePath, track.Id);
                 for (int i = 0; i < testdata.Count; i++)
                 {
                     var data = testdata[i];
-                    var result = _evaluationMachine.RunTest(data.Input, data.Output, programPath, track.Id);
+                    var result = await _evaluationMachine.RunTestAsync(data, programPath, track.Id);
 
                     var status = track.GetPointStatus();
                     status[i].Id = i;

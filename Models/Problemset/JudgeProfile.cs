@@ -13,7 +13,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public double TimeLimit { get; set; }
 
-        public List<TestData> GetJudgeDatas()
+        public List<TestData> GetTestDatas()
         {
             if (!string.IsNullOrWhiteSpace(TestDatas))
             {

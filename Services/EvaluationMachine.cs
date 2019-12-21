@@ -1,5 +1,7 @@
-﻿using Semicolon.OnlineJudge.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
+using Semicolon.OnlineJudge.Models.Problemset;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -101,10 +103,10 @@ namespace Semicolon.OnlineJudge.Services
             return programSourceFilePath;
         }
 
-        public PointStatus RunTest(string input, string expectedOutput, string compiledProgramPath, long trackId)
+        public async Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId)
         {
-            var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
-            var problem = _context.Problems.FirstOrDefault(p => p.Id == track.ProblemId);
+            var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == trackId);
+            var problem = await _context.Problems.FirstOrDefaultAsync(p => p.Id == track.ProblemId);
 
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
@@ -127,7 +129,7 @@ namespace Semicolon.OnlineJudge.Services
                 programProcess.StartInfo.WorkingDirectory = path;
                 programProcess.StartInfo.FileName = programSourceFilePath;
                 programProcess.Start();
-                programProcess.StandardInput.WriteLine(input);
+                programProcess.StandardInput.WriteLine(data.Input);
                 programOutput = programProcess.StandardOutput.ReadToEnd();
                 programProcess.WaitForExit();
 
@@ -137,7 +139,7 @@ namespace Semicolon.OnlineJudge.Services
                     return PointStatus.TimeLimitExceeded;
                 }
 
-                if (expectedOutput == programOutput)
+                if (data.Output == programOutput)
                 {
                     return PointStatus.Accepted;
                 }
