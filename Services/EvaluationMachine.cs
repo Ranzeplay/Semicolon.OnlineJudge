@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Services
@@ -152,9 +153,15 @@ namespace Semicolon.OnlineJudge.Services
                 programProcess.Start();
                 programProcess.StandardInput.WriteLine(data.Input);
                 programOutput = programProcess.StandardOutput.ReadToEnd();
+                Thread.Sleep(Convert.ToInt32(problem.GetJudgeProfile().TimeLimit * 1000) + 1000);
+
+                if (!programProcess.HasExited)
+                {
+                    programProcess.Kill();
+                }
                 programProcess.WaitForExit();
 
-                var runningTime = (DateTime.Now - programProcess.StartTime).Seconds;
+                var runningTime = (programProcess.ExitTime - programProcess.StartTime).Seconds;
                 if (runningTime > problem.GetJudgeProfile().TimeLimit)
                 {
                     return PointStatus.TimeLimitExceeded;
