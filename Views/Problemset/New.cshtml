@@ -23,12 +23,12 @@
                 </div>
                 <div class="form-group">
                     <label for="time">Time Limit (Seconds)</label>
-                    <input type="number" class="form-control" id="time" asp-for="TimeLimit" />
+                    <input type="number" step="0.01" min="0.01" class="form-control" id="time" asp-for="TimeLimit" />
                 </div>
 
                 <div class="form-group">
                     <label for="count">How many test data do you have?</label>
-                    <input type="number" class="form-control" id="count" asp-for="TestDataNumber" />
+                    <input type="number" step="0.01" min="0.01" class="form-control" id="count" asp-for="TestDataNumber" />
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block">Continue</button>
