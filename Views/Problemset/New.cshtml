@@ -15,7 +15,9 @@
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea class="form-control" id="description" asp-for="Description"></textarea>
+                    <div style="background-color: white">
+                        <textarea class="form-control" id="description" asp-for="Description"></textarea>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="mem">Memory Limit (MB)</label>
@@ -38,13 +40,9 @@
     <div class="col-md-1"></div>
 </div>
 
-@section Head {
-    <link rel="stylesheet" href="~/lib/simplemde/dist/simplemde.min.css">
-    <script src="~/lib/simplemde/dist/simplemde.min.js"></script>
-}
-
 @section Scripts {
     <script>
-        var simplemde = new SimpleMDE({ element: document.getElementById("description"), spellChecker: false });
+        var editor = new Editor({ element: document.getElementById('description') });
+        editor.render();
     </script>
 }
