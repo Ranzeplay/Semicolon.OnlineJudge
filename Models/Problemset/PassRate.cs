@@ -13,12 +13,12 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public double GetPassRate()
         {
-            return Pass / Submit;
+            return (double)Pass / Submit;
         }
 
-        public override string ToString()
+        public string ToUIString()
         {
-            if (Submit == 0)
+            if (Pass == 0 || Submit == 0)
             {
                 return "0/0 - 0%";
             }
