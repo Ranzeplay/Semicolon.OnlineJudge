@@ -23,7 +23,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
                 return "0/0 - 0%";
             }
 
-            return Pass + "/" + Submit + " - " + GetPassRate() * 100 + "%";
+            return Pass + "/" + Submit + " - " + (GetPassRate() * 100).ToString("0.00") + "%";
         }
     }
 }
