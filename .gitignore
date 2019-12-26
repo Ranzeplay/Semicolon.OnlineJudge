@@ -347,3 +347,4 @@ healthchecksdb
 /wwwroot/lib/simplemde
 /wwwroot/lib/signalr
 /EvaluationMachine
+/wwwroot/lib/Chart.js
