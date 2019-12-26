@@ -1,10 +1,13 @@
-﻿using Semicolon.OnlineJudge.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
+using Semicolon.OnlineJudge.Models.Problemset;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Services
@@ -20,6 +23,8 @@ namespace Semicolon.OnlineJudge.Services
 
         public async Task<string> CompileProgramAsync(string sourceFilePath, long trackId)
         {
+            var osVersion = Environment.OSVersion.Platform;
+
             var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
 
             var path = Directory.GetCurrentDirectory();
@@ -41,7 +46,20 @@ namespace Semicolon.OnlineJudge.Services
                 compilerProcess.StartInfo.RedirectStandardInput = true;
                 compilerProcess.StartInfo.RedirectStandardOutput = true;
                 compilerProcess.StartInfo.WorkingDirectory = path;
-                compilerProcess.StartInfo.FileName = "cmd.exe";
+
+                if (osVersion == PlatformID.Win32NT)
+                {
+                    compilerProcess.StartInfo.FileName = "cmd.exe";
+                }
+                else if(osVersion == PlatformID.Unix)
+                {
+                    compilerProcess.StartInfo.FileName = "sh";
+                }
+                else
+                {
+                    return null;
+                }
+
                 compilerProcess.Start();
                 compilerProcess.StandardInput.WriteLine("gcc source.c");
                 compilerProcess.StandardInput.WriteLine("exit");
@@ -65,7 +83,15 @@ namespace Semicolon.OnlineJudge.Services
                 throw ex;
             }
 
-            return Path.Combine(path, "a.exe");
+            if (osVersion == PlatformID.Win32NT)
+            {
+                return Path.Combine(path, "a.exe");
+            }
+            else
+            {
+                return Path.Combine(path, "a.out");
+            }
+            
         }
 
         public string CreateSourceFile(string code, long trackId)
@@ -101,10 +127,10 @@ namespace Semicolon.OnlineJudge.Services
             return programSourceFilePath;
         }
 
-        public PointStatus RunTest(string input, string expectedOutput, string compiledProgramPath, long trackId)
+        public async Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId)
         {
-            var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
-            var problem = _context.Problems.FirstOrDefault(p => p.Id == track.ProblemId);
+            var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == trackId);
+            var problem = await _context.Problems.FirstOrDefaultAsync(p => p.Id == track.ProblemId);
 
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
@@ -113,8 +139,6 @@ namespace Semicolon.OnlineJudge.Services
             {
                 Directory.CreateDirectory(path);
             }
-
-            var programSourceFilePath = Path.Combine(path, "a.exe");
 
             string programOutput = string.Empty;
             try
@@ -125,19 +149,25 @@ namespace Semicolon.OnlineJudge.Services
                 programProcess.StartInfo.RedirectStandardInput = true;
                 programProcess.StartInfo.RedirectStandardOutput = true;
                 programProcess.StartInfo.WorkingDirectory = path;
-                programProcess.StartInfo.FileName = programSourceFilePath;
+                programProcess.StartInfo.FileName = compiledProgramPath;
                 programProcess.Start();
-                programProcess.StandardInput.WriteLine(input);
+                programProcess.StandardInput.WriteLine(data.Input);
                 programOutput = programProcess.StandardOutput.ReadToEnd();
+                Thread.Sleep(Convert.ToInt32(problem.GetJudgeProfile().TimeLimit * 1000) + 1000);
+
+                if (!programProcess.HasExited)
+                {
+                    programProcess.Kill();
+                }
                 programProcess.WaitForExit();
 
-                var runningTime = (DateTime.Now - programProcess.StartTime).Seconds;
-                if(runningTime > problem.GetJudgeProfile().TimeLimit)
+                var runningTime = (programProcess.ExitTime - programProcess.StartTime).Seconds;
+                if (runningTime > problem.GetJudgeProfile().TimeLimit)
                 {
                     return PointStatus.TimeLimitExceeded;
                 }
 
-                if (expectedOutput == programOutput)
+                if (data.Output == programOutput)
                 {
                     return PointStatus.Accepted;
                 }

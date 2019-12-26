@@ -61,7 +61,7 @@ namespace Semicolon.OnlineJudge.Controllers
                 {
                     List<Point> points = new List<Point>();
 
-                    for (int i = 0; i < problem.GetJudgeProfile().GetJudgeDatas().Count; i++)
+                    for (int i = 0; i < problem.GetJudgeProfile().GetTestDatas().Count; i++)
                     {
                         points.Add(new Point
                         {

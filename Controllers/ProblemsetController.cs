@@ -80,7 +80,7 @@ namespace Semicolon.OnlineJudge.Controllers
         [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
         public IActionResult NewTestData(NewModel model)
         {
-            model.TestDatas = new List<Models.Problemset.TestData>();
+            model.TestDatas = new List<TestData>();
             for (int i = 0; i < model.TestDataNumber; i++)
             {
                 model.TestDatas.Add(new Models.Problemset.TestData { Input = "Your data", Output = "Your data" });
@@ -107,6 +107,14 @@ namespace Semicolon.OnlineJudge.Controllers
                 AuthorId = user.Id,
                 PublishTime = DateTime.UtcNow,
             };
+
+            var exampleData = new TestData
+            {
+                Input = model.ExampleData.Input,
+                Output = model.ExampleData.Output
+            };
+
+            problem.SetExampleData(exampleData);
 
             var judgeProfile = new JudgeProfile
             {

@@ -1,4 +1,5 @@
 ﻿using Semicolon.OnlineJudge.Models.Judge;
+using Semicolon.OnlineJudge.Models.Problemset;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,6 @@ namespace Semicolon.OnlineJudge.Services
 
         Task<string> CompileProgramAsync(string sourceFilePath, long trackId);
 
-        PointStatus RunTest(string input, string output, string compiledProgramPath, long trackId);
+        Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId);
     }
 }

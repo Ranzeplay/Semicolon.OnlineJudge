@@ -34,6 +34,11 @@
       "provider": "unpkg",
       "library": "@microsoft/signalr@latest",
       "destination": "wwwroot/lib/signalr/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "Chart.js@2.9.3",
+      "destination": "wwwroot/lib/Chart.js/"
     }
   ]
 }
