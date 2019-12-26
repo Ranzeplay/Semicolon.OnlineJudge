@@ -9,5 +9,8 @@ namespace Semicolon.OnlineJudge.Models.ViewModels.Users
 {
     public class IndexModel
     {
+        public OJUser User { get; set; }
+
+        public List<Track> Tracks { get; set; }
     }
 }
