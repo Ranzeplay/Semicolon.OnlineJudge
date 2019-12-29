@@ -8,11 +8,11 @@ using Semicolon.OnlineJudge.Models.ViewModels.Records;
 
 namespace Semicolon.OnlineJudge.Controllers
 {
-    public class Records : Controller
+    public class RecordsController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public Records(ApplicationDbContext context)
+        public RecordsController(ApplicationDbContext context)
         {
             _context = context;
         }
