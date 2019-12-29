@@ -55,6 +55,7 @@ namespace Semicolon.OnlineJudge.Controllers
                     ProblemId = model.Id,
                     CodeEncoded = model.Code,
                     Status = JudgeStatus.Pending,
+                    Language = model.Language
                 };
 
                 if (problem != null)
