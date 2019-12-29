@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
 using Semicolon.OnlineJudge.Models.User;
@@ -16,10 +17,12 @@ namespace Semicolon.OnlineJudge.Controllers
     public class JudgeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<JudgeController> _logger;
 
-        public JudgeController(ApplicationDbContext context)
+        public JudgeController(ApplicationDbContext context, ILogger<JudgeController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -81,6 +84,8 @@ namespace Semicolon.OnlineJudge.Controllers
                     await _context.SaveChangesAsync();
 
                     var trackNew = await _context.Tracks.FirstOrDefaultAsync(t => t.CreateTime == track.CreateTime);
+
+                    _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) started a new track for problem #{problem.Id}", track);
 
                     return RedirectToAction(nameof(Status), new { trackNew.Id });
                 }
