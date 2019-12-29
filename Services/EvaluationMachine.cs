@@ -161,7 +161,7 @@ namespace Semicolon.OnlineJudge.Services
                 }
                 programProcess.WaitForExit();
 
-                var runningTime = (programProcess.ExitTime - programProcess.StartTime).Seconds;
+                var runningTime = ((programProcess.ExitTime - programProcess.StartTime).TotalMilliseconds) / 1000;
                 if (runningTime > problem.GetJudgeProfile().TimeLimit)
                 {
                     return PointStatus.TimeLimitExceeded;
