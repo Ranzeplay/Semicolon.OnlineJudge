@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -80,17 +81,13 @@ namespace Semicolon.OnlineJudge.Services
                 compilerProcess.StartInfo.RedirectStandardOutput = true;
                 compilerProcess.StartInfo.WorkingDirectory = path;
 
-                if (osVersion == PlatformID.Win32NT)
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     compilerProcess.StartInfo.FileName = "cmd.exe";
                 }
-                else if (osVersion == PlatformID.Unix)
-                {
-                    compilerProcess.StartInfo.FileName = "sh";
-                }
                 else
                 {
-                    return null;
+                    compilerProcess.StartInfo.FileName = "/bin/bash";
                 }
 
                 compilerProcess.Start();
@@ -125,7 +122,7 @@ namespace Semicolon.OnlineJudge.Services
                 throw ex;
             }
 
-            if (osVersion == PlatformID.Win32NT)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
                 return Path.Combine(path, "a.exe");
             }
