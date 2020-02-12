@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Markdig;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Problemset;
 using Semicolon.OnlineJudge.Models.User;
@@ -17,39 +19,42 @@ namespace Semicolon.OnlineJudge.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ProblemsetController(ApplicationDbContext context)
+        private readonly UserManager<SemicolonUser> _userManager;
+
+        public ProblemsetController(ApplicationDbContext context, UserManager<SemicolonUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var model = new IndexModel
             {
                 ProblemModels = new List<ProblemModel>()
             };
-            foreach (var p in _context.Problems.ToList())
+            foreach (var problem in _context.Problems.ToList())
             {
                 var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
 
-                var html = Markdown.ToHtml(p.Description, pipeline);
-                var raw = Markdown.ToPlainText(p.Description);
+                var html = Markdown.ToHtml(problem.Description, pipeline);
+                var raw = Markdown.ToPlainText(problem.Description);
 
-                var author = _context.OJUsers.FirstOrDefault(x => x.Id == p.AuthorId);
+                var author = await _userManager.FindByIdAsync(problem.AuthorId);
 
                 model.ProblemModels.Add(new ProblemModel
                 {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Description = p.Description,
+                    Id = problem.Id,
+                    Title = problem.Title,
+                    Description = problem.Description,
                     ContentRaw = raw,
                     ContentHtml = html,
-                    AuthorId = p.AuthorId,
+                    AuthorId = problem.AuthorId,
                     Author = author.UserName,
-                    ExampleData = p.ExampleData,
-                    JudgeProfile = p.JudgeProfile,
-                    PassRate = p.PassRate,
-                    PublishTime = p.PublishTime
+                    ExampleData = problem.ExampleData,
+                    JudgeProfile = problem.JudgeProfile,
+                    PassRate = problem.PassRate,
+                    PublishTime = problem.PublishTime
                 });
             }
 
@@ -57,7 +62,7 @@ namespace Semicolon.OnlineJudge.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public IActionResult New()
         {
             return View();
@@ -65,7 +70,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public IActionResult New(NewModel model)
         {
             if (ModelState.IsValid)
@@ -77,7 +82,7 @@ namespace Semicolon.OnlineJudge.Controllers
         }
 
         [HttpGet]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public IActionResult NewTestData(NewModel model)
         {
             model.TestDatas = new List<TestData>();
@@ -91,10 +96,10 @@ namespace Semicolon.OnlineJudge.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public async Task<IActionResult> NewTestData(NewModel model, string status)
         {
-            var user = GetUserProfile();
+            var user = await _userManager.GetUserAsync(User);
             if(user == null)
             {
                 return Unauthorized();
@@ -137,7 +142,7 @@ namespace Semicolon.OnlineJudge.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Search(string content)
+        public async Task<IActionResult> Search(string content)
         {
             if(content == null)
             {
@@ -155,7 +160,7 @@ namespace Semicolon.OnlineJudge.Controllers
                 var html = Markdown.ToHtml(p.Description, pipeline);
                 var raw = Markdown.ToPlainText(p.Description);
 
-                var author = _context.OJUsers.FirstOrDefault(x => x.Id == p.AuthorId);
+                var author = await _userManager.FindByIdAsync(p.AuthorId);
 
                 model.ProblemModels.Add(new ProblemModel
                 {
@@ -178,7 +183,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         [HttpGet]
         // [Route("{id}")]
-        public IActionResult Details(long? id)
+        public async Task<IActionResult> Details(long? id)
         {
             var problem = _context.Problems.FirstOrDefault(p => p.Id == id);
 
@@ -187,7 +192,7 @@ namespace Semicolon.OnlineJudge.Controllers
             var html = Markdown.ToHtml(problem.Description, pipeline);
             var raw = Markdown.ToPlainText(problem.Description);
 
-            var author = _context.OJUsers.FirstOrDefault(x => x.Id == problem.AuthorId);
+            var author = await _userManager.FindByIdAsync(problem.AuthorId);
 
             var model = new ProblemModel
             {
@@ -205,23 +210,6 @@ namespace Semicolon.OnlineJudge.Controllers
             };
 
             return View(model);
-        }
-
-        private OJUser GetUserProfile()
-        {
-            var user = new OJUser();
-
-            try
-            {
-                var id = HttpContext.User.FindFirst("UserId").Value;
-                user = _context.OJUsers.FirstOrDefault(u => u.Id == id);
-            }
-            catch
-            {
-                return null;
-            }
-
-            return user;
         }
     }
 }

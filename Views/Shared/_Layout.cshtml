@@ -63,11 +63,11 @@
                 <div class="info">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="Account" asp-action="Me" class="d-block">Hello, @User.FindFirst("UserName").Value</a>
+                        <a asp-controller="Auth" asp-action="Logout" class="d-block">Hello, @User.Identity.Name</a>
                     }
                     else
                     {
-                        <a href="/Auth" class="d-block">Login</a>
+                        <a asp-controller="Auth" asp-action="Login" class="d-block">Login</a>
                     }
                 </div>
             </div>

@@ -1,0 +1,58 @@
+﻿@model Semicolon.Auth.Models.ViewModels.Account.DeleteAccountModel
+@{
+    ViewData["Title"] = "Delete Account";
+}
+
+<div style="width: 60%; margin: 0 auto; margin-top: 10%">
+    <form method="post" class="uk-form-horizontal uk-card-hover uk-margin-large uk-card-body" asp-action="Delete" id="delete-form">
+        <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Delete Account</legend>
+
+            <div asp-validation-summary="All" class="uk-text-danger" style="margin-top: 15px"></div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Email</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" type="email" asp-for="Email">
+                </div>v
+            </div>
+
+            <div class="uk-margin">
+                <label class="uk-form-label" for="form-horizontal-text">Password</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" id="form-horizontal-text" type="password" asp-for="Password">
+                </div>
+            </div>
+
+            <div class="uk-margin">
+                <button type="button" uk-toggle="target: #confirm-modal" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom">Delete</button>
+                <a class="uk-button uk-button-link" asp-action="My">Go Back</a>
+            </div>
+
+            <div id="confirm-modal" uk-modal>
+                <div class="uk-modal-dialog">
+                    <button class="uk-modal-close-default" type="button" uk-close></button>
+                    <div class="uk-modal-header">
+                        <h2 class="uk-modal-title">Please confirm your action</h2>
+                    </div>
+                    <div class="uk-modal-body">
+                        <p class="uk-text-danger">
+                            You are requesting to delete your account!
+                            <br />
+                            The account will be delete permanently!
+                        </p>
+
+                        <p class="uk-text-warning">
+                            You will no longer accessing OAuth apps that you authorized.
+                        </p>
+
+                    </div>
+                    <div class="uk-modal-footer">
+                        <button type="submit" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom" onclick="document.getElementById('delete-form').submit()">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+s

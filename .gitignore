@@ -348,3 +348,4 @@ healthchecksdb
 /wwwroot/lib/signalr
 /EvaluationMachine
 /wwwroot/lib/Chart.js
+/wwwroot/lib/uikit

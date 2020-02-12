@@ -1,4 +1,5 @@
-﻿using Semicolon.OnlineJudge.Models.Judge;
+﻿using Semicolon.Auth.Models;
+using Semicolon.OnlineJudge.Models.Judge;
 using Semicolon.OnlineJudge.Models.User;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ namespace Semicolon.OnlineJudge.Models.ViewModels.Users
 {
     public class IndexModel
     {
-        public OJUser User { get; set; }
+        public SemicolonUser User { get; set; }
 
         public List<Track> Tracks { get; set; }
     }

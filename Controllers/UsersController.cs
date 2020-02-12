@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChartJSCore.Helpers;
 using ChartJSCore.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
 using Semicolon.OnlineJudge.Models.User;
@@ -16,18 +18,21 @@ namespace Semicolon.OnlineJudge.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public UsersController(ApplicationDbContext context)
+        private readonly UserManager<SemicolonUser> _userManager;
+
+        public UsersController(ApplicationDbContext context, UserManager<SemicolonUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public IActionResult Index(string id)
+        public async Task<IActionResult> Index(string id)
         {
-            var user = _context.OJUsers.ToList().FirstOrDefault(u => u.Id == id);
+            var user = await _userManager.FindByIdAsync(id);
 
             if (User.Identity.IsAuthenticated && id == null)
             {
-                user = GetUserProfile();
+                user = await _userManager.GetUserAsync(User);
             }
 
             var tracks = _context.Tracks.Where(t => t.AuthorId == user.Id).ToList();
@@ -78,7 +83,7 @@ namespace Semicolon.OnlineJudge.Controllers
                     ChartColor.FromHexString("#6C757D")
                 },
 
-                Data = new List<double> 
+                Data = new List<double?> 
                 {
                     tracks.LongCount(x => x.Status == JudgeStatus.Accept), 
                     tracks.LongCount(x => x.Status == JudgeStatus.WrongAnswer),
@@ -96,23 +101,6 @@ namespace Semicolon.OnlineJudge.Controllers
             chart.Data = data;
 
             return chart;
-        }
-
-        private OJUser GetUserProfile()
-        {
-            var user = new OJUser();
-
-            try
-            {
-                var id = HttpContext.User.FindFirst("UserId").Value;
-                user = _context.OJUsers.FirstOrDefault(u => u.Id == id);
-            }
-            catch
-            {
-                return null;
-            }
-
-            return user;
         }
     }
 }

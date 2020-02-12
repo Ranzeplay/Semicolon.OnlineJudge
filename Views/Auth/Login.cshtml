@@ -1,0 +1,36 @@
+﻿@model Semicolon.Auth.Models.ViewModels.Auth.LoginModel
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div style="width: 60%; margin: 0 auto; margin-top: 15%">
+    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+        <form method="post" asp-action="Login">
+            <fieldset class="uk-fieldset">
+                <legend class="uk-legend">Login</legend>
+
+                <div asp-validation-summary="All" class="uk-text-danger" style="margin-top: 15px"></div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="email-input" asp-for="Email">Email</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="email-input" type="text" placeholder="Email" asp-for="Email">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <label class="uk-form-label" for="password-input" asp-for="Password">Password</label>
+                    <div class="uk-form-controls">
+                        <input class="uk-input" id="password-input" type="password" placeholder="Password" asp-for="Password">
+                    </div>
+                </div>
+
+                <div class="uk-margin">
+                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Login</button>
+                    <a class="uk-button uk-button-link" asp-action="Register">Register here</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
