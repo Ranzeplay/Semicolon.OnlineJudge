@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Models
 {
-    public enum ProgrammingLanguage
+    public enum SupportProgrammingLanguage
     {
         C,
-        Cpp,
-        Java,
-        CSharp
+        Cpp
     }
 }

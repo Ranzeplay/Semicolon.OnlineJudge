@@ -232,6 +232,9 @@ namespace Semicolon.OnlineJudge.Migrations
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("Language")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("PointStatus")
                         .HasColumnType("TEXT");
 

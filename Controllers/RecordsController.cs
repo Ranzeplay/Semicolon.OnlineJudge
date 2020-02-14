@@ -10,7 +10,7 @@ using Semicolon.OnlineJudge.Models.ViewModels.Records;
 
 namespace Semicolon.OnlineJudge.Controllers
 {
-    public class Records : Controller
+    public class RecordsController : Controller
     {
         private readonly UserManager<SemicolonUser> _userManager;
 

@@ -14,6 +14,7 @@
                             <th scope="col">Problem Id</th>
                             <th scope="col">Pass Rate</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Language</th>
                             <th scope="col">Uploader</th>
                             <th scope="col">Time</th>
                         </tr>
@@ -25,6 +26,7 @@
                                 <td><a asp-controller="Judge" asp-action="Status" asp-route-id="@upload.Id">@upload.Id</a></td>
                                 <td><a asp-controller="Problemset" asp-action="Details" asp-route-id="@upload.ProblemId">@upload.ProblemId</a></td>
                                 <td>@upload.GetPassRate()</td>
+                                <td>@upload.Language.ToString()</td>
                                 <td>@upload.Status.ToString()</td>
                                 <td><a asp-controller="Users" asp-action="Index" asp-route-id="@upload.AuthorId">@upload.Author</a></td>
                                 <td>@upload.CreateTime</td>
