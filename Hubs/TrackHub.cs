@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
 using Semicolon.OnlineJudge.Services;
@@ -17,11 +18,13 @@ namespace Semicolon.OnlineJudge.Hubs
         private readonly ApplicationDbContext _context;
 
         private readonly IEvaluationMachine _evaluationMachine;
+        private readonly ILogger<TrackHub> _logger;
 
-        public TrackHub(ApplicationDbContext context, IEvaluationMachine evaluationMachine)
+        public TrackHub(ApplicationDbContext context, IEvaluationMachine evaluationMachine, ILogger<TrackHub> logger)
         {
             _context = context;
             _evaluationMachine = evaluationMachine;
+            _logger = logger;
         }
 
         public async Task GetTrack(string trackId)
@@ -39,16 +42,17 @@ namespace Semicolon.OnlineJudge.Hubs
             var problem = await _context.Problems.FirstOrDefaultAsync(q => q.Id == track.ProblemId);
             if (problem != null)
             {
+                _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] Starting to check code of track {track.Id}", track.CodeEncoded);
                 var testdata = problem.GetJudgeProfile().GetTestDatas();
 
                 string sourceFilePath = _evaluationMachine.CreateSourceFile(track.CodeEncoded, track.Id);
                 string programPath = await _evaluationMachine.CompileProgramAsync(sourceFilePath, track.Id);
                 track = await _context.Tracks.FirstOrDefaultAsync(t => t.Id == long.Parse(trackId));
-                if(!File.Exists(programPath))
+                if (!File.Exists(programPath))
                 {
                     track.Status = JudgeStatus.CompileError;
                     var pointStatus = track.GetPointStatus();
-                    for(int i = 0; i < pointStatus.Count; i++)
+                    for (int i = 0; i < pointStatus.Count; i++)
                     {
                         pointStatus[i].Status = PointStatus.RuntimeError;
                     }
@@ -92,6 +96,8 @@ namespace Semicolon.OnlineJudge.Hubs
                 await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track)));
                 _context.Tracks.Update(track);
                 await _context.SaveChangesAsync();
+
+                _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] Completed the check of code of track {track.Id}", track);
             }
 
             await Clients.Caller.SendAsync("finish");

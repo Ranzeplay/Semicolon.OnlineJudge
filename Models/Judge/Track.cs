@@ -23,6 +23,8 @@ namespace Semicolon.OnlineJudge.Models.Judge
 
         public string CompilerOutput { get; set; }
 
+        public SupportProgrammingLanguage Language { get; set; }
+
         public void SetPointStatus(List<Point> vs)
         {
             PointStatus = System.Text.Json.JsonSerializer.Serialize(vs);

@@ -11,6 +11,6 @@ namespace Semicolon.OnlineJudge.Models.ViewModels.Judge
 
         public string Code { get; set; }
 
-        public ProgrammingLanguage Language { get; set; }
+        public SupportProgrammingLanguage Language { get; set; }
     }
 }
