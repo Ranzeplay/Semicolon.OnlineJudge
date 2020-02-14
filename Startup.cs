@@ -35,6 +35,12 @@ namespace Semicolon.OnlineJudge
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Auth/Login";
+                options.LogoutPath = "/Auth/Logout";
+            });
+
             services.AddRazorPages();
             services.AddSignalR(options =>
             {

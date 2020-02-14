@@ -101,7 +101,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync();
+            await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }
