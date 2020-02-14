@@ -87,7 +87,7 @@ namespace Semicolon.OnlineJudge.Controllers
             model.TestDatas = new List<TestData>();
             for (int i = 0; i < model.TestDataNumber; i++)
             {
-                model.TestDatas.Add(new TestData { Input = "Your data", Output = "Your data" });
+                model.TestDatas.Add(new TestData { Input = "", Output = "" });
             }
 
             return View(model);
