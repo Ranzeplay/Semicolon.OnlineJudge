@@ -18,7 +18,6 @@ namespace Semicolon.OnlineJudge.Controllers
         private readonly UserManager<SemicolonUser> _userManager;
 
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<JudgeController> _logger;
 
         public JudgeController(ApplicationDbContext context, UserManager<SemicolonUser> userManager)
         {
@@ -86,7 +85,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
                     var trackNew = await _context.Tracks.FirstOrDefaultAsync(t => t.CreateTime == track.CreateTime);
 
-                    _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) started a new track for problem #{problem.Id}", track);
+                    // _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) started a new track for problem #{problem.Id}", track);
 
                     return RedirectToAction(nameof(Status), new { trackNew.Id });
                 }

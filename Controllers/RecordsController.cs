@@ -16,7 +16,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        public Records(ApplicationDbContext context, UserManager<SemicolonUser> userManager)
+        public RecordsController(ApplicationDbContext context, UserManager<SemicolonUser> userManager)
         {
             _context = context;
             _userManager = userManager;

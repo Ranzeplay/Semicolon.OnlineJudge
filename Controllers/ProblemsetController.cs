@@ -17,7 +17,6 @@ namespace Semicolon.OnlineJudge.Controllers
     public class ProblemsetController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly ILogger<ProblemsetController> _logger;
 
         private readonly UserManager<SemicolonUser> _userManager;
 
@@ -139,7 +138,7 @@ namespace Semicolon.OnlineJudge.Controllers
             _context.Problems.Add(problem);
             await _context.SaveChangesAsync();
 
-            _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) created a new problem", problem);
+            // _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) created a new problem", problem);
 
             return RedirectToAction(nameof(Index));
         }
