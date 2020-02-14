@@ -20,11 +20,24 @@
     <Compile Remove="Migrations\20191214152122_AddEmailToUserDb.Designer.cs" />
     <Compile Remove="Migrations\20191215061033_UpdateProblemstDb.cs" />
     <Compile Remove="Migrations\20191215061033_UpdateProblemstDb.Designer.cs" />
+    <Compile Remove="Migrations\20191215061215_InitProblemAndUserDb.cs" />
+    <Compile Remove="Migrations\20191215061215_InitProblemAndUserDb.Designer.cs" />
     <Compile Remove="Migrations\20191218144817_InitTrackDb.cs" />
     <Compile Remove="Migrations\20191218144817_InitTrackDb.Designer.cs" />
+    <Compile Remove="Migrations\20191218153659_InitTrackDb.cs" />
+    <Compile Remove="Migrations\20191218153659_InitTrackDb.Designer.cs" />
+    <Compile Remove="Migrations\20200211144023_IntgrateAuthentication.cs" />
+    <Compile Remove="Migrations\20200211144023_IntgrateAuthentication.Designer.cs" />
+    <Compile Remove="Migrations\20200212021719_MigrateToSqlServer.cs" />
+    <Compile Remove="Migrations\20200212021719_MigrateToSqlServer.Designer.cs" />
+    <Compile Remove="Migrations\20200212022004_MigrateToSqlServer.cs" />
+    <Compile Remove="Migrations\20200212022004_MigrateToSqlServer.Designer.cs" />
+    <Compile Remove="Migrations\20200214015308_Release.cs" />
+    <Compile Remove="Migrations\20200214015308_Release.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aiursoft.Pylon" Version="3.1.1.6" />
     <PackageReference Include="ChartJSCore" Version="1.5.7" />
     <PackageReference Include="Markdig" Version="0.18.1" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />

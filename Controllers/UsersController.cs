@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
-using Semicolon.OnlineJudge.Models.User;
 using Semicolon.OnlineJudge.Models.ViewModels.Users;
 
 namespace Semicolon.OnlineJudge.Controllers

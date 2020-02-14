@@ -1,6 +1,5 @@
 ﻿using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Models.Judge;
-using Semicolon.OnlineJudge.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
