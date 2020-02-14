@@ -42,12 +42,22 @@
             </div>
         </form>
 
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-th-large"></i>
-                </a>
-            </li>
+        <ul class="navbar-nav ml-auto" style="margin-right: 2%">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="text-dark" asp-controller="Users" asp-action="My">Hello, @User.Identity.Name</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="text-dark" asp-controller="Auth" asp-action="Logout">Logout</a>
+                </li>
+            }
+            else
+            {
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a class="text-dark" asp-controller="Auth" asp-action="Login">Login</a>
+                </li>
+            }
         </ul>
     </nav>
     <aside class="main-sidebar sidebar-light-info elevation-4">
@@ -63,7 +73,7 @@
                 <div class="info">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="Auth" asp-action="Logout" class="d-block">Hello, @User.Identity.Name</a>
+                        <a asp-controller="Users" asp-action="My" class="d-block">Hello, @User.Identity.Name</a>
                     }
                     else
                     {

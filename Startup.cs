@@ -12,7 +12,6 @@ using Microsoft.Extensions.Hosting;
 using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Hubs;
-using Semicolon.OnlineJudge.Models;
 using Semicolon.OnlineJudge.Services;
 
 namespace Semicolon.OnlineJudge
