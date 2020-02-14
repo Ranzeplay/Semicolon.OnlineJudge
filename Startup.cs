@@ -12,7 +12,6 @@ using Microsoft.Extensions.Hosting;
 using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Hubs;
-using Semicolon.OnlineJudge.Models;
 using Semicolon.OnlineJudge.Services;
 
 namespace Semicolon.OnlineJudge
@@ -34,6 +33,12 @@ namespace Semicolon.OnlineJudge
             services.AddIdentity<SemicolonUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Auth/Login";
+                options.LogoutPath = "/Auth/Logout";
+            });
 
             services.AddRazorPages();
             services.AddSignalR(options =>

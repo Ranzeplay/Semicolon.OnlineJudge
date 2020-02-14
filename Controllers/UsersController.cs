@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ChartJSCore.Helpers;
 using ChartJSCore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Semicolon.Auth.Models;
@@ -25,6 +26,7 @@ namespace Semicolon.OnlineJudge.Controllers
             _userManager = userManager;
         }
 
+        [Route("Users/{Id}")]
         public async Task<IActionResult> Index(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -46,6 +48,14 @@ namespace Semicolon.OnlineJudge.Controllers
             ViewData["summaryChart"] = GeneratePieChart(tracks);
 
             return View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> My()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return RedirectToAction(nameof(Index), new { id = user.Id });
         }
 
         private Chart GeneratePieChart(List<Track> tracks)
