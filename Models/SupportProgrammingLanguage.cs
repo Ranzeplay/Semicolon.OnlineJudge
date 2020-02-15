@@ -7,7 +7,7 @@ namespace Semicolon.OnlineJudge.Models
 {
     public enum SupportProgrammingLanguage
     {
-        C,
-        Cpp
+        Cpp,
+        C
     }
 }

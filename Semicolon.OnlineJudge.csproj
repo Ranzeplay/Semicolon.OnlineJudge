@@ -26,6 +26,8 @@
     <Compile Remove="Migrations\20191218144817_InitTrackDb.Designer.cs" />
     <Compile Remove="Migrations\20191218153659_InitTrackDb.cs" />
     <Compile Remove="Migrations\20191218153659_InitTrackDb.Designer.cs" />
+    <Compile Remove="Migrations\20191229061848_AddMoreCompilerOptions.cs" />
+    <Compile Remove="Migrations\20191229061848_AddMoreCompilerOptions.Designer.cs" />
     <Compile Remove="Migrations\20200211144023_IntgrateAuthentication.cs" />
     <Compile Remove="Migrations\20200211144023_IntgrateAuthentication.Designer.cs" />
     <Compile Remove="Migrations\20200212021719_MigrateToSqlServer.cs" />
@@ -34,6 +36,10 @@
     <Compile Remove="Migrations\20200212022004_MigrateToSqlServer.Designer.cs" />
     <Compile Remove="Migrations\20200214015308_Release.cs" />
     <Compile Remove="Migrations\20200214015308_Release.Designer.cs" />
+    <Compile Remove="Migrations\20200214015407_Release.cs" />
+    <Compile Remove="Migrations\20200214015407_Release.Designer.cs" />
+    <Compile Remove="Migrations\20200215090847_Release001.cs" />
+    <Compile Remove="Migrations\20200215090847_Release001.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

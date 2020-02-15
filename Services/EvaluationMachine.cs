@@ -171,7 +171,7 @@ namespace Semicolon.OnlineJudge.Services
                     return PointStatus.TimeLimitExceeded;
                 }
 
-                if (data.Output.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n') == programOutput.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n'))
+                if (data.Output.Trim().Equals(programOutput.Trim()))
                 {
                     return PointStatus.Accepted;
                 }
