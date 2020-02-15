@@ -154,6 +154,34 @@ namespace Semicolon.OnlineJudge.Controllers
             {
                 ProblemModels = new List<ProblemModel>()
             };
+
+            if (long.TryParse(content, out long number))
+            {
+                var p = _context.Problems.FirstOrDefault(p => p.Id == number);
+
+                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
+
+                var html = Markdown.ToHtml(p.Description, pipeline);
+                var raw = Markdown.ToPlainText(p.Description);
+
+                var author = await _userManager.FindByIdAsync(p.AuthorId);
+
+                model.ProblemModels.Add(new ProblemModel
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    ContentRaw = raw,
+                    ContentHtml = html,
+                    AuthorId = p.AuthorId,
+                    Author = author.UserName,
+                    ExampleData = p.ExampleData,
+                    JudgeProfile = p.JudgeProfile,
+                    PassRate = p.PassRate,
+                    PublishTime = p.PublishTime
+                });
+            }
+
             foreach (var p in _context.Problems.Where(x => x.Title.Contains(content)).ToList())
             {
                 var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
