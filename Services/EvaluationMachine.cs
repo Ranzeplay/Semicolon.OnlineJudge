@@ -81,6 +81,7 @@ namespace Semicolon.OnlineJudge.Services
                 compilerProcess.StartInfo.RedirectStandardOutput = true;
                 compilerProcess.StartInfo.WorkingDirectory = path;
 
+
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     compilerProcess.StartInfo.FileName = "cmd.exe";
@@ -173,7 +174,7 @@ namespace Semicolon.OnlineJudge.Services
                     return PointStatus.TimeLimitExceeded;
                 }
 
-                if (data.Output == programOutput)
+                if (data.Output.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n') == programOutput.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n'))
                 {
                     return PointStatus.Accepted;
                 }

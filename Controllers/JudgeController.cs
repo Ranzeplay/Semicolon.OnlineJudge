@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
-using Semicolon.OnlineJudge.Models.User;
 using Semicolon.OnlineJudge.Models.ViewModels.Judge;
 
 namespace Semicolon.OnlineJudge.Controllers
 {
     public class JudgeController : Controller
     {
-        private readonly ApplicationDbContext _context;
-        private readonly ILogger<JudgeController> _logger;
+        private readonly UserManager<SemicolonUser> _userManager;
 
-        public JudgeController(ApplicationDbContext context, ILogger<JudgeController> logger)
+        private readonly ApplicationDbContext _context;
+
+        public JudgeController(ApplicationDbContext context, UserManager<SemicolonUser> userManager)
         {
             _context = context;
-            _logger = logger;
+            _userManager = userManager;
         }
 
         [HttpGet]
         // [Route("{id}")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public IActionResult Submit(long? id)
         {
             if (id != null)
@@ -44,12 +44,12 @@ namespace Semicolon.OnlineJudge.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public async Task<IActionResult> Submit(SubmitModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = GetUserProfile();
+                var user = await _userManager.GetUserAsync(User);
                 var problem = await _context.Problems.FirstOrDefaultAsync(x => x.Id == model.Id);
                 var track = new Track
                 {
@@ -85,7 +85,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
                     var trackNew = await _context.Tracks.FirstOrDefaultAsync(t => t.CreateTime == track.CreateTime);
 
-                    _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) started a new track for problem #{problem.Id}", track);
+                    // _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) started a new track for problem #{problem.Id}", track);
 
                     return RedirectToAction(nameof(Status), new { trackNew.Id });
                 }
@@ -96,7 +96,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         [HttpGet]
         // [Route("{id}")]
-        [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
+        [Authorize]
         public async Task<IActionResult> Status(long id)
         {
             var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == id);
@@ -106,23 +106,6 @@ namespace Semicolon.OnlineJudge.Controllers
             }
 
             return NotFound();
-        }
-
-        private OJUser GetUserProfile()
-        {
-            var user = new OJUser();
-
-            try
-            {
-                var id = HttpContext.User.FindFirst("UserId").Value;
-                user = _context.OJUsers.FirstOrDefault(u => u.Id == id);
-            }
-            catch
-            {
-                return null;
-            }
-
-            return user;
         }
     }
 }

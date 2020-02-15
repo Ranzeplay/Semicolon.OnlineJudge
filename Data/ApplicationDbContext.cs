@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Models.Judge;
 using Semicolon.OnlineJudge.Models.Problemset;
-using Semicolon.OnlineJudge.Models.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,11 @@ using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<SemicolonUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-
-        public DbSet<OJUser> OJUsers { get; set; }
 
         public DbSet<Problem> Problems { get; set; }
 
