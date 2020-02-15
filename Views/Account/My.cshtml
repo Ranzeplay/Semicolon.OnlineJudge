@@ -1,65 +1,59 @@
 ﻿@model Semicolon.Auth.Models.ViewModels.Account.UserModel
 @{
-    ViewData["Title"] = "My Account";
+    ViewData["Title"] = "我的账户";
 }
 
 <div style="width: 60%; margin: 0 auto; margin-top: 10%">
     <form method="post" class="uk-form-horizontal uk-card-hover uk-margin-large uk-card-body" asp-action="My">
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">My Account</legend>
+            <legend class="uk-legend">我的账户</legend>
 
             <div asp-validation-summary="All" class="uk-text-danger" style="margin-top: 15px"></div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Email</label>
+                <label class="uk-form-label" for="form-horizontal-text">电子邮件地址</label>
                 <div class="uk-form-controls">
                     <input class="uk-input" id="form-horizontal-text" type="text" asp-for="Email">
                 </div>
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">UserName</label>
+                <label class="uk-form-label" for="form-horizontal-text">用户名</label>
                 <div class="uk-form-controls">
                     <input class="uk-input" id="form-horizontal-text" type="text" asp-for="UserName">
                 </div>
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Change Password</label>
+                <label class="uk-form-label" for="form-horizontal-text">修改密码</label>
                 <div class="uk-form-controls">
-                    <a role="button" class="uk-button uk-button-link" asp-action="ChangePassword">View</a>
-                </div>
-            </div>
-
-            <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">3rd Party Apps Settings</label>
-                <div class="uk-form-controls">
-                    <a role="button" class="uk-button uk-button-link" asp-action="Apps">View</a>
+                    <a role="button" class="uk-button uk-button-link" asp-action="ChangePassword">前往</a>
                 </div>
             </div>
 
             <br />
 
-            <legend class="uk-legend">Danger Zone</legend>
+            <legend class="uk-legend">以下设置请三思后进行</legend>
+            <p style="display: none">Danger Zone</p>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Change Password</label>
+                <label class="uk-form-label" for="form-horizontal-text">修改密码</label>
                 <div class="uk-form-controls">
-                    <a role="button" class="uk-button uk-button-link" asp-action="ChangePassword">View</a>
+                    <a role="button" class="uk-button uk-button-link" asp-action="ChangePassword">前往</a>
                 </div>
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Delete Account</label>
+                <label class="uk-form-label" for="form-horizontal-text">销毁账户</label>
                 <div class="uk-form-controls">
-                    <a role="button" class="uk-button uk-button-link" asp-action="Delete">Delete My Account</a>
+                    <a role="button" class="uk-button uk-button-link" asp-action="Delete">前往</a>
                 </div>
             </div>
 
             <div class="uk-margin">
                 <div class="uk-button-group uk-width-1-1">
-                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Update</button>
-                    <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom" asp-controller="Auth" asp-action="Logout">Logout</a>
+                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">更新设置</button>
+                    <a class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom" asp-controller="Auth" asp-action="Logout">注销</a>
                 </div>
             </div>
         </fieldset>

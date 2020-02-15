@@ -1,6 +1,6 @@
 ﻿@model Semicolon.OnlineJudge.Models.ViewModels.Problemset.NewModel
 @{
-    ViewData["Title"] = "New";
+    ViewData["Title"] = "创建题目";
 }
 
 <div class="row">
@@ -8,32 +8,33 @@
     <div class="col-md-10">
         <div class="row">
             <form method="post" asp-action="New" style="width: 100%">
-                <h4>New problem (Basic Infomation)</h4>
+                <h4>基本信息</h4>
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">标题</label>
                     <input class="form-control" id="title" asp-for="Title" />
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">描述</label>
                     <div style="background-color: white">
                         <textarea class="form-control" id="description" asp-for="Description"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="mem">Memory Limit (MB)</label>
+                    <label for="mem">内存限制 (MB)</label>
+                    <small class="text-muted">暂未完成</small>
                     <input type="number" class="form-control" id="mem" asp-for="MemoryLimit" />
                 </div>
                 <div class="form-group">
-                    <label for="time">Time Limit (Seconds)</label>
+                    <label for="time">时间限制 (Seconds)</label>
                     <input type="number" step="0.01" min="0.01" class="form-control" id="time" asp-for="TimeLimit" />
                 </div>
 
                 <div class="form-group">
-                    <label for="count">How many test data do you have?</label>
+                    <label for="count">有多少个测试点？</label>
                     <input type="number" step="0.01" min="0.01" class="form-control" id="count" asp-for="TestDataNumber" />
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                <button type="submit" class="btn btn-primary btn-block">继续</button>
             </form>
         </div>
     </div>

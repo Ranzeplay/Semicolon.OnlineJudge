@@ -1,6 +1,6 @@
 ﻿@model Semicolon.OnlineJudge.Models.ViewModels.Judge.SubmitModel
 @{
-    ViewData["Title"] = "Submit";
+    ViewData["Title"] = "提交代码";
 }
 
 <form method="post" asp-action="Submit" id="form">
@@ -16,7 +16,7 @@
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-info"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Problem Id</span>
+                    <span class="info-box-text">题目 ID</span>
                     <span class="info-box-number">@Model.Id</span>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">Language</span>
+                    <span class="info-box-text">语言</span>
                     <select class="form-control" asp-for="Language">
                         @foreach (var lang in Enum.GetNames(typeof(Semicolon.OnlineJudge.Models.SupportProgrammingLanguage)).ToList())
                         {
@@ -37,7 +37,7 @@
                 <span class="info-box-icon bg-info elevation-1"><i class="fas fa-upload"></i></span>
 
                 <div class="info-box-content">
-                    <button type="submit" class="btn btn-primary btn-block" onclick="document.getElementById('code-saver').value = btoa(editor.getValue())">Submit my code</button>
+                    <button type="submit" class="btn btn-primary btn-block" onclick="document.getElementById('code-saver').value = btoa(editor.getValue())">提交我的代码</button>
                     <input asp-for="Id" style="display: none" hidden readonly />
                 </div>
             </div>
