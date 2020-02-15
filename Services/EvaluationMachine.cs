@@ -134,11 +134,8 @@ namespace Semicolon.OnlineJudge.Services
 
         }
 
-        public async Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId)
+        public PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem)
         {
-            var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == trackId);
-            var problem = await _context.Problems.FirstOrDefaultAsync(p => p.Id == track.ProblemId);
-
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
             path = Path.Combine(path, track.Id.ToString());
