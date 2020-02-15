@@ -23,6 +23,9 @@
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link active text-blue" style="color: darkblue; font-weight: bolder">信息学奥赛在线评测</a>
+            </li>
             <li class="nav-item d-none d-sm-inline-block">
                 <a class="nav-link" asp-controller="Home" asp-action="Index">主页</a>
             </li>
@@ -31,7 +34,7 @@
             </li>
         </ul>
 
-        <form class="form-inline ml-3">
+        <form class="form-inline ml-3" method="post" asp-controller="Problemset" asp-action="Search">
             <div class="input-group input-group-sm">
                 <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search" name="content">
                 <div class="input-group-append">
@@ -111,11 +114,13 @@
                         <div class="col-sm-6">
                             <h1>@ViewData["Title"]</h1>
                         </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">信息学奥赛在线评测</a></li>
-                            </ol>
-                        </div>
+                        @*
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="#">信息学奥赛在线评测</a></li>
+                                </ol>
+                            </div>
+                        *@
                     </div>
                 </div>
             </section>

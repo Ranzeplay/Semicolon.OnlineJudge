@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Aiursoft.Pylon;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -17,7 +16,6 @@ namespace Semicolon.OnlineJudge
         {
             CreateHostBuilder(args)
                 .Build()
-                // .MigrateDbContext<ApplicationDbContext>()
                 .Run();
         }
 
