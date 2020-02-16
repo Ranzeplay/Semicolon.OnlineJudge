@@ -40,6 +40,8 @@
     <Compile Remove="Migrations\20200214015407_Release.Designer.cs" />
     <Compile Remove="Migrations\20200215090847_Release001.cs" />
     <Compile Remove="Migrations\20200215090847_Release001.Designer.cs" />
+    <Compile Remove="Migrations\20200216031003_UpdateProblem.cs" />
+    <Compile Remove="Migrations\20200216031003_UpdateProblem.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,6 +62,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="SharpZipLib" Version="1.2.0" />
   </ItemGroup>
 
 

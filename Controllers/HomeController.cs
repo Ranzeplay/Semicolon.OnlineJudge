@@ -39,6 +39,7 @@ namespace Semicolon.OnlineJudge.Controllers
             else
             {
                 ViewData["ProblemsPassed"] = "登录以查看更多信息";
+                ViewData["ProblemsSubmitted"] = "登录以查看更多信息";
             }
 
             return View(new IndexModel());

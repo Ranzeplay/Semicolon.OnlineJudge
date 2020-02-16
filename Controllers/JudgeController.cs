@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -65,7 +66,9 @@ namespace Semicolon.OnlineJudge.Controllers
                 {
                     List<Point> points = new List<Point>();
 
-                    for (int i = 0; i < problem.GetJudgeProfile().GetTestDatas().Count; i++)
+                    var problemDirectory = Path.Combine(Directory.GetCurrentDirectory(), "JudgeDataStorage", problem.Id.ToString(), "data");
+                    var subDirectories = Directory.EnumerateDirectories(problemDirectory);
+                    for (int i = 0; i < subDirectories.Count(); i++)
                     {
                         points.Add(new Point
                         {

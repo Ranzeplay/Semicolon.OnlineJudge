@@ -43,6 +43,11 @@
     {
       "library": "uikit@3.3.1",
       "destination": "wwwroot/lib/uikit/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "Dropify@0.2.2",
+      "destination": "wwwroot/lib/Dropify/"
     }
   ]
 }

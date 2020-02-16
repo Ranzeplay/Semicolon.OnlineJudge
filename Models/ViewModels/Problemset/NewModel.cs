@@ -1,4 +1,5 @@
-﻿using Semicolon.OnlineJudge.Models.Problemset;
+﻿using Microsoft.AspNetCore.Http;
+using Semicolon.OnlineJudge.Models.Problemset;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,9 +19,6 @@ namespace Semicolon.OnlineJudge.Models.ViewModels.Problemset
         // [Required]
         public TestData ExampleData { get; set; }
 
-        // [Required]
-        public List<TestData> TestDatas { get; set; }
-        
         [Required]
         public double MemoryLimit { get; set; }
 
@@ -28,6 +26,6 @@ namespace Semicolon.OnlineJudge.Models.ViewModels.Problemset
         public double TimeLimit { get; set; }
 
         [Required]
-        public long TestDataNumber { get; set; }
+        public IFormFile TestDatas { get; set; }
     }
 }

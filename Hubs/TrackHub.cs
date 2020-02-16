@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
+using Semicolon.OnlineJudge.Models.Problemset;
 using Semicolon.OnlineJudge.Services;
 using System;
 using System.Collections.Generic;
@@ -43,11 +44,25 @@ namespace Semicolon.OnlineJudge.Hubs
             if (problem != null)
             {
                 _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] Starting to check code of track {track.Id}", track.CodeEncoded);
-                var testdata = problem.GetJudgeProfile().GetTestDatas();
+
+                // Load test data to memory
+                var testdata = new List<TestData>();
+                var problemDirectory = Path.Combine(Directory.GetCurrentDirectory(), "JudgeDataStorage", problem.Id.ToString(), "data");
+                Directory.GetDirectories(problemDirectory).ToList().ForEach(async element =>
+                {
+                    var currentPath = Path.Combine(problemDirectory, element);
+
+                    TestData data = new TestData();
+                    data.Input = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.in"));
+                    data.Output = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.out"));
+                    testdata.Add(data);
+                });
 
                 string sourceFilePath = _evaluationMachine.CreateSourceFile(track.CodeEncoded, track.Id);
                 string programPath = await _evaluationMachine.CompileProgramAsync(sourceFilePath, track.Id);
                 track = await _context.Tracks.FirstOrDefaultAsync(t => t.Id == long.Parse(trackId));
+
+                // If compile failed, the executable file will not be exist
                 if (!File.Exists(programPath))
                 {
                     track.Status = JudgeStatus.CompileError;
