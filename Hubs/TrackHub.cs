@@ -52,13 +52,15 @@ namespace Semicolon.OnlineJudge.Hubs
                 {
                     var currentPath = Path.Combine(problemDirectory, element);
 
-                    TestData data = new TestData();
-                    data.Input = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.in"));
-                    data.Output = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.out"));
+                    TestData data = new TestData
+                    {
+                        Input = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.in")),
+                        Output = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.out"))
+                    };
                     testdata.Add(data);
                 });
 
-                string sourceFilePath = _evaluationMachine.CreateSourceFile(track.CodeEncoded, track.Id);
+                string sourceFilePath = _evaluationMachine.CreateSourceFile(Base64Encode(track.CodeEncoded), track.Id);
                 string programPath = await _evaluationMachine.CompileProgramAsync(sourceFilePath, track.Id);
                 track = await _context.Tracks.FirstOrDefaultAsync(t => t.Id == long.Parse(trackId));
 
@@ -152,7 +154,7 @@ namespace Semicolon.OnlineJudge.Hubs
 
         public static string Base64Decode(string base64EncodedData)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }
