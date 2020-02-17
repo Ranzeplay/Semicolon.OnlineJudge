@@ -1,39 +1,85 @@
 ﻿@model Semicolon.OnlineJudge.Models.ViewModels.Problemset.NewModel
 @{
-    ViewData["Title"] = "New";
+    ViewData["Title"] = "创建题目";
 }
 
 <div class="row">
     <div class="col-md-1"></div>
     <div class="col-md-10">
         <div class="row">
-            <form method="post" asp-action="New" style="width: 100%">
-                <h4>New problem (Basic Infomation)</h4>
+            <form method="post" enctype="multipart/form-data" asp-action="New" style="width: 100%">
+                <h4>基本信息</h4>
                 <div class="form-group">
-                    <label for="title">Title</label>
+                    <label for="title">标题</label>
                     <input class="form-control" id="title" asp-for="Title" />
                 </div>
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">描述</label>
                     <div style="background-color: white">
                         <textarea class="form-control" id="description" asp-for="Description"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="mem">Memory Limit (MB)</label>
+                    <label for="mem">内存限制 (MB)</label>
+                    <small class="text-muted">暂未完成</small>
                     <input type="number" class="form-control" id="mem" asp-for="MemoryLimit" />
                 </div>
                 <div class="form-group">
-                    <label for="time">Time Limit (Seconds)</label>
+                    <label for="time">时间限制 (Seconds)</label>
                     <input type="number" step="0.01" min="0.01" class="form-control" id="time" asp-for="TimeLimit" />
                 </div>
 
-                <div class="form-group">
-                    <label for="count">How many test data do you have?</label>
-                    <input type="number" step="0.01" min="0.01" class="form-control" id="count" asp-for="TestDataNumber" />
+                <div class="row" style="margin-top: 7px; margin-bottom: 15px">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>示例输入</label>
+                            <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Input"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>示例输出</label>
+                            <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Output"></textarea>
+                        </div>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                <input type="file" class="dropify" data-allowed-file-extensions="zip" accept=".zip" asp-for="TestDatas" />
+                <blockquote class="quote-secondary">
+                    <h5>File format</h5>
+                    <p>Youa are allowed to upload a <code>judge.zip</code> contains all of the test datas</p>
+                    <h6>Content structure</h6>
+                    <ul>
+                        <li>
+                            judge.zip
+                            <ul>
+                                <li>
+                                    1
+                                    <ul>
+                                        <li>data.in</li>
+                                        <li>data.out</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    2
+                                    <ul>
+                                        <li>data.in</li>
+                                        <li>data.out</li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    3
+                                    <ul>
+                                        <li>data.in</li>
+                                        <li>data.out</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </blockquote>
+
+                <button type="submit" class="btn btn-primary btn-block">完成</button>
             </form>
         </div>
     </div>
@@ -44,11 +90,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/editor/0.1.0/editor.css">
     <script src="https://cdn.jsdelivr.net/editor/0.1.0/editor.js"></script>
     <script src="https://cdn.jsdelivr.net/editor/0.1.0/marked.js"></script>
+
+    <link rel="stylesheet" href="~/lib/Dropify/css/dropify.min.css" />
 }
 
 @section Scripts {
+    <script src="~/lib/Dropify/js/dropify.min.js"></script>
     <script>
         var editor = new Editor({ element: document.getElementById('description') });
         editor.render();
+
+        $('.dropify').dropify();
     </script>
 }

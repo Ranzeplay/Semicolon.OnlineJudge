@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
+using Semicolon.OnlineJudge.Models.Problemset;
 using Semicolon.OnlineJudge.Services;
 using System;
 using System.Collections.Generic;
@@ -43,11 +44,27 @@ namespace Semicolon.OnlineJudge.Hubs
             if (problem != null)
             {
                 _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] Starting to check code of track {track.Id}", track.CodeEncoded);
-                var testdata = problem.GetJudgeProfile().GetTestDatas();
 
-                string sourceFilePath = _evaluationMachine.CreateSourceFile(track.CodeEncoded, track.Id);
+                // Load test data to memory
+                var testdata = new List<TestData>();
+                var problemDirectory = Path.Combine(Directory.GetCurrentDirectory(), "JudgeDataStorage", problem.Id.ToString(), "data");
+                Directory.GetDirectories(problemDirectory).ToList().ForEach(async element =>
+                {
+                    var currentPath = Path.Combine(problemDirectory, element);
+
+                    TestData data = new TestData
+                    {
+                        Input = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.in")),
+                        Output = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.out"))
+                    };
+                    testdata.Add(data);
+                });
+
+                string sourceFilePath = _evaluationMachine.CreateSourceFile(Base64Encode(track.CodeEncoded), track.Id);
                 string programPath = await _evaluationMachine.CompileProgramAsync(sourceFilePath, track.Id);
                 track = await _context.Tracks.FirstOrDefaultAsync(t => t.Id == long.Parse(trackId));
+
+                // If compile failed, the executable file will not be exist
                 if (!File.Exists(programPath))
                 {
                     track.Status = JudgeStatus.CompileError;
@@ -64,21 +81,46 @@ namespace Semicolon.OnlineJudge.Hubs
                     return;
                 }
 
+                var status = track.GetPointStatus();
+                status.ForEach(element =>
+                {
+                    element.Status = PointStatus.Judging;
+                });
+
+                track.SetPointStatus(status);
+
+                await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track)));
+
+                var tasks = new List<Task<PointStatus>>();
                 for (int i = 0; i < testdata.Count; i++)
                 {
-                    var status = track.GetPointStatus();
-                    status[i].Status = PointStatus.Judging;
-                    track.SetPointStatus(status);
+                    var task = new Task<PointStatus>(() =>
+                    {
+                        var section = i - 1;
+                        var data = testdata[section];
+                        var result = _evaluationMachine.RunTest(data, programPath, track, problem);
 
-                    var data = testdata[i];
-                    var result = await _evaluationMachine.RunTestAsync(data, programPath, track.Id);
+                        return result;
 
-                    status[i].Id = i;
-                    status[i].Status = result;
-                    track.SetPointStatus(status);
+                        // var currentStatus = status;
 
-                    await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track)));
+                        // currentStatus[section].Id = section;
+                        // currentStatus[section].Status = result;
+                        // status = currentStatus;
+                        // Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track))).RunSynchronously();
+                    });
+
+                    task.Start();
+                    tasks.Add(task);
                 }
+
+                var result = await Task.WhenAll(tasks);
+                for(int i = 0; i < result.Length; i++)
+                {
+                    status[i].Status = result[i];
+                }
+
+                track.SetPointStatus(status);
 
                 if (track.GetPointStatus().FirstOrDefault(x => x.Status != PointStatus.Accepted) != null)
                 {
@@ -93,9 +135,10 @@ namespace Semicolon.OnlineJudge.Hubs
                     _context.Update(problem);
                 }
 
-                await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track)));
                 _context.Tracks.Update(track);
                 await _context.SaveChangesAsync();
+
+                await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(_context.Tracks.FirstOrDefault(t => t.Id == Convert.ToInt64(trackId)))));
 
                 _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] Completed the check of code of track {track.Id}", track);
             }
@@ -111,7 +154,7 @@ namespace Semicolon.OnlineJudge.Hubs
 
         public static string Base64Decode(string base64EncodedData)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }

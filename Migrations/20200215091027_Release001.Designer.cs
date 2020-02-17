@@ -9,8 +9,8 @@ using Semicolon.OnlineJudge.Data;
 namespace Semicolon.OnlineJudge.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200214015407_Release")]
-    partial class Release
+    [Migration("20200215091027_Release001")]
+    partial class Release001
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -233,6 +233,9 @@ namespace Semicolon.OnlineJudge.Migrations
 
                     b.Property<DateTime>("CreateTime")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("PointStatus")
                         .HasColumnType("TEXT");

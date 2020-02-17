@@ -8,22 +8,22 @@
     <div class="col-md-8">
         <div class="timeline">
             <div class="time-label">
-                <span class="bg-blue">Records</span>
+                <span class="bg-blue">提交记录</span>
             </div>
             @foreach (var track in Model.Tracks)
             {
                 <div style="width: 100%">
                     <div class="timeline-item">
                         <span class="time"><i class="fas fa-clock"></i> @track.CreateTime</span>
-                        <h3 class="timeline-header">Submitted code</h3>
+                        <h3 class="timeline-header">提交了代码</h3>
 
                         <div class="timeline-body">
-                            <p>Problem Id: #@track.Id</p>
-                            <p>Status: @track.Status</p>
-                            <p>Accepted: @track.GetPointStatus().Where(t => t.Status == Semicolon.OnlineJudge.Models.Judge.PointStatus.Accepted).ToList().Count / @track.GetPointStatus().Count</p>
+                            <p>题目 ID: #@track.Id</p>
+                            <p>状态: @track.Status</p>
+                            <p>通过了 @track.GetPointStatus().Where(t => t.Status == Semicolon.OnlineJudge.Models.Judge.PointStatus.Accepted).ToList().Count / @track.GetPointStatus().Count 个测试点</p>
                         </div>
                         <div class="timeline-footer">
-                            <a class="btn btn-primary btn-sm" asp-controller="Judge" asp-action="Status" asp-route-id="@track.Id">View details</a>
+                            <a class="btn btn-primary btn-sm" asp-controller="Judge" asp-action="Status" asp-route-id="@track.Id">查看详情</a>
                         </div>
                     </div>
                 </div>
@@ -33,15 +33,15 @@
     <div class="col-md-4">
         <div class="card bg-light">
             <div class="card-header text-muted border-bottom-0">
-                <i class="fa fa-user-alt"></i> User Infomation
+                <i class="fa fa-user-alt"></i> 用户信息
             </div>
             <div class="card-body pt-0">
                 <div class="row">
                     <div class="col-7">
                         <h2 class="lead"><b>@Model.User.UserName</b></h2>
                         <ul class="ml-4 mb-0 fa-ul text-muted">
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-check"></i></span> Problems tried & passed: @Model.Tracks.Count</li>
-                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span> Email: @Model.User.Email</li>
+                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-check"></i></span>提交总数：@Model.Tracks.Count</li>
+                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span> 电子邮件地址：@Model.User.Email</li>
                         </ul>
                     </div>
                     <div class="col-5 text-center">
@@ -53,21 +53,21 @@
                 <div class="text-right">
                     <a href="#" class="btn btn-sm btn-primary">
                         <i class="fas fa-user"></i>
-                        View Profile
+                        查看详情
                     </a>
                 </div>
             </div>
         </div>
         <div class="card bg-light">
             <div class="card-header text-muted border-bottom-0">
-                <i class="fa fa-chart-pie"></i> Summary
+                <i class="fa fa-chart-pie"></i> 概览
             </div>
             <div class="card-body pt-0">
                 <div><canvas id="summaryChart"></canvas></div>
             </div>
             <div class="card-footer">
                 <div class="text-right">
-                    <a href="#" class="btn btn-sm btn-primary">View Details</a>
+                    <a href="#" class="btn btn-sm btn-primary">查看详情</a>
                 </div>
             </div>
         </div>

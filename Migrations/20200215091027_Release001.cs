@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Semicolon.OnlineJudge.Migrations
 {
-    public partial class Release : Migration
+    public partial class Release001 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -79,7 +79,8 @@ namespace Semicolon.OnlineJudge.Migrations
                     Status = table.Column<int>(nullable: false),
                     PointStatus = table.Column<string>(nullable: true),
                     CodeEncoded = table.Column<string>(nullable: true),
-                    CompilerOutput = table.Column<string>(nullable: true)
+                    CompilerOutput = table.Column<string>(nullable: true),
+                    Language = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

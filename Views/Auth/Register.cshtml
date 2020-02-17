@@ -1,47 +1,47 @@
 ﻿@model Semicolon.Auth.Models.ViewModels.Auth.RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "注册";
 }
 
 <div style="width: 60%; margin: 0 auto; margin-top: 8%">
     <div class="uk-card uk-card-default uk-card-hover uk-card-body">
         <form method="post" asp-action="Register">
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">Register</legend>
+                <legend class="uk-legend">注册</legend>
 
                 <div asp-validation-summary="All" class="uk-text-danger" style="margin-top: 15px"></div>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="email-input" asp-for="Email">Email</label>
+                    <label class="uk-form-label" for="email-input" asp-for="Email">电子邮件地址</label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="email-input" type="text" placeholder="Email" asp-for="Email">
                     </div>
                 </div>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="username-input" asp-for="UserName">UserName</label>
+                    <label class="uk-form-label" for="username-input" asp-for="UserName">用户名</label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="username-input" type="text" placeholder="UserName" asp-for="UserName">
                     </div>
                 </div>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="password-input" asp-for="Password">Password</label>
+                    <label class="uk-form-label" for="password-input" asp-for="Password">密码</label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="password-input" type="password" placeholder="Password" asp-for="Password">
                     </div>
                 </div>
 
                 <div class="uk-margin">
-                    <label class="uk-form-label" for="confirm-password-input" asp-for="ConfirmPassword">Confirm Password</label>
+                    <label class="uk-form-label" for="confirm-password-input" asp-for="ConfirmPassword">确认密码</label>
                     <div class="uk-form-controls">
                         <input class="uk-input" id="confirm-password-input" type="password" placeholder="Confirm Password" asp-for="ConfirmPassword">
                     </div>
                 </div>
 
                 <div class="uk-margin">
-                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Register</button>
-                    <a class="uk-button uk-button-link" asp-action="Login">Login here</a>
+                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">注册</button>
+                    <a class="uk-button uk-button-link" asp-action="Login">前往登录</a>
                 </div>
             </fieldset>
         </form>

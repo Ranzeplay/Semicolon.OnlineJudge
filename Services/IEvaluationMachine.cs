@@ -13,6 +13,6 @@ namespace Semicolon.OnlineJudge.Services
 
         Task<string> CompileProgramAsync(string sourceFilePath, long trackId);
 
-        Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId);
+        PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem);
     }
 }

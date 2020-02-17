@@ -48,7 +48,7 @@ namespace Semicolon.OnlineJudge.Services
 
             using (var tw = new StreamWriter(programSourceFilePath, true))
             {
-                tw.WriteLine(Base64Decode(track.CodeEncoded));
+                tw.WriteLine(Base64Decode(code));
                 tw.Close();
             }
 
@@ -134,11 +134,8 @@ namespace Semicolon.OnlineJudge.Services
 
         }
 
-        public async Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId)
+        public PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem)
         {
-            var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == trackId);
-            var problem = await _context.Problems.FirstOrDefaultAsync(p => p.Id == track.ProblemId);
-
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
             path = Path.Combine(path, track.Id.ToString());
@@ -147,7 +144,6 @@ namespace Semicolon.OnlineJudge.Services
                 Directory.CreateDirectory(path);
             }
 
-            string programOutput = string.Empty;
             try
             {
                 using Process programProcess = new Process();
@@ -159,7 +155,7 @@ namespace Semicolon.OnlineJudge.Services
                 programProcess.StartInfo.FileName = compiledProgramPath;
                 programProcess.Start();
                 programProcess.StandardInput.WriteLine(data.Input);
-                programOutput = programProcess.StandardOutput.ReadToEnd();
+                string programOutput = programProcess.StandardOutput.ReadToEnd();
                 Thread.Sleep(Convert.ToInt32(problem.GetJudgeProfile().TimeLimit * 1000) + 1000);
 
                 if (!programProcess.HasExited)
@@ -174,7 +170,7 @@ namespace Semicolon.OnlineJudge.Services
                     return PointStatus.TimeLimitExceeded;
                 }
 
-                if (data.Output.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n') == programOutput.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n'))
+                if (data.Output.Trim().TrimEnd('\n').Trim().Replace("\r", "").Equals(programOutput.Trim().TrimEnd('\n').Trim().Replace("\r", "")))
                 {
                     return PointStatus.Accepted;
                 }
@@ -191,7 +187,7 @@ namespace Semicolon.OnlineJudge.Services
 
         public static string Base64Decode(string base64EncodedData)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }
