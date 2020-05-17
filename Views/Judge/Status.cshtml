@@ -66,7 +66,7 @@
     <script src="~/lib/monaco-editor/min/vs/basic-languages/cpp/cpp.js"></script>
 
     <script>
-        var code = atob(document.getElementById('code-encoded').value)
+        var code = atob(document.getElementById('code-encoded').value);
         var editor = monaco.editor.create(document.getElementById('code'), {
             language: 'cpp',
             readOnly: true,

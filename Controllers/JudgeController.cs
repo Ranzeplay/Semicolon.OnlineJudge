@@ -57,7 +57,7 @@ namespace Semicolon.OnlineJudge.Controllers
                     AuthorId = user.Id,
                     CreateTime = DateTime.UtcNow,
                     ProblemId = model.Id,
-                    CodeEncoded = model.Code,
+                    CodeEncoded = Base64Encode(model.Code),
                     Status = JudgeStatus.Pending,
                     Language = model.Language
                 };
@@ -109,6 +109,12 @@ namespace Semicolon.OnlineJudge.Controllers
             }
 
             return NotFound();
+        }
+
+        public static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
         }
     }
 }

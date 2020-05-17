@@ -60,9 +60,13 @@ namespace Semicolon.OnlineJudge.Hubs
                     testdata.Add(data);
                 });
 
-                string sourceFilePath = _evaluationMachine.CreateSourceFile(Base64Encode(track.CodeEncoded), track.Id);
-                string programPath = await _evaluationMachine.CompileProgramAsync(sourceFilePath, track.Id);
-                track = await _context.Tracks.FirstOrDefaultAsync(t => t.Id == long.Parse(trackId));
+                // Compile source code
+                string sourceFilePath = _evaluationMachine.CreateSourceFile(track.CodeEncoded, track);
+                string programPath = _evaluationMachine.CompileProgram(track, out Track trackOut);
+                track = trackOut;
+
+                // Push compile log to client
+                await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track)));
 
                 // If compile failed, the executable file will not be exist
                 if (!File.Exists(programPath))
@@ -71,7 +75,7 @@ namespace Semicolon.OnlineJudge.Hubs
                     var pointStatus = track.GetPointStatus();
                     for (int i = 0; i < pointStatus.Count; i++)
                     {
-                        pointStatus[i].Status = PointStatus.RuntimeError;
+                        pointStatus[i].Status = PointStatus.InternalError;
                     }
                     track.SetPointStatus(pointStatus);
                     _context.Tracks.Update(track);
@@ -138,7 +142,7 @@ namespace Semicolon.OnlineJudge.Hubs
                 _context.Tracks.Update(track);
                 await _context.SaveChangesAsync();
 
-                await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(_context.Tracks.FirstOrDefault(t => t.Id == Convert.ToInt64(trackId)))));
+                await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track)));
 
                 _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] Completed the check of code of track {track.Id}", track);
             }
