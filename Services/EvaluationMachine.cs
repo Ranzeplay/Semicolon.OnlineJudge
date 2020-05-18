@@ -22,10 +22,8 @@ namespace Semicolon.OnlineJudge.Services
             _context = context;
         }
 
-        public string CreateSourceFile(string code, long trackId)
+        public string CreateSourceFile(string code, Track track)
         {
-            var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
-
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
 
@@ -55,11 +53,9 @@ namespace Semicolon.OnlineJudge.Services
             return programSourceFilePath;
         }
 
-        public async Task<string> CompileProgramAsync(string sourceFilePath, long trackId)
+        public string CompileProgram(Track trackIn, out Track track)
         {
-            var osVersion = Environment.OSVersion.Platform;
-
-            var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
+            track = trackIn;
 
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
@@ -80,7 +76,6 @@ namespace Semicolon.OnlineJudge.Services
                 compilerProcess.StartInfo.RedirectStandardInput = true;
                 compilerProcess.StartInfo.RedirectStandardOutput = true;
                 compilerProcess.StartInfo.WorkingDirectory = path;
-
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
@@ -114,9 +109,6 @@ namespace Semicolon.OnlineJudge.Services
                 {
                     track.CompilerOutput = compileOutput;
                 }
-
-                _context.Tracks.Update(track);
-                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -131,7 +123,6 @@ namespace Semicolon.OnlineJudge.Services
             {
                 return Path.Combine(path, "a.out");
             }
-
         }
 
         public PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem)
