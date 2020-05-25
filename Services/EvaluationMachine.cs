@@ -15,13 +15,6 @@ namespace Semicolon.OnlineJudge.Services
 {
     public class EvaluationMachine : IEvaluationMachine
     {
-        private readonly ApplicationDbContext _context;
-
-        public EvaluationMachine(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
         public string CreateSourceFile(string code, Track track)
         {
             var path = Directory.GetCurrentDirectory();
@@ -65,9 +58,6 @@ namespace Semicolon.OnlineJudge.Services
                 Directory.CreateDirectory(path);
             }
 
-            var programSourceFilePath = Path.Combine(path, "source.c");
-
-            string compileOutput = string.Empty;
             try
             {
                 using Process compilerProcess = new Process();
@@ -98,7 +88,7 @@ namespace Semicolon.OnlineJudge.Services
                 }
 
                 compilerProcess.StandardInput.WriteLine("exit");
-                compileOutput = compilerProcess.StandardOutput.ReadToEnd();
+                string compileOutput = compilerProcess.StandardOutput.ReadToEnd();
                 compilerProcess.WaitForExit();
 
                 if (string.IsNullOrWhiteSpace(compileOutput))
