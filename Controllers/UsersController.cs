@@ -58,6 +58,17 @@ namespace Semicolon.OnlineJudge.Controllers
             return RedirectToAction(nameof(Index), new { id = user.Id });
         }
 
+        [Authorize]
+        public async Task<IActionResult> ProblemsCreated()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return View(new ProblemsCreatedModel
+            {
+                Problems = _context.Problems.Where(p => p.AuthorId == user.Id).ToList()
+            });
+        }
+
         private Chart GeneratePieChart(List<Track> tracks)
         {
             Chart chart = new Chart

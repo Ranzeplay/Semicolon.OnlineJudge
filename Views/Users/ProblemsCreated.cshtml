@@ -1,0 +1,36 @@
+﻿@model Semicolon.OnlineJudge.Models.ViewModels.Users.ProblemsCreatedModel
+@{
+    ViewData["Title"] = "ProblemsCreated";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-condensed table-head-fixed table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">标题</th>
+                            <th scope="col">通过率</th>
+                            <th scope="col">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var problem in Model.Problems)
+                        {
+                            <tr>
+                                <td>@problem.Id</td>
+                                <td><a asp-controller="Problemset" asp-action="Details" asp-route-id="@problem.Id">@problem.Title</a></td>
+                                <td>@problem.GetPassRate().ToUIString()</td>
+                                <td>
+                                    <a role="button" class="btn btn-outline-danger btn-sm">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

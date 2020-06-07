@@ -75,7 +75,7 @@ namespace Semicolon.OnlineJudge.Controllers
         public async Task<IActionResult> New(NewModel model)
         {
             var user = await _userManager.GetUserAsync(User);
-            if(user == null)
+            if (user == null)
             {
                 return Unauthorized();
             }
@@ -109,7 +109,7 @@ namespace Semicolon.OnlineJudge.Controllers
                 Submit = 0,
                 Pass = 0
             });
-            
+
             _context.Problems.Add(problem);
             await _context.SaveChangesAsync();
 
@@ -141,7 +141,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         public async Task<IActionResult> Search(string content)
         {
-            if(content == null)
+            if (content == null)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -235,6 +235,29 @@ namespace Semicolon.OnlineJudge.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var problem = _context.Problems.FirstOrDefault(p => p.Id == id);
+            var user = await _userManager.GetUserAsync(User);
+
+            if (problem != null)
+            {
+                if (problem.AuthorId == user.Id)
+                {
+                    _context.Problems.Remove(problem);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("ProblemsCreated", "Users");
+                }
+
+                return Unauthorized();
+            }
+
+            return NotFound();
         }
     }
 }
