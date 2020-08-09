@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Semicolon.Auth.Models;
+using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models;
+using Semicolon.OnlineJudge.Models.ViewModels.Home;
 
 namespace Semicolon.OnlineJudge.Controllers
 {
@@ -13,14 +17,32 @@ namespace Semicolon.OnlineJudge.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ApplicationDbContext _context;
+
+        private readonly UserManager<SemicolonUser> _userManager;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<SemicolonUser> userManager)
         {
             _logger = logger;
+            _context = context;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                ViewData["ProblemsPassed"] = _context.Tracks.Where(t => t.Status == Models.Judge.JudgeStatus.Accept).Where(t => t.AuthorId == user.Id).LongCount();
+                ViewData["ProblemsSubmitted"] = _context.Tracks.Where(t => t.AuthorId == user.Id).LongCount();
+            }
+            else
+            {
+                ViewData["ProblemsPassed"] = "登录以查看更多信息";
+                ViewData["ProblemsSubmitted"] = "登录以查看更多信息";
+            }
+
+            return View(new IndexModel());
         }
 
         public IActionResult Privacy()

@@ -9,10 +9,10 @@ namespace Semicolon.OnlineJudge.Services
 {
     public interface IEvaluationMachine
     {
-        string CreateSourceFile(string code, long trackId);
+        string CreateSourceFile(string code, Track track);
 
-        Task<string> CompileProgramAsync(string sourceFilePath, long trackId);
+        PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem);
 
-        Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId);
+        string CompileProgram(Track trackIn, out Track track);
     }
 }

@@ -1,54 +1,49 @@
 ﻿@model Semicolon.Auth.Models.ViewModels.Account.DeleteAccountModel
 @{
-    ViewData["Title"] = "Delete Account";
+    ViewData["Title"] = "销毁账户";
 }
 
 <div style="width: 60%; margin: 0 auto; margin-top: 10%">
     <form method="post" class="uk-form-horizontal uk-card-hover uk-margin-large uk-card-body" asp-action="Delete" id="delete-form">
         <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Delete Account</legend>
+            <legend class="uk-legend">销毁账户</legend>
 
             <div asp-validation-summary="All" class="uk-text-danger" style="margin-top: 15px"></div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Email</label>
+                <label class="uk-form-label" for="form-horizontal-text">电子邮件地址</label>
                 <div class="uk-form-controls">
                     <input class="uk-input" id="form-horizontal-text" type="email" asp-for="Email">
                 </div>v
             </div>
 
             <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Password</label>
+                <label class="uk-form-label" for="form-horizontal-text">密码</label>
                 <div class="uk-form-controls">
                     <input class="uk-input" id="form-horizontal-text" type="password" asp-for="Password">
                 </div>
             </div>
 
             <div class="uk-margin">
-                <button type="button" uk-toggle="target: #confirm-modal" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom">Delete</button>
-                <a class="uk-button uk-button-link" asp-action="My">Go Back</a>
+                <button type="button" uk-toggle="target: #confirm-modal" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom">销毁</button>
+                <a class="uk-button uk-button-link" asp-action="My">返回</a>
             </div>
 
             <div id="confirm-modal" uk-modal>
                 <div class="uk-modal-dialog">
                     <button class="uk-modal-close-default" type="button" uk-close></button>
                     <div class="uk-modal-header">
-                        <h2 class="uk-modal-title">Please confirm your action</h2>
+                        <h2 class="uk-modal-title">请确认你的操作</h2>
                     </div>
                     <div class="uk-modal-body">
                         <p class="uk-text-danger">
-                            You are requesting to delete your account!
+                            你正在销毁你的账户
                             <br />
-                            The account will be delete permanently!
+                            此账户将被永久删除
                         </p>
-
-                        <p class="uk-text-warning">
-                            You will no longer accessing OAuth apps that you authorized.
-                        </p>
-
                     </div>
                     <div class="uk-modal-footer">
-                        <button type="submit" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom" onclick="document.getElementById('delete-form').submit()">Confirm</button>
+                        <button type="submit" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom" onclick="document.getElementById('delete-form').submit()">确认</button>
                     </div>
                 </div>
             </div>

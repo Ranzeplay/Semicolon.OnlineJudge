@@ -7,13 +7,13 @@
     <div class="col-md-9">
         <div class="invoice p-3 mb-3">
             <div class="content-header">
-                <h4>Description</h4>
+                <h4>描述</h4>
             </div>
             <div class="row" style="margin-top: 5px; margin-bottom: 5px">
                 <div class="card card-body">
                     <div class="col-md-1"></div>
                     <div class="col-md-11">
-                        <div class="content">
+                        <div class="content col-md-12">
                             @Html.Raw(Model.ContentHtml)
                         </div>
                     </div>
@@ -22,22 +22,22 @@
             </div>
             <br />
             <div class="content-header">
-                <h4>Example data</h4>
+                <h4>样例</h4>
             </div>
             <div class="row" style="margin-top: 5px">
                 <div class="col-md-1"></div>
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label>Input</label>
+                        <label>输入样例</label>
                         <textarea id="input" class="form-control" rows="3" readonly>@Model.GetExampleData().Input</textarea>
-                        <button class="btn btn-info btn-sm btn-block" data-clipboard-target="#input" style="margin-top: 4px">Copy</button>
+                        <button class="btn btn-info btn-sm btn-block" data-clipboard-target="#input" style="margin-top: 4px">拷贝</button>
                     </div>
                 </div>
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label>Output</label>
+                        <label>输出样例</label>
                         <textarea id="output" class="form-control" rows="3" readonly>@Model.GetExampleData().Output</textarea>
-                        <button class="btn btn-info btn-sm btn-block" data-clipboard-target="#output" style="margin-top: 4px">Copy</button>
+                        <button class="btn btn-info btn-sm btn-block" data-clipboard-target="#output" style="margin-top: 4px">拷贝</button>
                     </div>
                 </div>
                 <div class="col-md-1"></div>
@@ -49,7 +49,7 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-chart-pie"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Pass rate</span>
+                <span class="info-box-text">通过率</span>
                 <span class="info-box-number">@Model.GetPassRate().ToUIString()</span>
             </div>
         </div>
@@ -57,7 +57,7 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Author</span>
+                <span class="info-box-text">作者</span>
                 <span class="info-box-number">@Model.Author</span>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-calendar-plus"></i></span>
 
             <div class="info-box-content">
-                <span class="info-box-text">Published at</span>
+                <span class="info-box-text">创建于 (UTC)</span>
                 <span class="info-box-number">@Model.PublishTime</span>
             </div>
         </div>
@@ -73,7 +73,7 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-code"></i></span>
 
             <div class="info-box-content">
-                <a class="btn btn-primary btn-block" asp-controller="Judge" asp-action="Submit" asp-route-id="@Model.Id">Submit my code</a>
+                <a class="btn btn-primary btn-block" asp-controller="Judge" asp-action="Submit" asp-route-id="@Model.Id">提交代码</a>
             </div>
         </div>
     </div>

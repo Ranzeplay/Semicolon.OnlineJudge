@@ -26,6 +26,8 @@
     <Compile Remove="Migrations\20191218144817_InitTrackDb.Designer.cs" />
     <Compile Remove="Migrations\20191218153659_InitTrackDb.cs" />
     <Compile Remove="Migrations\20191218153659_InitTrackDb.Designer.cs" />
+    <Compile Remove="Migrations\20191229061848_AddMoreCompilerOptions.cs" />
+    <Compile Remove="Migrations\20191229061848_AddMoreCompilerOptions.Designer.cs" />
     <Compile Remove="Migrations\20200211144023_IntgrateAuthentication.cs" />
     <Compile Remove="Migrations\20200211144023_IntgrateAuthentication.Designer.cs" />
     <Compile Remove="Migrations\20200212021719_MigrateToSqlServer.cs" />
@@ -34,27 +36,33 @@
     <Compile Remove="Migrations\20200212022004_MigrateToSqlServer.Designer.cs" />
     <Compile Remove="Migrations\20200214015308_Release.cs" />
     <Compile Remove="Migrations\20200214015308_Release.Designer.cs" />
+    <Compile Remove="Migrations\20200214015407_Release.cs" />
+    <Compile Remove="Migrations\20200214015407_Release.Designer.cs" />
+    <Compile Remove="Migrations\20200215090847_Release001.cs" />
+    <Compile Remove="Migrations\20200215090847_Release001.Designer.cs" />
+    <Compile Remove="Migrations\20200216031003_UpdateProblem.cs" />
+    <Compile Remove="Migrations\20200216031003_UpdateProblem.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aiursoft.Pylon" Version="3.1.1.6" />
-    <PackageReference Include="ChartJSCore" Version="1.5.7" />
-    <PackageReference Include="Markdig" Version="0.18.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.1">
+    <PackageReference Include="ChartJSCore" Version="1.5.8" />
+    <PackageReference Include="Markdig" Version="0.20.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.6" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.3" />
+    <PackageReference Include="SharpZipLib" Version="1.2.0" />
   </ItemGroup>
 
 

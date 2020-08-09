@@ -15,17 +15,8 @@ namespace Semicolon.OnlineJudge.Services
 {
     public class EvaluationMachine : IEvaluationMachine
     {
-        private readonly ApplicationDbContext _context;
-
-        public EvaluationMachine(ApplicationDbContext context)
+        public string CreateSourceFile(string code, Track track)
         {
-            _context = context;
-        }
-
-        public string CreateSourceFile(string code, long trackId)
-        {
-            var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
-
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
 
@@ -48,18 +39,16 @@ namespace Semicolon.OnlineJudge.Services
 
             using (var tw = new StreamWriter(programSourceFilePath, true))
             {
-                tw.WriteLine(Base64Decode(track.CodeEncoded));
+                tw.WriteLine(Base64Decode(code));
                 tw.Close();
             }
 
             return programSourceFilePath;
         }
 
-        public async Task<string> CompileProgramAsync(string sourceFilePath, long trackId)
+        public string CompileProgram(Track trackIn, out Track track)
         {
-            var osVersion = Environment.OSVersion.Platform;
-
-            var track = _context.Tracks.FirstOrDefault(x => x.Id == trackId);
+            track = trackIn;
 
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
@@ -69,9 +58,6 @@ namespace Semicolon.OnlineJudge.Services
                 Directory.CreateDirectory(path);
             }
 
-            var programSourceFilePath = Path.Combine(path, "source.c");
-
-            string compileOutput = string.Empty;
             try
             {
                 using Process compilerProcess = new Process();
@@ -80,7 +66,6 @@ namespace Semicolon.OnlineJudge.Services
                 compilerProcess.StartInfo.RedirectStandardInput = true;
                 compilerProcess.StartInfo.RedirectStandardOutput = true;
                 compilerProcess.StartInfo.WorkingDirectory = path;
-
 
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
@@ -103,7 +88,7 @@ namespace Semicolon.OnlineJudge.Services
                 }
 
                 compilerProcess.StandardInput.WriteLine("exit");
-                compileOutput = compilerProcess.StandardOutput.ReadToEnd();
+                string compileOutput = compilerProcess.StandardOutput.ReadToEnd();
                 compilerProcess.WaitForExit();
 
                 if (string.IsNullOrWhiteSpace(compileOutput))
@@ -114,9 +99,6 @@ namespace Semicolon.OnlineJudge.Services
                 {
                     track.CompilerOutput = compileOutput;
                 }
-
-                _context.Tracks.Update(track);
-                await _context.SaveChangesAsync();
             }
             catch (Exception ex)
             {
@@ -131,14 +113,10 @@ namespace Semicolon.OnlineJudge.Services
             {
                 return Path.Combine(path, "a.out");
             }
-
         }
 
-        public async Task<PointStatus> RunTestAsync(TestData data, string compiledProgramPath, long trackId)
+        public PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem)
         {
-            var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == trackId);
-            var problem = await _context.Problems.FirstOrDefaultAsync(p => p.Id == track.ProblemId);
-
             var path = Directory.GetCurrentDirectory();
             path = Path.Combine(path, "EvaluationMachine");
             path = Path.Combine(path, track.Id.ToString());
@@ -147,7 +125,6 @@ namespace Semicolon.OnlineJudge.Services
                 Directory.CreateDirectory(path);
             }
 
-            string programOutput = string.Empty;
             try
             {
                 using Process programProcess = new Process();
@@ -159,7 +136,7 @@ namespace Semicolon.OnlineJudge.Services
                 programProcess.StartInfo.FileName = compiledProgramPath;
                 programProcess.Start();
                 programProcess.StandardInput.WriteLine(data.Input);
-                programOutput = programProcess.StandardOutput.ReadToEnd();
+                string programOutput = programProcess.StandardOutput.ReadToEnd();
                 Thread.Sleep(Convert.ToInt32(problem.GetJudgeProfile().TimeLimit * 1000) + 1000);
 
                 if (!programProcess.HasExited)
@@ -174,7 +151,7 @@ namespace Semicolon.OnlineJudge.Services
                     return PointStatus.TimeLimitExceeded;
                 }
 
-                if (data.Output.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n') == programOutput.TrimEnd('\n').TrimEnd(' ').TrimEnd('\n'))
+                if (data.Output.Trim().TrimEnd('\n').Trim().Replace("\r", "").Equals(programOutput.Trim().TrimEnd('\n').Trim().Replace("\r", "")))
                 {
                     return PointStatus.Accepted;
                 }
@@ -191,7 +168,7 @@ namespace Semicolon.OnlineJudge.Services
 
         public static string Base64Decode(string base64EncodedData)
         {
-            var base64EncodedBytes = System.Convert.FromBase64String(base64EncodedData);
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
     }

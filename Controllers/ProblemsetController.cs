@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ICSharpCode.SharpZipLib.Zip;
 using Markdig;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -70,36 +72,10 @@ namespace Semicolon.OnlineJudge.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public IActionResult New(NewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                return RedirectToAction(nameof(NewTestData), model);
-            }
-
-            return View();
-        }
-
-        [HttpGet]
-        [Authorize]
-        public IActionResult NewTestData(NewModel model)
-        {
-            model.TestDatas = new List<TestData>();
-            for (int i = 0; i < model.TestDataNumber; i++)
-            {
-                model.TestDatas.Add(new TestData { Input = "", Output = "" });
-            }
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize]
-        public async Task<IActionResult> NewTestData(NewModel model, string status)
+        public async Task<IActionResult> New(NewModel model)
         {
             var user = await _userManager.GetUserAsync(User);
-            if(user == null)
+            if (user == null)
             {
                 return Unauthorized();
             }
@@ -124,9 +100,8 @@ namespace Semicolon.OnlineJudge.Controllers
             {
                 MemoryLimit = model.MemoryLimit,
                 TimeLimit = model.TimeLimit,
-                TestDatas = string.Empty
             };
-            judgeProfile.SetTestDatas(model.TestDatas);
+
             problem.SetJudgeProfile(judgeProfile);
 
             problem.SetPassRate(new PassRate
@@ -138,6 +113,27 @@ namespace Semicolon.OnlineJudge.Controllers
             _context.Problems.Add(problem);
             await _context.SaveChangesAsync();
 
+            // Save test data to local disk
+            var judgeDataStorageDirectory = Path.Combine(Directory.GetCurrentDirectory(), "JudgeDataStorage");
+            if (!Directory.Exists(judgeDataStorageDirectory))
+            {
+                Directory.CreateDirectory(judgeDataStorageDirectory);
+            }
+
+            // Copy zip file to target directory
+            var problemDirectory = Path.Combine(judgeDataStorageDirectory, _context.Problems.LongCount().ToString());
+            Directory.CreateDirectory(problemDirectory);
+            var zipFilePath = Path.Combine(problemDirectory, "judge.zip");
+
+            var stream = new FileStream(zipFilePath, FileMode.Create);
+            model.TestDatas.CopyTo(stream);
+            stream.Close();
+
+            // Unzip file
+            var targetDirectory = Path.Combine(problemDirectory, "data");
+            var fastZip = new FastZip();
+            fastZip.ExtractZip(zipFilePath, targetDirectory, null);
+
             // _logger.Log(LogLevel.Information, $"[{DateTime.UtcNow}] User (Id: {user.Id}) created a new problem", problem);
 
             return RedirectToAction(nameof(Index));
@@ -145,7 +141,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         public async Task<IActionResult> Search(string content)
         {
-            if(content == null)
+            if (content == null)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -154,6 +150,34 @@ namespace Semicolon.OnlineJudge.Controllers
             {
                 ProblemModels = new List<ProblemModel>()
             };
+
+            if (long.TryParse(content, out long number))
+            {
+                var p = _context.Problems.FirstOrDefault(p => p.Id == number);
+
+                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
+
+                var html = Markdown.ToHtml(p.Description, pipeline);
+                var raw = Markdown.ToPlainText(p.Description);
+
+                var author = await _userManager.FindByIdAsync(p.AuthorId);
+
+                model.ProblemModels.Add(new ProblemModel
+                {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    ContentRaw = raw,
+                    ContentHtml = html,
+                    AuthorId = p.AuthorId,
+                    Author = author.UserName,
+                    ExampleData = p.ExampleData,
+                    JudgeProfile = p.JudgeProfile,
+                    PassRate = p.PassRate,
+                    PublishTime = p.PublishTime
+                });
+            }
+
             foreach (var p in _context.Problems.Where(x => x.Title.Contains(content)).ToList())
             {
                 var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
@@ -211,6 +235,29 @@ namespace Semicolon.OnlineJudge.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Delete(long id)
+        {
+            var problem = _context.Problems.FirstOrDefault(p => p.Id == id);
+            var user = await _userManager.GetUserAsync(User);
+
+            if (problem != null)
+            {
+                if (problem.AuthorId == user.Id)
+                {
+                    _context.Problems.Remove(problem);
+                    await _context.SaveChangesAsync();
+
+                    return RedirectToAction("ProblemsCreated", "Users");
+                }
+
+                return Unauthorized();
+            }
+
+            return NotFound();
         }
     }
 }
