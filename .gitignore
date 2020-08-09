@@ -346,8 +346,8 @@ healthchecksdb
 /wwwroot/lib/monaco-editor
 /wwwroot/lib/simplemde
 /wwwroot/lib/signalr
-/EvaluationMachine
 /wwwroot/lib/Chart.js
 /wwwroot/lib/uikit
 /wwwroot/lib/Dropify
 /judgeDataStorage
+/CodeSubmitts

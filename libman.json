@@ -3,32 +3,65 @@
   "defaultProvider": "jsdelivr",
   "libraries": [
     {
-      "library": "admin-lte@3.0.1",
-      "destination": "wwwroot/lib/admin-lte/"
+      "provider": "cdnjs",
+      "library": "admin-lte@3.0.5",
+      "destination": "wwwroot/lib/admin-lte",
+      "files": [
+        "css/adminlte.css",
+        "css/adminlte.css.map",
+        "css/adminlte.min.css",
+        "css/adminlte.min.css.map",
+        "js/adminlte.js",
+        "js/adminlte.js.map",
+        "js/adminlte.min.js",
+        "js/adminlte.min.js.map"
+      ]
     },
     {
       "provider": "cdnjs",
-      "library": "font-awesome@5.11.2",
-      "destination": "wwwroot/lib/font-awesome/"
+      "library": "font-awesome@5.14.0",
+      "destination": "wwwroot/lib/font-awesome/",
+      "files": [
+        "css/all.css",
+        "css/all.min.css",
+        "js/all.js",
+        "js/all.min.js"
+      ]
     },
     {
       "provider": "cdnjs",
       "library": "clipboard.js@2.0.4",
-      "destination": "wwwroot/lib/clipboard.js/"
+      "destination": "wwwroot/lib/clipboard.js/",
+      "files": [
+        "clipboard.js",
+        "clipboard.min.js"
+      ]
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery/",
+      "files": [
+        "dist/jquery.js",
+        "dist/jquery.min.js",
+        "dist/jquery.min.map",
+        "dist/jquery.slim.js",
+        "dist/jquery.slim.min.js",
+        "dist/jquery.slim.min.map"
+      ]
     },
     {
       "provider": "cdnjs",
-      "library": "jquery@3.4.1",
-      "destination": "wwwroot/lib/jquery/"
-    },
-    {
-      "provider": "cdnjs",
-      "library": "monaco-editor@0.18.1",
+      "library": "monaco-editor@0.20.0",
       "destination": "wwwroot/lib/monaco-editor/"
     },
     {
       "library": "simplemde@1.11.2",
-      "destination": "wwwroot/lib/simplemde/"
+      "destination": "wwwroot/lib/simplemde/",
+      "files": [
+        "dist/simplemde.min.css",
+        "dist/simplemde.min.js"
+      ]
     },
     {
       "provider": "unpkg",
@@ -41,8 +74,17 @@
       "destination": "wwwroot/lib/Chart.js/"
     },
     {
-      "library": "uikit@3.3.1",
-      "destination": "wwwroot/lib/uikit/"
+      "provider": "jsdelivr",
+      "library": "uikit@3.5.5",
+      "destination": "wwwroot/lib/uikit/",
+      "files": [
+        "dist/css/uikit.css",
+        "dist/css/uikit.min.css",
+        "dist/js/uikit.js",
+        "dist/js/uikit.min.js",
+        "dist/js/uikit-icons.js",
+        "dist/js/uikit-icons.min.js"
+      ]
     },
     {
       "provider": "cdnjs",
