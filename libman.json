@@ -14,7 +14,8 @@
         "js/adminlte.js",
         "js/adminlte.js.map",
         "js/adminlte.min.js",
-        "js/adminlte.min.js.map"
+        "js/adminlte.min.js.map",
+        "img/avatar.png"
       ]
     },
     {

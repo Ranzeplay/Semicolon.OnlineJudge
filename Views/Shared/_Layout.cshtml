@@ -6,11 +6,11 @@
     <title>@ViewData["Title"] - 信息学奥赛在线评测</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/admin-lte/dist/css/adminlte.css" />
+        <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/admin-lte/dist/css/adminlte.min.css" />
+        <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.min.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
@@ -71,7 +71,7 @@
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="~/lib/admin-lte/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+                    <img src="~/lib/admin-lte/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                     @if (User.Identity.IsAuthenticated)
@@ -142,13 +142,13 @@
 
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/lib/admin-lte/dist/js/adminlte.js"></script>
+        <script src="~/lib/admin-lte/js/adminlte.js"></script>
         <script src="~/lib/font-awesome/js/all.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/lib/admin-lte/dist/js/adminlte.min.js"></script>
+        <script src="~/lib/admin-lte/js/adminlte.min.js"></script>
         <script src="~/lib/font-awesome/js/all.min.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     </environment>
