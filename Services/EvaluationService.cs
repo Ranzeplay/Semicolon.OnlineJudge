@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Services
 {
-    public class EvaluationMachine : IEvaluationMachine
+    public class EvaluationService : IEvaluationService
     {
         public string CreateSourceFile(string code, Track track)
         {
