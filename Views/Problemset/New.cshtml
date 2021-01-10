@@ -1,6 +1,6 @@
 ﻿@model Semicolon.OnlineJudge.Models.ViewModels.Problemset.NewModel
 @{
-    ViewData["Title"] = "创建题目";
+    ViewData["Title"] = "Create problem";
 }
 
 <div class="row">
@@ -8,37 +8,37 @@
     <div class="col-md-10">
         <div class="row">
             <form method="post" enctype="multipart/form-data" asp-action="New" style="width: 100%">
-                <h4>基本信息</h4>
+                <h4>Basic information</h4>
                 <div class="form-group">
                     <label for="title">标题</label>
                     <input class="form-control" id="title" asp-for="Title" />
                 </div>
                 <div class="form-group">
-                    <label for="description">描述</label>
+                    <label for="description">Description</label>
                     <div style="background-color: white">
                         <textarea class="form-control" id="description" asp-for="Description"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="mem">内存限制 (MB)</label>
+                    <label for="mem">Memory limit (MB)</label>
                     <small class="text-muted">暂未完成</small>
                     <input type="number" class="form-control" id="mem" asp-for="MemoryLimit" />
                 </div>
                 <div class="form-group">
-                    <label for="time">时间限制 (Seconds)</label>
+                    <label for="time">Time limit (Seconds)</label>
                     <input type="number" step="0.01" min="0.01" class="form-control" id="time" asp-for="TimeLimit" />
                 </div>
 
                 <div class="row" style="margin-top: 7px; margin-bottom: 15px">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>示例输入</label>
+                            <label>Sample input</label>
                             <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Input"></textarea>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label>示例输出</label>
+                            <label>Sample output</label>
                             <textarea class="form-control" rows="5" placeholder="Enter here" autocomplete="off" asp-for="ExampleData.Output"></textarea>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                     </ul>
                 </blockquote>
 
-                <button type="submit" class="btn btn-primary btn-block">完成</button>
+                <button type="submit" class="btn btn-primary btn-block">Complete</button>
             </form>
         </div>
     </div>
