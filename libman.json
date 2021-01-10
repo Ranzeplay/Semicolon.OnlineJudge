@@ -91,6 +91,11 @@
       "provider": "cdnjs",
       "library": "Dropify@0.2.2",
       "destination": "wwwroot/lib/Dropify/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "tailwindcss@2.0.2",
+      "destination": "wwwroot/lib/tailwindcss/"
     }
   ]
 }

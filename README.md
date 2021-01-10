@@ -11,7 +11,6 @@ Issues will be fixed *as fast as I can* if there is.
 ### Planned Tasks
 
 - Use [TailwindCSS](https://github.com/tailwindlabs/tailwindcss) as its web UI
-
 - ~~Judge the code in a safe way (`Docker` or `WebAssembly`)~~
 - Deploy an example
 - Support `Linux`
