@@ -4,6 +4,8 @@
 
 ## How to run the project
 
+> You need to install `gcc` conpiler first
+
 ### Run locally
 
 - Clone the project to your computer
