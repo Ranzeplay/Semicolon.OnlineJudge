@@ -1,0 +1,11 @@
+﻿# Use {sourceFile} for the code file submitted
+# Use {inputData} for input test data
+# Use {captureOutput} for get output data
+
+DisplayName: C
+EditorLang: c 
+
+BuildSteps: 
+  - gcc {sourceFile} -o exec.o
+
+RunCommand: ./exec.o

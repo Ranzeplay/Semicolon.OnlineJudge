@@ -47,6 +47,7 @@ namespace Semicolon.OnlineJudge
             });
 
             services.AddTransient<IEvaluationService, EvaluationService>();
+            services.AddTransient<IBuildRoleService, BuildRoleService>();
 
             services.AddControllersWithViews();
         }
