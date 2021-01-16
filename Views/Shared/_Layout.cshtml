@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - 信息学奥赛在线评测</title>
+    <title>@ViewData["Title"] - OnlineJudge</title>
 
     <environment include="Development">
-        <link rel="stylesheet" href="~/lib/admin-lte/dist/css/adminlte.css" />
+        <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="~/lib/admin-lte/dist/css/adminlte.min.css" />
+        <link rel="stylesheet" href="~/lib/admin-lte/css/adminlte.min.css" />
         <link rel="stylesheet" href="~/lib/font-awesome/css/all.min.css" />
     </environment>
     <link rel="stylesheet" href="~/css/site.css" />
@@ -24,13 +24,10 @@
                 <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active text-blue" style="color: darkblue; font-weight: bolder">信息学奥赛在线评测</a>
+                <a class="nav-link active text-blue" style="color: darkblue; font-weight: bolder">OnlineJudge</a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <a class="nav-link" asp-controller="Home" asp-action="Index">主页</a>
-            </li>
-            <li class="nav-item d-none d-sm-inline-block">
-                <a class="nav-link" asp-controller="Home" asp-action="Privacy">隐私政策</a>
+                <a class="nav-link" asp-controller="Home" asp-action="Index">Home page</a>
             </li>
         </ul>
 
@@ -49,16 +46,16 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Users" asp-action="My">你好, @User.Identity.Name</a>
+                    <a class="nav-link text-dark" asp-controller="Users" asp-action="My">Hello, @User.Identity.Name</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-controller="Auth" asp-action="Logout">注销</a>
+                    <a class="nav-link text-dark" asp-controller="Auth" asp-action="Logout">Log out</a>
                 </li>
             }
             else
             {
                 <li class="nav-item">
-                    <a class="text-dark" asp-controller="Auth" asp-action="Login">登录</a>
+                    <a class="text-dark" asp-controller="Auth" asp-action="Login">Log in</a>
                 </li>
             }
         </ul>
@@ -71,16 +68,16 @@
         <div class="sidebar">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="~/lib/admin-lte/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
+                    <img src="~/lib/admin-lte/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-controller="Users" asp-action="My" class="d-block">你好, @User.Identity.Name</a>
+                        <a asp-controller="Users" asp-action="My" class="d-block">Hello, @User.Identity.Name</a>
                     }
                     else
                     {
-                        <a asp-controller="Auth" asp-action="Login" class="d-block">登录</a>
+                        <a asp-controller="Auth" asp-action="Login" class="d-block">Log in</a>
                     }
                 </div>
             </div>
@@ -90,15 +87,15 @@
                     <li class="nav-item has-treeview menu-open">
                         <a class="nav-link active" asp-controller="Home" asp-action="Index">
                             <i class="nav-icon fas fa-home"></i>
-                            <p>主页</p>
+                            <p>Home page</p>
                         </a>
                         <a class="nav-link active" asp-controller="Problemset" asp-action="Index">
                             <i class="nav-icon fas fa-book"></i>
-                            <p>题目列表</p>
+                            <p>Problemset</p>
                         </a>
                         <a class="nav-link active" asp-controller="Records" asp-action="Index">
                             <i class="nav-icon fas fa-history"></i>
-                            <p>提交记录</p>
+                            <p>Submit history</p>
                         </a>
                     </li>
                 </ul>
@@ -114,13 +111,6 @@
                         <div class="col-sm-6">
                             <h1>@ViewData["Title"]</h1>
                         </div>
-                        @*
-                            <div class="col-sm-6">
-                                <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="#">信息学奥赛在线评测</a></li>
-                                </ol>
-                            </div>
-                        *@
                     </div>
                 </div>
             </section>
@@ -135,20 +125,20 @@
 
         <footer class="main-footer">
             <div class="container">
-                &copy; 2019 - Semicolon.OnlineJudge - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                &copy; 2021 - Semicolon.OnlineJudge
             </div>
         </footer>
     </div>
 
     <environment include="Development">
         <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/lib/admin-lte/dist/js/adminlte.js"></script>
+        <script src="~/lib/admin-lte/js/adminlte.js"></script>
         <script src="~/lib/font-awesome/js/all.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.js"></script>
     </environment>
     <environment exclude="Development">
         <script src="~/lib/jquery/jquery.min.js"></script>
-        <script src="~/lib/admin-lte/dist/js/adminlte.min.js"></script>
+        <script src="~/lib/admin-lte/js/adminlte.min.js"></script>
         <script src="~/lib/font-awesome/js/all.min.js"></script>
         <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     </environment>

@@ -2,7 +2,21 @@
 
 ---
 
-### Working Progress
+## How to run the project
+
+> You need to install `gcc` conpiler first
+
+### Run locally
+
+- Clone the project to your computer
+- Run `dotnet restore` to restore the project
+- Install EntityFrameworkCore by running command `dotnet tool install dotnet-ef -g`
+- Run `dotnet ef database update` to create database from existing configuration
+- Run `dotnet run` to run code on debug mode locally
+
+---
+
+## Working Progress
 
 Almost done. 
 
@@ -10,7 +24,8 @@ Issues will be fixed *as fast as I can* if there is.
 
 ### Planned Tasks
 
-- Judge the code in a safe way (`Docker` or `WebAssembly`)
+- Use [TailwindCSS](https://github.com/tailwindlabs/tailwindcss) as its web UI
+- ~~Judge the code in a safe way (`Docker` or `WebAssembly`)~~
 - Deploy an example
 - Support `Linux`
 - Management dashboard

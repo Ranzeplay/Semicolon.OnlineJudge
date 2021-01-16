@@ -46,7 +46,8 @@ namespace Semicolon.OnlineJudge
                 options.EnableDetailedErrors = true;
             });
 
-            services.AddTransient<IEvaluationMachine, EvaluationMachine>();
+            services.AddTransient<IEvaluationService, EvaluationService>();
+            services.AddTransient<IBuildRoleService, BuildRoleService>();
 
             services.AddControllersWithViews();
         }

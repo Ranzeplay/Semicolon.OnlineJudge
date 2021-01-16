@@ -1,6 +1,6 @@
 ﻿@model Semicolon.OnlineJudge.Models.Judge.Track
 @{
-    ViewData["Title"] = "评测状态";
+    ViewData["Title"] = "Judge status";
 }
 
 <div class="row">
@@ -12,8 +12,8 @@
                     <i class="fas fa-code" id="icon-@i"></i>
                 </span>
                 <div class="info-box-content">
-                    <span class="info-box-text" id="text-@i">等待服务器响应</span>
-                    <span class="info-box-number" id="status-@i">等待服务器响应</span>
+                    <span class="info-box-text" id="text-@i">Waiting for server</span>
+                    <span class="info-box-number" id="status-@i">Waiting for server</span>
                 </div>
             </div>
         }
@@ -21,9 +21,9 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">评测状态</h3>
+                <h3 class="card-title">Status</h3>
                 <div class="card-tools">
-                    <span class="badge badge-light" id="server-status">等待服务器响应</span>
+                    <span class="badge badge-light" id="server-status">Waiting for server response</span>
                 </div>
             </div>
             <div class="card-body">
@@ -32,7 +32,7 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">编译输出</h3>
+                <h3 class="card-title">Compilation output</h3>
             </div>
             <div class="card-body" id="compiler-output-text">
                 @Model.CompilerOutput
@@ -40,7 +40,7 @@
         </div>
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">代码</h3>
+                <h3 class="card-title">Code</h3>
             </div>
             <div class="card-body">
                 <input style="display: none" value="@Model.CodeEncoded" id="code-encoded" />
