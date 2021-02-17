@@ -13,12 +13,13 @@ using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Services
 {
-    public class EvaluationMachine : IEvaluationMachine
+    public class EvaluationService : IEvaluationService
     {
+        private readonly string _storePath = Path.Combine(Directory.GetCurrentDirectory(), "EvaluationMachine");
+
         public string CreateSourceFile(string code, Track track)
         {
-            var path = Directory.GetCurrentDirectory();
-            path = Path.Combine(path, "EvaluationMachine");
+            var path = _storePath;
 
             var programSourceFilePath = Path.Combine(path, track.Id.ToString());
             if (!Directory.Exists(programSourceFilePath))
@@ -50,9 +51,7 @@ namespace Semicolon.OnlineJudge.Services
         {
             track = trackIn;
 
-            var path = Directory.GetCurrentDirectory();
-            path = Path.Combine(path, "EvaluationMachine");
-            path = Path.Combine(path, track.Id.ToString());
+            var path = Path.Combine(_storePath, track.Id.ToString());
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
@@ -100,9 +99,9 @@ namespace Semicolon.OnlineJudge.Services
                     track.CompilerOutput = compileOutput;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw ex;
+                throw;
             }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
@@ -117,9 +116,7 @@ namespace Semicolon.OnlineJudge.Services
 
         public PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem)
         {
-            var path = Directory.GetCurrentDirectory();
-            path = Path.Combine(path, "EvaluationMachine");
-            path = Path.Combine(path, track.Id.ToString());
+            var path = Path.Combine(_storePath, track.Id.ToString());
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);

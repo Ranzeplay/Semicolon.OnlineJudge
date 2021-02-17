@@ -18,10 +18,10 @@ namespace Semicolon.OnlineJudge.Hubs
     {
         private readonly ApplicationDbContext _context;
 
-        private readonly IEvaluationMachine _evaluationMachine;
+        private readonly IEvaluationService _evaluationMachine;
         private readonly ILogger<TrackHub> _logger;
 
-        public TrackHub(ApplicationDbContext context, IEvaluationMachine evaluationMachine, ILogger<TrackHub> logger)
+        public TrackHub(ApplicationDbContext context, IEvaluationService evaluationMachine, ILogger<TrackHub> logger)
         {
             _context = context;
             _evaluationMachine = evaluationMachine;

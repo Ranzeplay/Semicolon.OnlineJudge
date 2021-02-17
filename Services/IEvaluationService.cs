@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Services
 {
-    public interface IEvaluationMachine
+    public interface IEvaluationService
     {
         string CreateSourceFile(string code, Track track);
 

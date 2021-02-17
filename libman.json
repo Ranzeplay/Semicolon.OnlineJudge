@@ -14,7 +14,8 @@
         "js/adminlte.js",
         "js/adminlte.js.map",
         "js/adminlte.min.js",
-        "js/adminlte.min.js.map"
+        "js/adminlte.min.js.map",
+        "img/avatar.png"
       ]
     },
     {
@@ -90,6 +91,11 @@
       "provider": "cdnjs",
       "library": "Dropify@0.2.2",
       "destination": "wwwroot/lib/Dropify/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "tailwindcss@2.0.2",
+      "destination": "wwwroot/lib/tailwindcss/"
     }
   ]
 }
