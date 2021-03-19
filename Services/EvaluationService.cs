@@ -124,13 +124,19 @@ namespace Semicolon.OnlineJudge.Services
 
             try
             {
-                using Process programProcess = new Process();
-                programProcess.StartInfo.UseShellExecute = false;
-                programProcess.StartInfo.CreateNoWindow = true;
-                programProcess.StartInfo.RedirectStandardInput = true;
-                programProcess.StartInfo.RedirectStandardOutput = true;
-                programProcess.StartInfo.WorkingDirectory = path;
-                programProcess.StartInfo.FileName = compiledProgramPath;
+                var programProcess = new Process
+                {
+                    StartInfo = new ProcessStartInfo
+                    {
+                        UseShellExecute = false,
+                        CreateNoWindow = true,
+                        RedirectStandardInput = true,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        WorkingDirectory = path,
+                        FileName = compiledProgramPath
+                    },
+                };
                 programProcess.Start();
                 programProcess.StandardInput.WriteLine(data.Input);
                 string programOutput = programProcess.StandardOutput.ReadToEnd();
@@ -148,7 +154,7 @@ namespace Semicolon.OnlineJudge.Services
                     return PointStatus.TimeLimitExceeded;
                 }
 
-                if (data.Output.Trim().TrimEnd('\n').Trim().Replace("\r", "").Equals(programOutput.Trim().TrimEnd('\n').Trim().Replace("\r", "")))
+                if (data.Output.Trim().TrimEnd('\n').Trim().Replace("\r", "") == programOutput.Trim().TrimEnd('\n').Trim().Replace("\r", ""))
                 {
                     return PointStatus.Accepted;
                 }
