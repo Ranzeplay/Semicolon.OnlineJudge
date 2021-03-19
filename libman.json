@@ -94,8 +94,22 @@
     },
     {
       "provider": "cdnjs",
-      "library": "tailwindcss@2.0.2",
-      "destination": "wwwroot/lib/tailwindcss/"
+      "library": "Primer@15.2.0",
+      "destination": "wwwroot/lib/Primer/",
+      "files": [
+        "primer.css",
+        "primer.css.map",
+        "primer.min.css",
+        "core.css",
+        "core.css.map",
+        "base.css.map",
+        "base.min.css",
+        "base.css",
+        "utilities.css",
+        "utilities.min.css",
+        "utilities.css.map",
+        "core.min.css"
+      ]
     }
   ]
 }
