@@ -3,47 +3,48 @@
     ViewData["Title"] = "Register";
 }
 
-<div style="width: 60%; margin: 0 auto; margin-top: 8%">
-    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
-        <form method="post" asp-action="Register">
-            <fieldset class="uk-fieldset">
-                <legend class="uk-legend">Register</legend>
+<form method="post" asp-action="Register" class="Box Box--spacious mx-auto mt-10 col-6">
+    <div class="Box-body">
+        <h3 class="f1-light">Register</h3>
 
-                <div asp-validation-summary="All" class="uk-text-danger" style="margin-top: 15px"></div>
+        <div class="form-group">
+            <div asp-validation-summary="All" class="text-red ml-3"></div>
+        </div>
 
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="email-input" asp-for="Email">Email address</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="email-input" type="text" placeholder="Email" asp-for="Email">
-                    </div>
-                </div>
+        <div class="form-group">
+            <div class="form-group-header">
+                <label for="email-addr">Email address</label>
+            </div>
+            <div class="form-group-body">
+                <input class="form-control" type="email" id="email-addr" asp-for="Email" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group-header">
+                <label for="username">User name</label>
+            </div>
+            <div class="form-group-body">
+                <input class="form-control" type="text" id="username" asp-for="UserName" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group-header">
+                <label for="password">Password</label>
+            </div>
+            <div class="form-group-body">
+                <input class="form-control" type="password" id="password" asp-for="Password" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-group-header">
+                <label for="confirm-password">Confirm password</label>
+            </div>
+            <div class="form-group-body">
+                <input class="form-control" type="password" id="confirm-password" asp-for="ConfirmPassword" />
+            </div>
+        </div>
 
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="username-input" asp-for="UserName">Username</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="username-input" type="text" placeholder="UserName" asp-for="UserName">
-                    </div>
-                </div>
-
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="password-input" asp-for="Password">Password</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="password-input" type="password" placeholder="Password" asp-for="Password">
-                    </div>
-                </div>
-
-                <div class="uk-margin">
-                    <label class="uk-form-label" for="confirm-password-input" asp-for="ConfirmPassword">Confirm password</label>
-                    <div class="uk-form-controls">
-                        <input class="uk-input" id="confirm-password-input" type="password" placeholder="Confirm Password" asp-for="ConfirmPassword">
-                    </div>
-                </div>
-
-                <div class="uk-margin">
-                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1 uk-margin-small-bottom">Submit</button>
-                    <a class="uk-button uk-button-link" asp-action="Login">Go login</a>
-                </div>
-            </fieldset>
-        </form>
+        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+        <a asp-action="Login" class="btn btn-link mt-2 ml-3" role="button">Go login</a>
     </div>
-</div>
+</form>
