@@ -31,12 +31,13 @@ namespace Semicolon.OnlineJudge.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
 
-            if (User.Identity.IsAuthenticated && id == null)
+            if (User.Identity.IsAuthenticated && id == "My")
             {
                 user = await _userManager.GetUserAsync(User);
             }
 
-            var tracks = _context.Tracks.Where(t => t.AuthorId == user.Id).ToList();
+            var tracksQuery = _context.Tracks.Where(t => t.AuthorId == user.Id);
+            var tracks = tracksQuery != null ? tracksQuery.ToList() : new List<Track>();
             tracks.Reverse();
 
             var model = new IndexModel
