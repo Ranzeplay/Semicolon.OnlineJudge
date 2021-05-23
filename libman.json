@@ -4,7 +4,7 @@
   "libraries": [
     {
       "provider": "cdnjs",
-      "library": "admin-lte@3.0.5",
+      "library": "admin-lte@3.1.0",
       "destination": "wwwroot/lib/admin-lte",
       "files": [
         "css/adminlte.css",
@@ -20,7 +20,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "font-awesome@5.14.0",
+      "library": "font-awesome@5.15.3",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [
         "css/all.css",
@@ -31,7 +31,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "clipboard.js@2.0.4",
+      "library": "clipboard.js@2.0.8",
       "destination": "wwwroot/lib/clipboard.js/",
       "files": [
         "clipboard.js",
@@ -40,7 +40,7 @@
     },
     {
       "provider": "jsdelivr",
-      "library": "jquery@3.5.1",
+      "library": "jquery@3.6.0",
       "destination": "wwwroot/lib/jquery/",
       "files": [
         "dist/jquery.js",
@@ -53,7 +53,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "monaco-editor@0.20.0",
+      "library": "monaco-editor@0.23.0",
       "destination": "wwwroot/lib/monaco-editor/"
     },
     {
@@ -71,12 +71,12 @@
     },
     {
       "provider": "cdnjs",
-      "library": "Chart.js@2.9.3",
+      "library": "Chart.js@3.2.1",
       "destination": "wwwroot/lib/Chart.js/"
     },
     {
       "provider": "jsdelivr",
-      "library": "uikit@3.5.5",
+      "library": "uikit@3.6.22",
       "destination": "wwwroot/lib/uikit/",
       "files": [
         "dist/css/uikit.css",
@@ -94,7 +94,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "Primer@15.2.0",
+      "library": "Primer@16.3.0",
       "destination": "wwwroot/lib/Primer/",
       "files": [
         "primer.css",
