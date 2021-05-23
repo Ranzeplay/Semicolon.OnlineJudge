@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
@@ -28,7 +29,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
         {
             if (!string.IsNullOrWhiteSpace(ExampleData))
             {
-                return System.Text.Json.JsonSerializer.Deserialize<TestData>(ExampleData);
+                return JsonSerializer.Deserialize<TestData>(ExampleData);
             }
 
             return new TestData();
@@ -36,7 +37,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public void SetExampleData(TestData exampleData)
         {
-            ExampleData = System.Text.Json.JsonSerializer.Serialize(exampleData);
+            ExampleData = JsonSerializer.Serialize(exampleData);
         }
 
 
@@ -44,7 +45,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
         {
             if (!string.IsNullOrWhiteSpace(JudgeProfile))
             {
-                return System.Text.Json.JsonSerializer.Deserialize<JudgeProfile>(JudgeProfile);
+                return JsonSerializer.Deserialize<JudgeProfile>(JudgeProfile);
             }
 
             return new JudgeProfile();
@@ -52,14 +53,14 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public void SetJudgeProfile(JudgeProfile judgeProfile)
         {
-            JudgeProfile = System.Text.Json.JsonSerializer.Serialize(judgeProfile);
+            JudgeProfile = JsonSerializer.Serialize(judgeProfile);
         }
 
         public PassRate GetPassRate()
         {
             if (!string.IsNullOrWhiteSpace(PassRate))
             {
-                return System.Text.Json.JsonSerializer.Deserialize<PassRate>(PassRate);
+                return JsonSerializer.Deserialize<PassRate>(PassRate);
             }
 
             return new PassRate();
@@ -67,7 +68,7 @@ namespace Semicolon.OnlineJudge.Models.Problemset
 
         public void SetPassRate(PassRate passRate)
         {
-            PassRate = System.Text.Json.JsonSerializer.Serialize(passRate);
+            PassRate = JsonSerializer.Serialize(passRate);
         }
     }
 }
