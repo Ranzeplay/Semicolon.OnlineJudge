@@ -64,7 +64,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
                 if (problem != null)
                 {
-                    List<Point> points = new List<Point>();
+                    List<Point> points = new();
 
                     var problemDirectory = Path.Combine(Directory.GetCurrentDirectory(), "JudgeDataStorage", problem.Id.ToString(), "data");
                     var subDirectories = Directory.EnumerateDirectories(problemDirectory);

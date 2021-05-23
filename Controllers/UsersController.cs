@@ -70,19 +70,19 @@ namespace Semicolon.OnlineJudge.Controllers
             });
         }
 
-        private Chart GeneratePieChart(List<Track> tracks)
+        private static Chart GeneratePieChart(List<Track> tracks)
         {
-            Chart chart = new Chart
+            Chart chart = new()
             {
                 Type = Enums.ChartType.Pie,
             };
 
-            ChartJSCore.Models.Data data = new ChartJSCore.Models.Data
+            ChartJSCore.Models.Data data = new()
             {
                 Labels = Enum.GetNames(typeof(JudgeStatus))
             };
 
-            PieDataset dataset = new PieDataset
+            PieDataset dataset = new()
             {
                 Label = "Summary",
 
