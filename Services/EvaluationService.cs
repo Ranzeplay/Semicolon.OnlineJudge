@@ -59,7 +59,7 @@ namespace Semicolon.OnlineJudge.Services
 
             try
             {
-                using Process compilerProcess = new Process();
+                using Process compilerProcess = new();
                 compilerProcess.StartInfo.UseShellExecute = false;
                 compilerProcess.StartInfo.CreateNoWindow = true;
                 compilerProcess.StartInfo.RedirectStandardInput = true;
