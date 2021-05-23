@@ -52,7 +52,7 @@ namespace Semicolon.OnlineJudge.Hubs
                 {
                     var currentPath = Path.Combine(problemDirectory, element);
 
-                    TestData data = new TestData
+                    TestData data = new()
                     {
                         Input = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.in")),
                         Output = await File.ReadAllTextAsync(Path.Combine(currentPath, "data.out"))

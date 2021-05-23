@@ -10,7 +10,7 @@
             <form method="post" enctype="multipart/form-data" asp-action="New" style="width: 100%">
                 <h4>Basic information</h4>
                 <div class="form-group">
-                    <label for="title">标题</label>
+                    <label for="title">Title</label>
                     <input class="form-control" id="title" asp-for="Title" />
                 </div>
                 <div class="form-group">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="form-group">
                     <label for="mem">Memory limit (MB)</label>
-                    <small class="text-muted">暂未完成</small>
+                    <small class="text-muted">Not available yet</small>
                     <input type="number" class="form-control" id="mem" asp-for="MemoryLimit" />
                 </div>
                 <div class="form-group">
@@ -48,7 +48,7 @@
                 <blockquote class="quote-secondary">
                     <h5>File format</h5>
                     <p>Youa are allowed to upload a <code>judge.zip</code> contains all of the test datas</p>
-                    <h6>Content structure</h6>
+                    <h6>Content structure (Ensure there are no additional directories)</h6>
                     <ul>
                         <li>
                             judge.zip
