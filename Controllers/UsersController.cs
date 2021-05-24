@@ -26,15 +26,18 @@ namespace Semicolon.OnlineJudge.Controllers
             _userManager = userManager;
         }
 
+        [Route("Users/My")]
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+
+            return Redirect($"/Users/{user.Id}");
+        }
+
         [Route("Users/{Id}")]
         public async Task<IActionResult> Index(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
-
-            if (User.Identity.IsAuthenticated && id == "My")
-            {
-                user = await _userManager.GetUserAsync(User);
-            }
 
             var tracksQuery = _context.Tracks.Where(t => t.AuthorId == user.Id);
             var tracks = tracksQuery != null ? tracksQuery.ToList() : new List<Track>();
@@ -60,6 +63,7 @@ namespace Semicolon.OnlineJudge.Controllers
         }
 
         [Authorize]
+        [Route("Users/ProblemsCreated")]
         public async Task<IActionResult> ProblemsCreated()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -104,9 +108,9 @@ namespace Semicolon.OnlineJudge.Controllers
                     ChartColor.FromHexString("#6C757D")
                 },
 
-                Data = new List<double?> 
+                Data = new List<double?>
                 {
-                    tracks.LongCount(x => x.Status == JudgeStatus.Accept), 
+                    tracks.LongCount(x => x.Status == JudgeStatus.Accept),
                     tracks.LongCount(x => x.Status == JudgeStatus.WrongAnswer),
                     tracks.LongCount(x => x.Status == JudgeStatus.CompileError),
                     tracks.LongCount(x => x.Status == JudgeStatus.UnknownError),
