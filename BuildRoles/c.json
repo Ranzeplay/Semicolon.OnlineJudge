@@ -1,0 +1,15 @@
+{
+  "DisplayName": "C",
+  "EditorLanguage": "c",
+  "CompilationConfiguration": {
+    "Program": "gcc.exe",
+    "Arguments": "-o exec.exe {sourceFile}"
+  },
+  "ExecutionConfiguration": {
+    "Program": "./exec.o",
+    "Steps": [
+      "{inputData}",
+      "{waitForExit}"
+    ]
+  }
+}

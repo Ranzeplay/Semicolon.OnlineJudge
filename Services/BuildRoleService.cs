@@ -3,9 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace Semicolon.OnlineJudge.Services
 {
@@ -13,28 +12,47 @@ namespace Semicolon.OnlineJudge.Services
     {
         private readonly string _storePath = Path.Combine(Directory.GetCurrentDirectory(), "BuildRoles");
 
-        public BuildRole GetConfiguration(string name)
+        private readonly List<BuildRule> _rules;
+
+        public BuildRoleService()
         {
-            var configs = GetAllConfigurations();
-            return configs.FirstOrDefault(c => c.DisplayName == name);
+            _rules = GetAllConfigurations();
         }
 
-        public List<BuildRole> GetAllConfigurations()
+        private List<BuildRule> GetAllConfigurations()
         {
-            var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(UnderscoredNamingConvention.Instance)
-                .Build();
+            var configFiles = Directory.GetFiles(_storePath, "*.json");
 
-            var configFiles = Directory.GetFiles(_storePath, "*.yml");
-
-            var configs = new List<BuildRole>();
+            var configs = new List<BuildRule>();
             foreach (var file in configFiles)
             {
                 var content = File.ReadAllText(file);
-                configs.Add(deserializer.Deserialize<BuildRole>(content));
+                configs.Add(JsonSerializer.Deserialize<BuildRule>(content));
             }
 
             return configs;
+        }
+
+        public BuildRule GetConfiguration(string name)
+        {
+            return _rules.FirstOrDefault(c => c.DisplayName == name);
+        }
+       
+
+        public List<SupportedProgrammingLanguage> GetSupportedProgrammingLanguages()
+        {
+            var result = new List<SupportedProgrammingLanguage>();
+
+            foreach (var role in _rules)
+            {
+                result.Add(new()
+                {
+                    Id = role.EditorLanguage,
+                    DisplayName = role.DisplayName
+                });
+            }
+
+            return result;
         }
     }
 }

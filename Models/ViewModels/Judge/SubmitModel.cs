@@ -14,7 +14,10 @@ namespace Semicolon.OnlineJudge.Models.ViewModels.Judge
         [Required]
         public string Code { get; set; }
 
+        // This is only for displaying languages
+        public List<SupportedProgrammingLanguage> Languages { get; set; }
+
         [Required]
-        public SupportProgrammingLanguage Language { get; set; }
+        public string LanguageId { get; set; }
     }
 }

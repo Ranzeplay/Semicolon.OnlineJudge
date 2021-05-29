@@ -1,9 +1,0 @@
-﻿# Use {sourceFile} for the code file submitted
-
-DisplayName: C
-EditorLang: c 
-
-BuildSteps: 
-  - gcc {sourceFile} -o exec.o
-
-RunCommand: ./exec.o
