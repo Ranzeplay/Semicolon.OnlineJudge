@@ -25,10 +25,10 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Language</span>
-                    <select class="form-control" asp-for="Language">
-                        @foreach (var lang in (Enum.GetNames(typeof(Semicolon.OnlineJudge.Models.SupportProgrammingLanguage)).ToList()))
+                    <select class="form-control" asp-for="LanguageId">
+                        @foreach (var lang in Model.Languages)
                         {
-                            <option value="@lang">@lang</option>
+                            <option value="@lang.Id">@lang.DisplayName</option>
                         }
                     </select>
                 </div>

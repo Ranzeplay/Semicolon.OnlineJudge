@@ -77,14 +77,16 @@ namespace Semicolon.OnlineJudge.Services
 
                 compilerProcess.Start();
 
-                if (track.Language == Models.SupportProgrammingLanguage.C)
+                /*
+                if (track.Language == Models.SupportedProgrammingLanguage.C)
                 {
                     compilerProcess.StandardInput.WriteLine("gcc source.c");
                 }
-                else if (track.Language == Models.SupportProgrammingLanguage.Cpp)
+                else if (track.Language == Models.SupportedProgrammingLanguage.Cpp)
                 {
                     compilerProcess.StandardInput.WriteLine("g++ source.c");
                 }
+                */
 
                 compilerProcess.StandardInput.WriteLine("exit");
                 string compileOutput = compilerProcess.StandardOutput.ReadToEnd();

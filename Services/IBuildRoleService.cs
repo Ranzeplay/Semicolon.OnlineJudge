@@ -8,8 +8,10 @@ namespace Semicolon.OnlineJudge.Services
 {
     public interface IBuildRoleService
     {
-        List<BuildRole> GetAllConfigurations();
+        // List<BuildRole> GetAllConfigurations();
 
-        BuildRole GetConfiguration(string name);
+        BuildRule GetConfiguration(string name);
+
+        List<SupportedProgrammingLanguage> GetSupportedProgrammingLanguages();
     }
 }

@@ -11,6 +11,7 @@ using Semicolon.Auth.Models;
 using Semicolon.OnlineJudge.Data;
 using Semicolon.OnlineJudge.Models.Judge;
 using Semicolon.OnlineJudge.Models.ViewModels.Judge;
+using Semicolon.OnlineJudge.Services;
 
 namespace Semicolon.OnlineJudge.Controllers
 {
@@ -20,10 +21,13 @@ namespace Semicolon.OnlineJudge.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        public JudgeController(ApplicationDbContext context, UserManager<SemicolonUser> userManager)
+        private readonly IBuildRoleService _buildRoleService;
+
+        public JudgeController(ApplicationDbContext context, UserManager<SemicolonUser> userManager, IBuildRoleService buildRoleService)
         {
             _context = context;
             _userManager = userManager;
+            _buildRoleService = buildRoleService;
         }
 
         [HttpGet]
@@ -36,7 +40,11 @@ namespace Semicolon.OnlineJudge.Controllers
                 var problem = _context.Problems.FirstOrDefault(p => p.Id == id);
                 if (problem != null)
                 {
-                    return View(new SubmitModel { Id = id.GetValueOrDefault() });
+                    return View(new SubmitModel
+                    {
+                        Id = id.GetValueOrDefault(),
+                        Languages = _buildRoleService.GetSupportedProgrammingLanguages()
+                    });
                 }
             }
 
@@ -59,7 +67,7 @@ namespace Semicolon.OnlineJudge.Controllers
                     ProblemId = model.Id,
                     CodeEncoded = Base64Encode(model.Code),
                     Status = JudgeStatus.Pending,
-                    Language = model.Language
+                    // Language = model.LanguageName
                 };
 
                 if (problem != null)
@@ -103,7 +111,7 @@ namespace Semicolon.OnlineJudge.Controllers
         public async Task<IActionResult> Status(long id)
         {
             var track = await _context.Tracks.FirstOrDefaultAsync(x => x.Id == id);
-            if(track != null)
+            if (track != null)
             {
                 return View(track);
             }
