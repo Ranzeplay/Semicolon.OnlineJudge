@@ -62,14 +62,14 @@ namespace Semicolon.OnlineJudge.Hubs
 
                 // Compile source code
                 string sourceFilePath = _evaluationMachine.CreateSourceFile(track.CodeEncoded, track);
-                string programPath = _evaluationMachine.CompileProgram(track, out Track trackOut);
+                bool compileResult = _evaluationMachine.CompileProgram(track, out Track trackOut);
                 track = trackOut;
 
                 // Push compile log to client
                 await Clients.Caller.SendAsync("updateStatus", Base64Encode(JsonSerializer.Serialize(track)));
 
-                // If compile failed, the executable file will not be exist
-                if (!File.Exists(programPath))
+                // If compile failed, update the data
+                if (!compileResult)
                 {
                     track.Status = JudgeStatus.CompileError;
                     var pointStatus = track.GetPointStatus();
@@ -102,7 +102,7 @@ namespace Semicolon.OnlineJudge.Hubs
                     {
                         var section = i - 1;
                         var data = testdata[section];
-                        var result = _evaluationMachine.RunTest(data, programPath, track, problem);
+                        var result = _evaluationMachine.RunTest(data, track, problem);
 
                         return result;
 

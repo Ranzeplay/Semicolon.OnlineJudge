@@ -13,5 +13,7 @@ namespace Semicolon.OnlineJudge.Services
         BuildRule GetConfiguration(string name);
 
         List<SupportedProgrammingLanguage> GetSupportedProgrammingLanguages();
+
+        BuildRule GetById(string id);
     }
 }

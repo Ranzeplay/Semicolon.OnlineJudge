@@ -25,7 +25,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Language</span>
-                    <select class="form-control" asp-for="LanguageId">
+                    <select class="form-control" asp-for="LanguageId" onchange="recreateEditor()">
                         @foreach (var lang in Model.Languages)
                         {
                             <option value="@lang.Id">@lang.DisplayName</option>
@@ -57,16 +57,5 @@
     <script src="~/lib/monaco-editor/min/vs/base/worker/workerMain.js"></script>
     <script src="~/lib/monaco-editor/min/vs/basic-languages/cpp/cpp.js"></script>
 
-    <script>
-        var editor = monaco.editor.create(document.getElementById('code'), {
-            language: 'cpp',
-            fontSize: "18px"
-        });
-    </script>
-    <script>
-        function completeCode() {
-            document.getElementById('code-saver').value = editor.getValue();
-            document.getElementById('form').submit();
-        }
-    </script>
+    <script src="~/js/judge/submit.js"></script>
 }

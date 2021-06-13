@@ -16,10 +16,12 @@ namespace Semicolon.OnlineJudge.Services
     public class EvaluationService : IEvaluationService
     {
         private readonly string _storePath = Path.Combine(Directory.GetCurrentDirectory(), "EvaluationMachine");
+        private readonly IBuildRoleService _buildRoleService = new BuildRoleService();
 
         public string CreateSourceFile(string code, Track track)
         {
             var path = _storePath;
+            var rule = _buildRoleService.GetById(track.LanguageId);
 
             var programSourceFilePath = Path.Combine(path, track.Id.ToString());
             if (!Directory.Exists(programSourceFilePath))
@@ -27,7 +29,7 @@ namespace Semicolon.OnlineJudge.Services
                 Directory.CreateDirectory(programSourceFilePath);
             }
 
-            programSourceFilePath = Path.Combine(programSourceFilePath, "source.c");
+            programSourceFilePath = Path.Combine(programSourceFilePath, rule.SourceFileName);
             if (!File.Exists(programSourceFilePath))
             {
                 File.Create(programSourceFilePath).Close();
@@ -47,10 +49,11 @@ namespace Semicolon.OnlineJudge.Services
             return programSourceFilePath;
         }
 
-        public string CompileProgram(Track trackIn, out Track track)
+        public bool CompileProgram(Track trackIn, out Track track)
         {
             track = trackIn;
 
+            // Get judge storage directory
             var path = Path.Combine(_storePath, track.Id.ToString());
             if (!Directory.Exists(path))
             {
@@ -59,38 +62,34 @@ namespace Semicolon.OnlineJudge.Services
 
             try
             {
+                var rule = _buildRoleService.GetById(track.LanguageId);
+
                 using Process compilerProcess = new();
                 compilerProcess.StartInfo.UseShellExecute = false;
                 compilerProcess.StartInfo.CreateNoWindow = true;
                 compilerProcess.StartInfo.RedirectStandardInput = true;
                 compilerProcess.StartInfo.RedirectStandardOutput = true;
+                compilerProcess.StartInfo.RedirectStandardError = true;
                 compilerProcess.StartInfo.WorkingDirectory = path;
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                compilerProcess.StartInfo.FileName = rule.CompilationConfiguration.Program;
+                if (rule.CompilationConfiguration.Arguments != null)
                 {
-                    compilerProcess.StartInfo.FileName = "cmd.exe";
+                    var args = rule.CompilationConfiguration.Arguments.Replace("{sourceFile}", rule.SourceFileName);
+                    compilerProcess.StartInfo.Arguments = args;
+                    compilerProcess.Start();
                 }
                 else
                 {
-                    compilerProcess.StartInfo.FileName = "/bin/bash";
+                    compilerProcess.Start();
+                    foreach (var step in rule.CompilationConfiguration.Steps)
+                    {
+                        compilerProcess.StandardInput.WriteLine(step.Replace("{sourceFile}", rule.SourceFileName));
+                    }
                 }
 
-                compilerProcess.Start();
-
-                /*
-                if (track.Language == Models.SupportedProgrammingLanguage.C)
-                {
-                    compilerProcess.StandardInput.WriteLine("gcc source.c");
-                }
-                else if (track.Language == Models.SupportedProgrammingLanguage.Cpp)
-                {
-                    compilerProcess.StandardInput.WriteLine("g++ source.c");
-                }
-                */
-
-                compilerProcess.StandardInput.WriteLine("exit");
-                string compileOutput = compilerProcess.StandardOutput.ReadToEnd();
                 compilerProcess.WaitForExit();
+                string compileOutput = compilerProcess.StandardOutput.ReadToEnd();
 
                 if (string.IsNullOrWhiteSpace(compileOutput))
                 {
@@ -100,23 +99,16 @@ namespace Semicolon.OnlineJudge.Services
                 {
                     track.CompilerOutput = compileOutput;
                 }
+
+                return true;
             }
             catch (Exception)
             {
-                throw;
-            }
-
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-            {
-                return Path.Combine(path, "a.exe");
-            }
-            else
-            {
-                return Path.Combine(path, "a.out");
+                return false;
             }
         }
 
-        public PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem)
+        public PointStatus RunTest(TestData data, Track track, Problem problem)
         {
             var path = Path.Combine(_storePath, track.Id.ToString());
             if (!Directory.Exists(path))
@@ -126,31 +118,40 @@ namespace Semicolon.OnlineJudge.Services
 
             try
             {
-                var programProcess = new Process
+                var rule = _buildRoleService.GetById(track.LanguageId);
+
+                using Process executableProcess = new();
+                executableProcess.StartInfo.UseShellExecute = false;
+                executableProcess.StartInfo.CreateNoWindow = true;
+                executableProcess.StartInfo.RedirectStandardInput = true;
+                executableProcess.StartInfo.RedirectStandardOutput = true;
+                executableProcess.StartInfo.WorkingDirectory = path;
+
+                executableProcess.StartInfo.FileName = Path.Combine(path, rule.ExecutionConfiguration.Program);
+                if (rule.ExecutionConfiguration.Arguments != null)
                 {
-                    StartInfo = new ProcessStartInfo
+                    executableProcess.StartInfo.Arguments = rule.ExecutionConfiguration.Arguments;
+                    executableProcess.Start();
+                }
+                else
+                {
+                    executableProcess.Start();
+                    foreach (var step in rule.ExecutionConfiguration.Steps)
                     {
-                        UseShellExecute = false,
-                        CreateNoWindow = true,
-                        RedirectStandardInput = true,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        WorkingDirectory = path,
-                        FileName = compiledProgramPath
-                    },
-                };
-                programProcess.Start();
-                programProcess.StandardInput.WriteLine(data.Input);
-                string programOutput = programProcess.StandardOutput.ReadToEnd();
+                        executableProcess.StandardInput.WriteLine(step.Replace("{inputData}", data.Input));
+                    }
+                }
+
+                string programOutput = executableProcess.StandardOutput.ReadToEnd();
                 Thread.Sleep(Convert.ToInt32(problem.GetJudgeProfile().TimeLimit * 1000) + 1000);
 
-                if (!programProcess.HasExited)
+                if (!executableProcess.HasExited)
                 {
-                    programProcess.Kill();
+                    executableProcess.Kill();
                 }
-                programProcess.WaitForExit();
+                executableProcess.WaitForExit();
 
-                var runningTime = ((programProcess.ExitTime - programProcess.StartTime).TotalMilliseconds) / 1000;
+                var runningTime = ((executableProcess.ExitTime - executableProcess.StartTime).TotalMilliseconds) / 1000;
                 if (runningTime > problem.GetJudgeProfile().TimeLimit)
                 {
                     return PointStatus.TimeLimitExceeded;

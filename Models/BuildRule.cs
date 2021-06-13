@@ -14,6 +14,8 @@ namespace Semicolon.OnlineJudge.Models
         /// </summary>
         public string EditorLanguage { get; set; }
 
+        public string SourceFileName { get; set; }
+
         public Commands CompilationConfiguration { get; set; }
 
         public Commands ExecutionConfiguration { get; set; }

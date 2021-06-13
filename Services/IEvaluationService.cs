@@ -11,8 +11,8 @@ namespace Semicolon.OnlineJudge.Services
     {
         string CreateSourceFile(string code, Track track);
 
-        PointStatus RunTest(TestData data, string compiledProgramPath, Track track, Problem problem);
+        PointStatus RunTest(TestData data, Track track, Problem problem);
 
-        string CompileProgram(Track trackIn, out Track track);
+        bool CompileProgram(Track trackIn, out Track track);
     }
 }
