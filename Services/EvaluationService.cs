@@ -16,12 +16,12 @@ namespace Semicolon.OnlineJudge.Services
     public class EvaluationService : IEvaluationService
     {
         private readonly string _storePath = Path.Combine(Directory.GetCurrentDirectory(), "EvaluationMachine");
-        private readonly IBuildRoleService _buildRoleService = new BuildRoleService();
+        private readonly IBuildRuleService _buildRuleService = new BuildRuleService();
 
         public string CreateSourceFile(string code, Track track)
         {
             var path = _storePath;
-            var rule = _buildRoleService.GetById(track.LanguageId);
+            var rule = _buildRuleService.GetById(track.LanguageId);
 
             var programSourceFilePath = Path.Combine(path, track.Id.ToString());
             if (!Directory.Exists(programSourceFilePath))
@@ -62,7 +62,7 @@ namespace Semicolon.OnlineJudge.Services
 
             try
             {
-                var rule = _buildRoleService.GetById(track.LanguageId);
+                var rule = _buildRuleService.GetById(track.LanguageId);
 
                 using Process compilerProcess = new();
                 compilerProcess.StartInfo.UseShellExecute = false;
@@ -118,7 +118,7 @@ namespace Semicolon.OnlineJudge.Services
 
             try
             {
-                var rule = _buildRoleService.GetById(track.LanguageId);
+                var rule = _buildRuleService.GetById(track.LanguageId);
 
                 using Process executableProcess = new();
                 executableProcess.StartInfo.UseShellExecute = false;

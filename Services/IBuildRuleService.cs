@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Services
 {
-    public interface IBuildRoleService
+    public interface IBuildRuleService
     {
-        // List<BuildRole> GetAllConfigurations();
+        // List<BuildRule> GetAllConfigurations();
 
         BuildRule GetConfiguration(string name);
 

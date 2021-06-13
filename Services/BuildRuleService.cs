@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Semicolon.OnlineJudge.Services
 {
-    public class BuildRoleService : IBuildRoleService
+    public class BuildRuleService : IBuildRuleService
     {
-        private readonly string _storePath = Path.Combine(Directory.GetCurrentDirectory(), "BuildRoles");
+        private readonly string _storePath = Path.Combine(Directory.GetCurrentDirectory(), "BuildRules");
 
         private readonly List<BuildRule> _rules;
 
-        public BuildRoleService()
+        public BuildRuleService()
         {
             _rules = GetAllConfigurations();
         }

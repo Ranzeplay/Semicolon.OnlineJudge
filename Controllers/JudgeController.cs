@@ -21,13 +21,13 @@ namespace Semicolon.OnlineJudge.Controllers
 
         private readonly ApplicationDbContext _context;
 
-        private readonly IBuildRoleService _buildRoleService;
+        private readonly IBuildRuleService _buildRuleService;
 
-        public JudgeController(ApplicationDbContext context, UserManager<SemicolonUser> userManager, IBuildRoleService buildRoleService)
+        public JudgeController(ApplicationDbContext context, UserManager<SemicolonUser> userManager, IBuildRuleService buildRuleService)
         {
             _context = context;
             _userManager = userManager;
-            _buildRoleService = buildRoleService;
+            _buildRuleService = buildRuleService;
         }
 
         [HttpGet]
@@ -43,7 +43,7 @@ namespace Semicolon.OnlineJudge.Controllers
                     return View(new SubmitModel
                     {
                         Id = id.GetValueOrDefault(),
-                        Languages = _buildRoleService.GetSupportedProgrammingLanguages()
+                        Languages = _buildRuleService.GetSupportedProgrammingLanguages()
                     });
                 }
             }
