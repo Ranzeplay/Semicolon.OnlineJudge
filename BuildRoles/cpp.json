@@ -1,15 +1,15 @@
 {
   "DisplayName": "C++",
   "EditorLanguage": "cpp",
+  "SourceFileName": "source.cpp",
   "CompilationConfiguration": {
     "Program": "g++.exe",
     "Arguments": "-o exec.exe {sourceFile}"
   },
   "ExecutionConfiguration": {
-    "Program": "./exec.o",
+    "Program": "./exec.exe",
     "Steps": [
-      "{inputData}",
-      "{waitForExit}"
+      "{inputData}"
     ]
   }
 }

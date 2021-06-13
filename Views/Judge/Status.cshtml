@@ -68,7 +68,7 @@
     <script>
         var code = atob(document.getElementById('code-encoded').value);
         var editor = monaco.editor.create(document.getElementById('code'), {
-            language: 'cpp',
+            language: '@Model.LanguageId',
             readOnly: true,
             value: code
         });

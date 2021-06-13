@@ -54,5 +54,10 @@ namespace Semicolon.OnlineJudge.Services
 
             return result;
         }
+
+        public BuildRule GetById(string id)
+        {
+            return _rules.FirstOrDefault(c => c.EditorLanguage == id);
+        }
     }
 }

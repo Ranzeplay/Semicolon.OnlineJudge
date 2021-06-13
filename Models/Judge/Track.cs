@@ -23,7 +23,7 @@ namespace Semicolon.OnlineJudge.Models.Judge
 
         public string CompilerOutput { get; set; }
 
-        public SupportedProgrammingLanguage Language { get; set; }
+        public string LanguageId { get; set; }
 
         public void SetPointStatus(List<Point> vs)
         {
