@@ -1,6 +1,6 @@
 {
   "DisplayName": "C",
-  "EditorLanguage": "c",
+  "EditorLanguage": "cpp",
   "SourceFileName": "source.c",
   "CompilationConfiguration": {
     "Program": "gcc.exe",
