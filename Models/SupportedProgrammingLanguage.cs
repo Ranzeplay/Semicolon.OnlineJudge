@@ -9,6 +9,8 @@ namespace Semicolon.OnlineJudge.Models
     {
         public string Id { get; set; }
 
+        public string EditorLanguage { get; set; }
+
         public string DisplayName { get; set; }
     }
 }

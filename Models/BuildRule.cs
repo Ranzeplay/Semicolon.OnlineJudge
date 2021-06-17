@@ -7,6 +7,8 @@ namespace Semicolon.OnlineJudge.Models
 {
     public class BuildRule
     {
+        public string Id { get; set; }
+
         public string DisplayName { get; set; }
 
         /// <summary>
