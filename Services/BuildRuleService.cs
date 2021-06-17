@@ -24,9 +24,9 @@ namespace Semicolon.OnlineJudge.Services
             var configFiles = Directory.GetFiles(_storePath, "*.json");
 
             var configs = new List<BuildRule>();
-            foreach (var file in configFiles)
+            foreach (var fileFullName in configFiles)
             {
-                var content = File.ReadAllText(file);
+                var content = File.ReadAllText(fileFullName);
                 configs.Add(JsonSerializer.Deserialize<BuildRule>(content));
             }
 
@@ -43,12 +43,13 @@ namespace Semicolon.OnlineJudge.Services
         {
             var result = new List<SupportedProgrammingLanguage>();
 
-            foreach (var role in _rules)
+            foreach (var rule in _rules)
             {
                 result.Add(new()
                 {
-                    Id = role.EditorLanguage,
-                    DisplayName = role.DisplayName
+                    Id = rule.Id,
+                    EditorLanguage = rule.EditorLanguage,
+                    DisplayName = rule.DisplayName
                 });
             }
 
@@ -57,7 +58,7 @@ namespace Semicolon.OnlineJudge.Services
 
         public BuildRule GetById(string id)
         {
-            return _rules.FirstOrDefault(c => c.EditorLanguage == id);
+            return _rules.FirstOrDefault(c => c.Id == id);
         }
     }
 }

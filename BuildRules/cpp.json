@@ -1,4 +1,5 @@
 {
+  "Id": "cpp",
   "DisplayName": "C++",
   "EditorLanguage": "cpp",
   "SourceFileName": "source.cpp",

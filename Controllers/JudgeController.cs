@@ -92,7 +92,7 @@ namespace Semicolon.OnlineJudge.Controllers
                     _context.Problems.Update(problem);
 
                     _context.Tracks.Add(track);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();                                                       
 
                     var trackNew = await _context.Tracks.FirstOrDefaultAsync(t => t.CreateTime == track.CreateTime);
 
@@ -103,6 +103,13 @@ namespace Semicolon.OnlineJudge.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("/api/supported_langs")]
+        public IActionResult GetAllProgrammingLanguages()
+        {
+            return new JsonResult(_buildRuleService.GetSupportedProgrammingLanguages());
         }
 
         [HttpGet]
