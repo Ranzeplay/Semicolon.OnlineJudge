@@ -26,6 +26,7 @@ namespace Semicolon.OnlineJudge.Controllers
             _userManager = userManager;
         }
 
+        [Authorize]
         [Route("Users/My")]
         public async Task<IActionResult> Index()
         {

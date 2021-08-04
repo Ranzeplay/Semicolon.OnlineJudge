@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -107,10 +108,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         [HttpGet]
         [Route("/api/supported_langs")]
-        public IActionResult GetAllProgrammingLanguages()
-        {
-            return new JsonResult(_buildRuleService.GetSupportedProgrammingLanguages());
-        }
+        public IActionResult GetAllProgrammingLanguages() => new JsonResult(_buildRuleService.GetSupportedProgrammingLanguages());
 
         [HttpGet]
         // [Route("{id}")]
@@ -128,7 +126,7 @@ namespace Semicolon.OnlineJudge.Controllers
 
         public static string Base64Encode(string plainText)
         {
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
             return Convert.ToBase64String(plainTextBytes);
         }
     }
