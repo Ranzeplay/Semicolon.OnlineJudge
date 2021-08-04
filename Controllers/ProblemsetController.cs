@@ -153,53 +153,53 @@ namespace Semicolon.OnlineJudge.Controllers
 
             if (long.TryParse(content, out long number))
             {
-                var p = _context.Problems.FirstOrDefault(p => p.Id == number);
+                var problem = _context.Problems.FirstOrDefault(p => p.Id == number);
 
                 var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
 
-                var html = Markdown.ToHtml(p.Description, pipeline);
-                var raw = Markdown.ToPlainText(p.Description);
+                var html = Markdown.ToHtml(problem.Description, pipeline);
+                var raw = Markdown.ToPlainText(problem.Description);
 
-                var author = await _userManager.FindByIdAsync(p.AuthorId);
+                var author = await _userManager.FindByIdAsync(problem.AuthorId);
 
                 model.ProblemModels.Add(new ProblemModel
                 {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Description = p.Description,
+                    Id = problem.Id,
+                    Title = problem.Title,
+                    Description = problem.Description,
                     ContentRaw = raw,
                     ContentHtml = html,
-                    AuthorId = p.AuthorId,
+                    AuthorId = problem.AuthorId,
                     Author = author.UserName,
-                    ExampleData = p.ExampleData,
-                    JudgeProfile = p.JudgeProfile,
-                    PassRate = p.PassRate,
-                    PublishTime = p.PublishTime
+                    ExampleData = problem.ExampleData,
+                    JudgeProfile = problem.JudgeProfile,
+                    PassRate = problem.PassRate,
+                    PublishTime = problem.PublishTime
                 });
             }
 
-            foreach (var p in _context.Problems.Where(x => x.Title.Contains(content)).ToList())
+            foreach (var problem in _context.Problems.Where(x => x.Title.Contains(content)).ToList())
             {
                 var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
 
-                var html = Markdown.ToHtml(p.Description, pipeline);
-                var raw = Markdown.ToPlainText(p.Description);
+                var html = Markdown.ToHtml(problem.Description, pipeline);
+                var raw = Markdown.ToPlainText(problem.Description);
 
-                var author = await _userManager.FindByIdAsync(p.AuthorId);
+                var author = await _userManager.FindByIdAsync(problem.AuthorId);
 
                 model.ProblemModels.Add(new ProblemModel
                 {
-                    Id = p.Id,
-                    Title = p.Title,
-                    Description = p.Description,
+                    Id = problem.Id,
+                    Title = problem.Title,
+                    Description = problem.Description,
                     ContentRaw = raw,
                     ContentHtml = html,
-                    AuthorId = p.AuthorId,
+                    AuthorId = problem.AuthorId,
                     Author = author.UserName,
-                    ExampleData = p.ExampleData,
-                    JudgeProfile = p.JudgeProfile,
-                    PassRate = p.PassRate,
-                    PublishTime = p.PublishTime
+                    ExampleData = problem.ExampleData,
+                    JudgeProfile = problem.JudgeProfile,
+                    PassRate = problem.PassRate,
+                    PublishTime = problem.PublishTime
                 });
             }
 

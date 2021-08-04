@@ -28,10 +28,7 @@ namespace Semicolon.Auth.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
+        public IActionResult Index() => View();
 
         [HttpGet]
         [Authorize]
@@ -60,10 +57,7 @@ namespace Semicolon.Auth.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult ChangePassword()
-        {
-            return View();
-        }
+        public IActionResult ChangePassword() => View();
 
         [HttpPost]
         [Authorize]
@@ -90,10 +84,7 @@ namespace Semicolon.Auth.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Delete()
-        {
-            return View();
-        }
+        public IActionResult Delete() => View();
 
         [HttpPost]
         [Authorize]
