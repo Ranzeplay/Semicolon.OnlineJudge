@@ -62,19 +62,6 @@
       "destination": "wwwroot/lib/Chart.js/"
     },
     {
-      "provider": "jsdelivr",
-      "library": "uikit@3.6.22",
-      "destination": "wwwroot/lib/uikit/",
-      "files": [
-        "dist/css/uikit.css",
-        "dist/css/uikit.min.css",
-        "dist/js/uikit.js",
-        "dist/js/uikit.min.js",
-        "dist/js/uikit-icons.js",
-        "dist/js/uikit-icons.min.js"
-      ]
-    },
-    {
       "provider": "cdnjs",
       "library": "Dropify@0.2.2",
       "destination": "wwwroot/lib/Dropify/"
