@@ -20,7 +20,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "font-awesome@5.15.3",
+      "library": "font-awesome@5.15.4",
       "destination": "wwwroot/lib/font-awesome/",
       "files": [
         "css/all.css",
@@ -58,7 +58,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "Chart.js@3.2.1",
+      "library": "Chart.js@3.6.0",
       "destination": "wwwroot/lib/Chart.js/"
     },
     {
@@ -68,7 +68,7 @@
     },
     {
       "provider": "cdnjs",
-      "library": "Primer@16.3.0",
+      "library": "Primer@18.0.2",
       "destination": "wwwroot/lib/Primer/",
       "files": [
         "primer.css",
