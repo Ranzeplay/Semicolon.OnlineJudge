@@ -1,53 +1,51 @@
 ﻿@model Semicolon.Auth.Models.ViewModels.Account.DeleteAccountModel
 @{
-    ViewData["Title"] = "销毁账户";
+    ViewData["Title"] = "Delete account";
+    Layout = "~/Views/Shared/_PrivateLayout.cshtml";
 }
 
-<div style="width: 60%; margin: 0 auto; margin-top: 10%">
-    <form method="post" class="uk-form-horizontal uk-card-hover uk-margin-large uk-card-body" asp-action="Delete" id="delete-form">
-        <fieldset class="uk-fieldset">
-            <legend class="uk-legend">Delete account</legend>
+<div class="pt-4 container-lg clearfix flex-row flex-column">
+	<div class="col-3 float-left">
+		<partial name="_NavigationPartialView" />
+	</div>
+	<div class="col-8 float-right">
+		<div class="Subhead">
+			<div class="Subhead-heading">Delete account</div>
+		</div>
 
-            <div asp-validation-summary="All" class="uk-text-danger" style="margin-top: 15px"></div>
+		<div class="flash-messages mt-2">
+			<div class="flash flash-warn">
+			<i class="fas fa-exclamation-triangle"></i> <span class="text-bold">Attention</span><br />
+			&nbsp;&nbsp;&nbsp;&nbsp; You are going to delete your account, then action can't be undone! <br /> 
+			&nbsp;&nbsp;&nbsp;&nbsp; Please check twice before you click the button
+			</div>
+		</div>
 
-            <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Email address</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" id="form-horizontal-text" type="email" asp-for="Email">
-                </div>v
-            </div>
+		<form method="post" class="col-12 mt-2" asp-action="Delete">
+			<div asp-validation-summary="All" class="text-danger mt-2"></div>
 
-            <div class="uk-margin">
-                <label class="uk-form-label" for="form-horizontal-text">Password</label>
-                <div class="uk-form-controls">
-                    <input class="uk-input" id="form-horizontal-text" type="password" asp-for="Password">
-                </div>
-            </div>
+			<div class="form-group">
+				<div class="form-group-header">
+					<label for="form-horizontal-text">Email address</label>
+				</div>
+				<div class="form-group-body">
+					<input class="form-control input-block" id="form-horizontal-text" type="email" asp-for="Email">
+				</div>
+			</div>
 
-            <div class="uk-margin">
-                <button type="button" uk-toggle="target: #confirm-modal" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom">销毁</button>
-                <a class="uk-button uk-button-link" asp-action="My">Back</a>
-            </div>
+			<div class="form-group">
+				<div class="form-group-header">
+					<label for="form-horizontal-text">Password</label>
+				</div>
+				<div class="form-group-body">
+					<input class="form-control input-block" id="form-horizontal-text" type="password" asp-for="Password">
+				</div>
+			</div>
 
-            <div id="confirm-modal" uk-modal>
-                <div class="uk-modal-dialog">
-                    <button class="uk-modal-close-default" type="button" uk-close></button>
-                    <div class="uk-modal-header">
-                        <h2 class="uk-modal-title">Please confirm your action</h2>
-                    </div>
-                    <div class="uk-modal-body">
-                        <p class="uk-text-danger">
-                            You are deleting your account
-                            <br />
-                            This account will be deleted permanently
-                        </p>
-                    </div>
-                    <div class="uk-modal-footer">
-                        <button type="submit" class="uk-button uk-button-danger uk-width-1-1 uk-margin-small-bottom" onclick="document.getElementById('delete-form').submit()">Confirm</button>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    </form>
+			<div class="form-actions mt-2">
+				<button type="submit" class="btn btn-danger">Confirm deletion</button>
+				<a role="button" class="btn" asp-action="My">Cancel</a>
+			</div>
+		</form>
+	</div>
 </div>
-s

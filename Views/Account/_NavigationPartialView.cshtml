@@ -1,0 +1,19 @@
+﻿<nav class="menu" aria-label="Account settings">
+	<span class="menu-heading">Profile</span>
+	<a class="menu-item" asp-controller="Account" asp-action="My">
+		<i class="fas fa-user"></i>
+		Profile
+	</a>
+</nav>
+
+<nav class="menu mt-3" aria-label="Account settings">
+	<span class="menu-heading">Danger Zone</span>
+	<a class="menu-item" asp-controller="Account" asp-action="ChangePassword">
+		<i class="fas fa-key"></i>
+		Change password
+	</a>
+	<a class="menu-item" asp-controller="Account" asp-action="Delete">
+		<i class="fas fa-eraser"></i>
+		Delete account
+	</a>
+</nav>

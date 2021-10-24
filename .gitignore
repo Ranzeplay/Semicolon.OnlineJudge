@@ -338,16 +338,19 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# Database
+/Semicolon.OnlineJudge.db
+
+# Client-side libraries
 /wwwroot/lib/admin-lte
 /wwwroot/lib/font-awesome
-/Semicolon.OnlineJudge.db
 /wwwroot/lib/clipboard.js
 /wwwroot/lib/jquery
 /wwwroot/lib/monaco-editor
 /wwwroot/lib/simplemde
 /wwwroot/lib/signalr
 /wwwroot/lib/Chart.js
-/wwwroot/lib/uikit
 /wwwroot/lib/Dropify
 /wwwroot/lib/Primer
 /judgeDataStorage
