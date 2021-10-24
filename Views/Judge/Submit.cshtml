@@ -25,7 +25,8 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">Language</span>
-                    <select class="form-control" asp-for="LanguageId" onchange="recreateEditor()">
+                    @* <span class="info-box-number text-muted" id="language-loading-text">Loading...</span> *@
+                    <select class="form-control" asp-for="LanguageId" onchange="updateEditorLanguage()" onload="loadLangOptions()">
                         @foreach (var lang in Model.Languages)
                         {
                             <option value="@lang.Id">@lang.DisplayName</option>
@@ -50,7 +51,9 @@
 }
 
 @section Scripts {
-    <script>var require = { paths: { 'vs': '~/lib/monaco-editor/min/vs' } };</script>
+    <script>
+        var require = { paths: { 'vs': '~/lib/monaco-editor/min/vs' } };
+    </script>
     <script src="~/lib/monaco-editor/min/vs/loader.js"></script>
     <script src="~/lib/monaco-editor/min/vs/editor/editor.main.nls.js"></script>
     <script src="~/lib/monaco-editor/min/vs/editor/editor.main.js"></script>
