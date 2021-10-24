@@ -39,19 +39,6 @@
       ]
     },
     {
-      "provider": "jsdelivr",
-      "library": "jquery@3.6.0",
-      "destination": "wwwroot/lib/jquery/",
-      "files": [
-        "dist/jquery.js",
-        "dist/jquery.min.js",
-        "dist/jquery.min.map",
-        "dist/jquery.slim.js",
-        "dist/jquery.slim.min.js",
-        "dist/jquery.slim.min.map"
-      ]
-    },
-    {
       "provider": "cdnjs",
       "library": "monaco-editor@0.23.0",
       "destination": "wwwroot/lib/monaco-editor/"
@@ -110,6 +97,11 @@
         "utilities.css.map",
         "core.min.css"
       ]
+    },
+    {
+      "provider": "cdnjs",
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/lib/jquery/"
     }
   ]
 }
