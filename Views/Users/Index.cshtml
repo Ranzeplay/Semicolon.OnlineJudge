@@ -55,6 +55,14 @@
                         <i class="fas fa-user"></i>
                         View details
                     </a>
+                    @if (Model.User.UserName == User.Identity.Name)
+                    {
+                    <a asp-controller="Account" asp-action="My" class="btn btn-sm btn-info">
+                        <i class="fas fa-user"></i>
+                        Edit account settings
+                    </a>
+                    }
+                    
                 </div>
             </div>
         </div>
