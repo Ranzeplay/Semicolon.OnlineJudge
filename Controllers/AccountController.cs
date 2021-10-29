@@ -70,7 +70,8 @@ namespace Semicolon.Auth.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(My));
+                    await _signInManager.SignOutAsync();
+                    return RedirectToAction("Login", "Auth");
                 }
 
                 foreach (var error in result.Errors)
