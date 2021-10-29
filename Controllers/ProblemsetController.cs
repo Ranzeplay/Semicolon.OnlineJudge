@@ -28,46 +28,30 @@ namespace Semicolon.OnlineJudge.Controllers
             _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var model = new IndexModel
             {
                 ProblemModels = new List<ProblemModel>()
             };
+
             foreach (var problem in _context.Problems.ToList())
             {
-                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
-
-                var html = Markdown.ToHtml(problem.Description, pipeline);
-                var raw = Markdown.ToPlainText(problem.Description);
-
-                var author = await _userManager.FindByIdAsync(problem.AuthorId);
-
                 model.ProblemModels.Add(new ProblemModel
                 {
                     Id = problem.Id,
                     Title = problem.Title,
-                    Description = problem.Description,
-                    ContentRaw = raw,
-                    ContentHtml = html,
-                    AuthorId = problem.AuthorId,
-                    Author = author.UserName,
-                    ExampleData = problem.ExampleData,
-                    JudgeProfile = problem.JudgeProfile,
                     PassRate = problem.PassRate,
-                    PublishTime = problem.PublishTime
                 });
             }
 
             return View(model);
         }
 
+
         [HttpGet]
         [Authorize]
-        public IActionResult New()
-        {
-            return View();
-        }
+        public IActionResult New() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -139,7 +123,7 @@ namespace Semicolon.OnlineJudge.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Search(string content)
+        public IActionResult Search(string content)
         {
             if (content == null)
             {
@@ -151,57 +135,34 @@ namespace Semicolon.OnlineJudge.Controllers
                 ProblemModels = new List<ProblemModel>()
             };
 
+            // Try match problem id
             if (long.TryParse(content, out long number))
             {
                 var problem = _context.Problems.FirstOrDefault(p => p.Id == number);
-
-                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
-
-                var html = Markdown.ToHtml(problem.Description, pipeline);
-                var raw = Markdown.ToPlainText(problem.Description);
-
-                var author = await _userManager.FindByIdAsync(problem.AuthorId);
-
-                model.ProblemModels.Add(new ProblemModel
+                if (problem != null)
                 {
-                    Id = problem.Id,
-                    Title = problem.Title,
-                    Description = problem.Description,
-                    ContentRaw = raw,
-                    ContentHtml = html,
-                    AuthorId = problem.AuthorId,
-                    Author = author.UserName,
-                    ExampleData = problem.ExampleData,
-                    JudgeProfile = problem.JudgeProfile,
-                    PassRate = problem.PassRate,
-                    PublishTime = problem.PublishTime
-                });
+                    model.ProblemModels.Add(new ProblemModel
+                    {
+                        Id = problem.Id,
+                        Title = problem.Title,
+                        PassRate = problem.PassRate,
+                    });
+                }
             }
 
+            // Search from title
             foreach (var problem in _context.Problems.Where(x => x.Title.Contains(content)).ToList())
             {
-                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().UseBootstrap().Build();
-
-                var html = Markdown.ToHtml(problem.Description, pipeline);
-                var raw = Markdown.ToPlainText(problem.Description);
-
-                var author = await _userManager.FindByIdAsync(problem.AuthorId);
-
                 model.ProblemModels.Add(new ProblemModel
                 {
                     Id = problem.Id,
                     Title = problem.Title,
-                    Description = problem.Description,
-                    ContentRaw = raw,
-                    ContentHtml = html,
-                    AuthorId = problem.AuthorId,
-                    Author = author.UserName,
-                    ExampleData = problem.ExampleData,
-                    JudgeProfile = problem.JudgeProfile,
                     PassRate = problem.PassRate,
-                    PublishTime = problem.PublishTime
                 });
             }
+
+            // Remove multiple elements
+            model.ProblemModels.Distinct();
 
             return View(model);
         }
@@ -229,7 +190,6 @@ namespace Semicolon.OnlineJudge.Controllers
                 AuthorId = problem.AuthorId,
                 Author = author.UserName,
                 ExampleData = problem.ExampleData,
-                JudgeProfile = problem.JudgeProfile,
                 PassRate = problem.PassRate,
                 PublishTime = problem.PublishTime
             };

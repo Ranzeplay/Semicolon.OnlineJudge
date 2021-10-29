@@ -4,9 +4,9 @@
 }
 
 <div class="row">
-    <div class="col-md-9">
-        <div class="card">
-            <div class="card-body">
+    <div class="col-md-8">
+        <div class="Box">
+            <div class="Box-body">
                 <table class="table table-condensed table-head-fixed table-hover">
                     <thead>
                         <tr>
@@ -31,45 +31,28 @@
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="row">
-            <form method="get" asp-action="Search">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Search</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="input-group">
-                            <input name="content" type="text" class="form-control" placeholder="Content" />
-                            <div class="input-group-append">
-                                <div class="input-group-text">
-                                    <span class="fas fa-search"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px">Go</button>
-                    </div>
+    <div class="col-md-4">
+        <form method="get" asp-action="Search">
+                <div class="Box">
+                <div class="Box-header">
+                    <h3 class="Box-title">Search</h3>
                 </div>
-            </form>
-        </div>
-        <div class="row">
-            <div class="card" style="width: 100%">
-                <div class="card-header">
-                    <h3 class="card-title">Didn't find what you want?</h3>
-                </div>
-                <div class="card-body">
-                    <a class="btn btn-primary btn-block" asp-action="New">Create a new problem</a>
+                <div class="Box-body">
+                    <div class="form-group">
+                        <input name="content" type="text" class="form-control" placeholder="Content" />
+                        <button type="submit" class="btn btn-outline" style="margin-top: 10px">Go</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="card" style="width: 100%">
-                <div class="card-header">
-                    <h3 class="card-title">More</h3>
-                </div>
-                <div class="card-body">
-                    <a class="btn btn-primary btn-block" asp-controller="Users" asp-action="ProblemsCreated">Problems you created</a>
-                </div>
+        </form>
+
+        <div class="Box mt-3">
+            <div class="Box-header">
+                <h3 class="Box-title">More</h3>
+            </div>
+            <div class="Box-body">
+                <p><a asp-controller="Users" asp-action="ProblemsCreated">View problems you created</a></p>
+                <p><a asp-action="New">Create a new problem</a></p>
             </div>
         </div>
     </div>
