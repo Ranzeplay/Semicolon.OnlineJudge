@@ -339,6 +339,9 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
+# VSCode profile
+.vscode/
+
 # Database
 /Semicolon.OnlineJudge.db
 
