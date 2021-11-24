@@ -24,13 +24,15 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '6.0'
+    version: '6.0.x'
 
 - task: DotNetCoreCLI@2
+  name: RestoreNuGetPackages
   inputs:
     command: 'restore'
     feedsToUse: 'select'
 
 - task: DotNetCoreCLI@2
+  name: BuildProject
   inputs:
     command: 'build'
