@@ -39,17 +39,13 @@
       ]
     },
     {
-      "provider": "cdnjs",
+      "provider": "unpkg",
       "library": "monaco-editor@0.23.0",
       "destination": "wwwroot/lib/monaco-editor/"
     },
     {
       "library": "simplemde@1.11.2",
-      "destination": "wwwroot/lib/simplemde/",
-      "files": [
-        "dist/simplemde.min.css",
-        "dist/simplemde.min.js"
-      ]
+      "destination": "wwwroot/lib/simplemde/"
     },
     {
       "provider": "unpkg",
