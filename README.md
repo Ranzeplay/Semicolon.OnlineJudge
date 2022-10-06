@@ -4,7 +4,7 @@
 
 ## How to run the project
 
-> You need to install `gcc` conpiler first
+> You need to install `gcc` compiler first
 
 ### Run locally
 
@@ -24,9 +24,6 @@ Issues will be fixed *as fast as I can* if there is.
 
 ### Planned Tasks
 
-- Use [TailwindCSS](https://github.com/tailwindlabs/tailwindcss) as its web UI
-- ~~Judge the code in a safe way (`Docker` or `WebAssembly`)~~
-- Deploy an example
 - Support `Linux`
 - Management dashboard
 
@@ -34,7 +31,7 @@ Issues will be fixed *as fast as I can* if there is.
 
 - Integrated authentication
 - Add problem (`Markdown` support)
-- Solve problem (`C` and `C++`)
+- Solve problem (`C`,  `C++`, you can even setup your own compiler)
 - Code judgement (Real-time feedback with `SingalR`)
 
 ### Database
