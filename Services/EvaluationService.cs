@@ -152,7 +152,7 @@ namespace Semicolon.OnlineJudge.Services
                 }
                 executableProcess.WaitForExit();
 
-                if (executableProcess.PeakWorkingSet64 > problem.MaximiumMemory)
+                if (executableProcess.PeakWorkingSet64 > problem.GetJudgeProfile().MemoryLimit)
                 {
                     return PointStatus.MemoryLimitExceeded;
                 }
