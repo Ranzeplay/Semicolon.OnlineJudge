@@ -148,13 +148,13 @@ namespace Semicolon.OnlineJudge.Services
                 if (!executableProcess.HasExited)
                 {
                     executableProcess.Kill();
+                    return PointStatus.TimeLimitExceeded;
                 }
                 executableProcess.WaitForExit();
 
-                var runningTime = ((executableProcess.ExitTime - executableProcess.StartTime).TotalMilliseconds) / 1000;
-                if (runningTime > problem.GetJudgeProfile().TimeLimit)
+                if (executableProcess.PeakWorkingSet64 > problem.GetJudgeProfile().MemoryLimit)
                 {
-                    return PointStatus.TimeLimitExceeded;
+                    return PointStatus.MemoryLimitExceeded;
                 }
 
                 if (data.Output.Trim().TrimEnd('\n').Trim().Replace("\r", "") == programOutput.Trim().TrimEnd('\n').Trim().Replace("\r", ""))
