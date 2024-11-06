@@ -1,6 +1,9 @@
 # Semicolon.OnlineJudge
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FRanzeplay%2FSemicolon.OnlineJudge.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FRanzeplay%2FSemicolon.OnlineJudge?ref=badge_shield)
 
+> [!NOTE]
+>
+> The project will no longer be maintained, and there is a continued project called [PhiJudge](https://github.com/Ranzeplay/PhiJudge) that is under development. 
 
 ---
 
